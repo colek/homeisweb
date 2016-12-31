@@ -6,10 +6,10 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="supportedContentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Navigation</a>
                     <div class="dropdown-menu" aria-labelledby="supportedContentDropdown">
-                        <button class="dropdown-item" (click)="onShowDataTags()">Datové body</button>
-                        <button class="dropdown-item" (click)="onShowFolders()">Složky hodnot</button>
-                        <button class="dropdown-item" (click)="onShowLogin()">Přihlášení</button>
-                        <button class="dropdown-item" (click)="onShowRegisters()">Nastavení Modbus</button>
+                        <button class="dropdown-item" routerLink="/dataitems" routerLinkActive='active'>Datové body</button>
+                        <button class="dropdown-item" routerLink="/folders" routerLinkActive='active'>Složky hodnot</button>
+                        <button class="dropdown-item"  routerLink="/login" routerLinkActive='active'>Přihlášení</button>
+                        <button class="dropdown-item"  routerLink="/modbus" routerLinkActive='active'>Nastavení Modbus</button>
                     </div>
                 </li>
             </ul>

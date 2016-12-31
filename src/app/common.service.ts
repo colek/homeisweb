@@ -22,8 +22,12 @@ export class CommonService {
   }
 
 // #region GET
-  getFolders() {
-    return this._http.get(this.urlAddr + "/folder/allitems")
+  getFolders(guid: string) {
+    let curl = this.urlAddr + "/folder/allitems";
+    if(guid != undefined && guid.length > 0){
+      curl += "/"+guid;
+    }
+    return this._http.get(curl)
       .map((res: Response) => res.json())
       .catch(this.handleError);
   }

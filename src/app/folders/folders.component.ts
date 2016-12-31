@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import {Folder} from './../classes';
 import { CommonService } from './../common.service'
+import { ActivatedRoute } from '@angular/router';
+import 'rxjs/add/operator/switchMap';
 
 
 @Component({
@@ -9,19 +11,34 @@ import { CommonService } from './../common.service'
   styleUrls: ['./folders.component.css'],
   providers: [CommonService]
 })
-export class FoldersComponent implements OnInit {
+export class FoldersComponent implements OnChanges, OnInit {
   folders: Folder[];
+  id: string;
 
-  constructor(private _commonService: CommonService) { }
+  constructor(private _commonService: CommonService, private route: ActivatedRoute,) { 
+    
+    }
 
-  ngOnInit() {
-    this._commonService.getFolders()
+    ngOnChanges(){
+let id = this.route.snapshot.params['id'];
+    this._commonService.getFolders(id)
     .subscribe(
       data => this.folders = data,
       error => console.error('Error: ' + error),
-      () => console.log('Completed!')
+      () => console.log('Completed! '+ id)
       );
-  }
+    }
+ngOnInit(){
+  let id:string;
+      this.route.params
+        .switchMap(this._commonService.getFolders(id)
+    .subscribe(
+      data => this.folders = data,
+      error => console.error('Error: ' + error),
+      () => console.log('Completed! '+ id)
+      ))
+    
+}
 
   onNewExpression(){
 

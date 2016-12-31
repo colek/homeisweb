@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {Folder} from './../classes';
-import { CommonService } from './../common.service'
+import { CommonService } from './../common.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'folder',
@@ -15,7 +16,7 @@ export class FolderComponent implements OnInit {
   test: string;
  
 
-  constructor(private _commonService: CommonService) {
+  constructor(private _commonService: CommonService, private router: Router) {
   }
 
   ngOnInit() {
@@ -23,6 +24,7 @@ export class FolderComponent implements OnInit {
 
   onClick(event){
     console.log('folder click');
+    this.router.navigate(['/folders/', this.folderId]);
   }
 
   onEdit(event){
