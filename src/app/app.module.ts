@@ -11,6 +11,7 @@ import { FoldersComponent } from './folders/folders.component';
 import { FolderComponent } from './folder/folder.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AppRoutingModule } from './app-routing.module';
+import { NewfolderComponent } from './newfolder/newfolder.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { AppRoutingModule } from './app-routing.module';
     MainNavBarComponent,
     FoldersComponent,
     FolderComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    NewfolderComponent
   ],
   imports: [
     BrowserModule,

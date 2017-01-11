@@ -19,7 +19,7 @@
         <div class="form-group row">
             <div class="col-xs-12 col-sm-12">
 				<div class="list-group">
-					<folder *ngFor="let folder of folders" [folderId]="folder.id" [folder]='folder'></folder>
+					<folder *ngFor="let folder of folders" [previousfolderId]="id" [folder]='folder'></folder>
                     <!--<div *ngFor="let folder of folders">{{folder.id}}</div>-->
 				</div>
             </div>

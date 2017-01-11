@@ -1,0 +1,19 @@
+<form>
+  <div class="container">
+    <div class="form-group row">
+            <div class="col-xs-12 col-sm-12">
+                <h2>{{header}}</h2>
+            </div>
+      <div class="col-xs-12 col-sm-6">
+        <label class="sr-only" for="foldernamex">Název adresáře:</label>
+        <input class="form-control" type="text" [(ngModel)]="folder.name" name="foldernamex" placeholder="Název adresáře" />
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 btn-group" role="group">
+      <button (click)="onBack()" class="btn btn-primary" type="button">Zpět</button>
+      <button (click)="onSave()" class="btn btn-primary" type="button">Uložit</button>
+      <button (click)="onDelete()" class="btn btn-primary" type="button">Smazat</button>
+    </div>
+    <div>{{strFolder}}</div>
+  </div>
+</form>

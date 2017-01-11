@@ -12,6 +12,7 @@ export class Folder {
     public type: string;
     public name: string;
     public parentId: string;
+    // public id: string;
     constructor() {
 
     }
@@ -29,7 +30,7 @@ export class Device {
 export class Tag {
     public name: string;
     public id: string;
-    public nodeName: string;
+    public NodeName: string;
     public address: string;
     public type: number;
     public direction: number;

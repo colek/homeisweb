@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Http, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Register, Folder, Device, DeviceValue } from './classes';
+import { Register, Tag, Folder, Device, DeviceValue } from './classes';
 import 'rxjs/add/observable/throw';
 
 import 'rxjs/add/operator/map';
@@ -11,7 +11,7 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class CommonService {
 
-  public urlAddr = 'http://192.168.2.221/api';
+  public urlAddr = '/api';
   constructor(private _http: Http) {
 
   }
@@ -21,11 +21,11 @@ export class CommonService {
     return Observable.throw(error.json().error || 'chyba');
   }
 
-// #region GET
+  // #region GET
   getFolders(guid: string) {
     let curl = this.urlAddr + "/folder/allitems";
-    if(guid != undefined && guid.length > 0){
-      curl += "/"+guid;
+    if (guid != undefined && guid.length > 0) {
+      curl += "/" + guid;
     }
     return this._http.get(curl)
       .map((res: Response) => res.json())
@@ -47,43 +47,61 @@ export class CommonService {
       .map((res: Response) => res.json())
       .catch(this.handleError);
   }
-// #endregion GET
+  // #endregion GET
 
-// #region POST
+  // #region POST
 
-  addFolder(folder: Folder) {    
-    let headers = this.getHeaders();
+  addFolder(folder: Folder) {
+    let headers = this.createNewHeader(); 
+    this.getHeaders(headers);
+    this.createAuthorizationHeader(headers);
     let strFolder = JSON.stringify(folder);
-    return this._http.post(this.urlAddr + '/folder/', strFolder,{
+    return this._http.post(this.urlAddr + '/folder', strFolder, {
       headers: headers
     })
-      .map((res: Response) => res.json())
+      .map((res: Response) => console.log(JSON.stringify(res)))
       .catch(this.handleError);
   }
 
-  addDevice(device: Device) {    
-    let headers = this.getHeaders();
+  // addTag(folder: Tag) {    
+    // let headers = this.createNewHeader(); 
+    // this.getHeaders(headers);
+    // this.createAuthorizationHeader(headers);
+  //   let strFolder = JSON.stringify(folder);
+  //   return this._http.post(this.urlAddr + '/folder/', strFolder,{
+  //     headers: headers
+  //   })
+  //     .map((res: Response) => res.json())
+  //     .catch(this.handleError);
+  // }
+
+  addDevice(device: Device) {
+    let headers = this.createNewHeader(); 
+    this.getHeaders(headers);
+    this.createAuthorizationHeader(headers);
     let strDevice = JSON.stringify(device);
-    return this._http.post(this.urlAddr + '/onewiredevices/', strDevice,{
+    return this._http.post(this.urlAddr + '/onewiredevices/', strDevice, {
       headers: headers
     })
       .map((res: Response) => res.json())
       .catch(this.handleError);
   }
 
-  addDeviceValue(deviceVal: DeviceValue) {    
-    let headers = this.getHeaders();
+  addDeviceValue(deviceVal: DeviceValue) {
+    let headers = this.createNewHeader(); 
+    this.getHeaders(headers);
+    this.createAuthorizationHeader(headers);
     let strDeviceVal = JSON.stringify(deviceVal);
-    return this._http.post(this.urlAddr + '/onewiredevices/devvalue/', strDeviceVal,{
+    return this._http.post(this.urlAddr + '/onewiredevices/devvalue/', strDeviceVal, {
       headers: headers
     })
       .map((res: Response) => res.json())
       .catch(this.handleError);
   }
 
-// #endregion POST
+  // #endregion POST
 
-// #region PUT
+  // #region PUT
   putRegister(write: Register) {
     //var json = JSON.stringify(object);
     //var params = 'json=' + json;
@@ -92,19 +110,36 @@ export class CommonService {
       + '/' + write.devaddress
       + '/' + write.base
       + '/' + write.value;
-    let headers = this.getHeaders();
+
+    let headers = this.createNewHeader(); 
+    this.getHeaders(headers);
 
     return this._http.put(writeAddr, null /*params*/, {
       headers: headers
     })
       .map(res => res.json());
   }
-// #endregion PUT
+  // #endregion PUT
 
-getHeaders(){  
-    var headers = new Headers();
+  // #region DELETE
+
+  deleteFolder(foderId: string) {
+
+  }
+
+  // #endregion DELETE
+
+
+
+  createAuthorizationHeader(headers: Headers) {
+    headers.append('Authorization', 'Basic ' +
+      btoa('a:a'));
+  }
+  getHeaders(headers: Headers) {
     headers.append('Content-type', 'application/json');
+  }
 
-    return headers;
-}
+  createNewHeader(){
+    return new Headers();
+  }
 }
