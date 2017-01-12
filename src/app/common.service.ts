@@ -11,7 +11,7 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class CommonService {
 
-  public urlAddr = '/api';
+  public urlAddr = 'http://192.168.2.221:82/api';
   constructor(private _http: Http) {
 
   }
@@ -119,12 +119,36 @@ export class CommonService {
     })
       .map(res => res.json());
   }
+
+
+  editFolder(folder: Folder) {
+    let folderAddr = this.urlAddr
+      + '/folder/' + folder.id;
+    let headers = this.createNewHeader(); 
+    this.getHeaders(headers);
+    this.createAuthorizationHeader(headers);
+    let strFolder = JSON.stringify(folder);
+    return this._http.put(folderAddr, strFolder, {
+      headers: headers
+    })
+      .map((res: Response) => console.log(JSON.stringify(res)))
+      .catch(this.handleError);
+  }
   // #endregion PUT
 
   // #region DELETE
 
-  deleteFolder(foderId: string) {
-
+  deleteFolder(folderId: string) {
+    let folderAddr = this.urlAddr
+      + '/folder/' + folderId;
+    let headers = this.createNewHeader(); 
+    this.getHeaders(headers);
+    this.createAuthorizationHeader(headers);
+    return this._http.delete(folderAddr, {
+      headers: headers
+    })
+      .map((res: Response) => console.log(JSON.stringify(res)))
+      .catch(this.handleError);
   }
 
   // #endregion DELETE

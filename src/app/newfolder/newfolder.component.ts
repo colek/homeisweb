@@ -28,10 +28,12 @@ export class NewfolderComponent implements OnInit {
     this.loadNewFolder(null);
 
     if (parentId != undefined) {
+      this.isNew = true;
       this.header = "Nový adresář";
       this.loadNewFolder(parentId);
     }
     else if (this.id != undefined) {
+      this.isNew = false;
       this.header = "Editace adresáře";
       this.route.params
         .switchMap((params: Params) => this.loadFolder(params['id']))
@@ -45,7 +47,7 @@ export class NewfolderComponent implements OnInit {
 
   loadNewFolder(parentId: string) {
     this.folder = new Folder();
-    this.folder.parentId = (parentId != undefined && parentId != 'undefined')?parentId:null;
+    this.folder.parentId = (parentId != undefined && parentId != 'undefined') ? parentId : null;
     this.folder.type = null;
   }
 
@@ -60,22 +62,37 @@ export class NewfolderComponent implements OnInit {
   }
 
   onSave() {
-    this._commonService.addFolder(this.folder)
+    if (this.isNew) {
+      this._commonService.addFolder(this.folder)
         .subscribe(
-            data => this.strFolder = JSON.stringify(data),
-            error => console.error('Error: ' + error),
-            () => console.log('Completed!')
+        data => this.strFolder = JSON.stringify(data),
+        error => console.error('Error: ' + error),
+        () => console.log('Completed!')
         );
+    }
+    else {
+      this._commonService.editFolder(this.folder)
+        .subscribe(
+        data => this.strFolder = JSON.stringify(data),
+        error => console.error('Error: ' + error),
+        () => console.log('Completed!')
+        );
+    }
   }
 
-  
+
 
   onBack() {
     this._location.back();
   }
 
   onDelete() {
-    this._commonService.deleteFolder(this.id);
+    this._commonService.deleteFolder(this.id)
+      .subscribe(
+      data => this.strFolder = JSON.stringify(data),
+      error => console.error('Error: ' + error),
+      () => console.log('Delete clicked!')
+      );
   }
 
 }

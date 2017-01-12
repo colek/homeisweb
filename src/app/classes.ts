@@ -12,7 +12,7 @@ export class Folder {
     public type: string;
     public name: string;
     public parentId: string;
-    // public id: string;
+    public id: string;
     constructor() {
 
     }
