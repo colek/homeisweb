@@ -49,7 +49,16 @@ export class FolderComponent implements OnInit {
 
   onEdit(event) {
     event.stopPropagation();
-    this.router.navigate(['/editfolder/', this.folder.id]);
+
+    switch (this.folder.NodeName) {
+      case "folder":
+        this.router.navigate(['/editfolder/', this.folder.id]);
+        break;
+      case "expression":
+        this.router.navigate(['/editexpression/', this.folder.id]);
+        break;
+    }
+    
   }
 
   switchBool() {

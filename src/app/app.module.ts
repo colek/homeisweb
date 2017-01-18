@@ -12,6 +12,8 @@ import { FolderComponent } from './folder/folder.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NewfolderComponent } from './newfolder/newfolder.component';
+import { ExpressionComponent } from './expression/expression.component';
+import { CodemirrorModule } from 'ng2-codemirror';
 
 
 @NgModule({
@@ -22,14 +24,16 @@ import { NewfolderComponent } from './newfolder/newfolder.component';
     FoldersComponent,
     FolderComponent,
     PageNotFoundComponent,
-    NewfolderComponent
+    NewfolderComponent,
+    ExpressionComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     NgbModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    CodemirrorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

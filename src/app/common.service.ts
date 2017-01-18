@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Http, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Register, Tag, Folder, Device, DeviceValue } from './classes';
+import { Register, Tag, Folder, Device, DeviceValue, Expression } from './classes';
 import 'rxjs/add/observable/throw';
 
 import 'rxjs/add/operator/map';
@@ -40,6 +40,14 @@ export class CommonService {
       .catch(this.handleError);
   }
 
+  getExpression(guid: string) {
+    let objAddr = this.urlAddr
+      + '/expression/' + guid;
+    return this._http.get(objAddr)
+      .map((res: Response) => res.json())
+      .catch(this.handleError);
+  }
+
   getDevice(guid: string) {
     let folderAddr = this.urlAddr
       + '/onewiredevices/' + guid;
@@ -62,6 +70,19 @@ export class CommonService {
       .map((res: Response) => console.log(JSON.stringify(res)))
       .catch(this.handleError);
   }
+
+  addExpression(expr: Expression) {
+    let headers = this.createNewHeader(); 
+    this.getHeaders(headers);
+    this.createAuthorizationHeader(headers);
+    let strObj = JSON.stringify(expr);
+    return this._http.post(this.urlAddr + '/expression', strObj, {
+      headers: headers
+    })
+      .map((res: Response) => console.log(JSON.stringify(res)))
+      .catch(this.handleError);
+  }
+
 
   // addTag(folder: Tag) {    
     // let headers = this.createNewHeader(); 
@@ -134,6 +155,21 @@ export class CommonService {
       .map((res: Response) => console.log(JSON.stringify(res)))
       .catch(this.handleError);
   }
+
+
+  editExpression(expr: Expression) {
+    let folderAddr = this.urlAddr
+      + '/expression/' + expr.id;
+    let headers = this.createNewHeader(); 
+    this.getHeaders(headers);
+    this.createAuthorizationHeader(headers);
+    let strObj = JSON.stringify(expr);
+    return this._http.put(folderAddr, strObj, {
+      headers: headers
+    })
+      .map((res: Response) => console.log(JSON.stringify(res)))
+      .catch(this.handleError);
+  }
   // #endregion PUT
 
   // #region DELETE
@@ -145,6 +181,19 @@ export class CommonService {
     this.getHeaders(headers);
     this.createAuthorizationHeader(headers);
     return this._http.delete(folderAddr, {
+      headers: headers
+    })
+      .map((res: Response) => console.log(JSON.stringify(res)))
+      .catch(this.handleError);
+  }
+
+  deleteExpression(exprId: string) {
+    let objAddr = this.urlAddr
+      + '/expression/' + exprId;
+    let headers = this.createNewHeader(); 
+    this.getHeaders(headers);
+    this.createAuthorizationHeader(headers);
+    return this._http.delete(objAddr, {
       headers: headers
     })
       .map((res: Response) => console.log(JSON.stringify(res)))

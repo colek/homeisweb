@@ -18,7 +18,8 @@
         "mobile": false,
         "styles": [
             "styles.css",
-            "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+            "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+            "../node_modules/codemirror/lib/codemirror.css"
         ],
         "scripts": [
             "../node_modules/jquery/dist/jquery.min.js",
@@ -31,7 +32,10 @@
             "prod": "environments/environment.prod.ts"
         }
     }],
-    "addons": [],
+    "addons": [
+    "../node_modules/codemirror/mode/xml/xml.js",
+    "../node_modules/codemirror/mode/javascript/javascript.js",
+    "../node_modules/codemirror/mode/lua/lua.js"],
     "packages": [],
     "e2e": {
         "protractor": {

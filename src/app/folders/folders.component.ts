@@ -30,7 +30,7 @@ export class FoldersComponent implements OnInit {
   }
 
   onNewExpression() {
-
+    this.router.navigate(['/newexpression', this.id]);
   }
 
   onNewTag() {

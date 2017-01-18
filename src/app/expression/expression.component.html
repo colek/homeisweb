@@ -1,0 +1,35 @@
+<form>
+  <div class="container">
+    <div class="form-group row">
+            <div class="col-12">
+                <h2>{{header}}</h2>
+            </div>
+      <div class="form-group col-12">
+        <label class="sr-only" for="expressionname">Název:</label>
+        <input class="form-control" type="text" [(ngModel)]="expression.name" name="expressionname" placeholder="Název" />
+      </div>
+      <div class="form-group col-12">
+        <label class="sr-only" for="expressiondesc">Popis:</label>
+        <input class="form-control" type="text" [(ngModel)]="expression.description" name="expressiondesc" placeholder="Popis" />
+      </div>
+      <div class="col-12 form-group">
+        <codemirror [(ngModel)]="expression.expression" name="expressionexp" [config]="expConfig"></codemirror>
+      </div>
+      <div class="col-12 form-group">
+        <label class="sr-only" for="expressionrun">Zapnuto:</label>
+        <input class="form-control" type="text" [(ngModel)]="expression.running" name="expressionrun" placeholder="" />
+      </div>
+      <div class="form-group col-12">
+        <label class="sr-only" for="expressionerr">Chyba:</label>
+        <textarea class="form-control" [(ngModel)]="expression.errormessage" name="expressionerr" placeholder="Chyba"></textarea>
+      </div>
+    </div>
+    <div class="col-12 btn-group" role="group">
+      <button (click)="onTest()" class="btn btn-primary" type="button">Test</button>
+      <button (click)="onBack()" class="btn btn-primary" type="button">Zpět</button>
+      <button (click)="onSave()" class="btn btn-primary" type="button">Uložit</button>
+      <button (click)="onDelete()" class="btn btn-primary" type="button">Smazat</button>
+    </div>
+    <div>{{strFolder}}</div>
+  </div>
+</form>

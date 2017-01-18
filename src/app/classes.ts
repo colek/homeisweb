@@ -45,7 +45,7 @@ export class Tag {
     }
 }
 
-export class DeviceValue{    
+export class DeviceValue {
     public name: string;
     public parentid: string;
     public type: number;
@@ -62,4 +62,14 @@ export class DeviceValue{
     constructor() {
 
     }
+}
+
+export class Expression {
+    public parentId: string;
+    public id: string;
+    public expression: string;
+    public running: boolean;
+    public description: string;
+    public name: string;
+    public errormessage: string;
 }
