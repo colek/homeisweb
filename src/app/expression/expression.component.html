@@ -16,8 +16,7 @@
         <codemirror [(ngModel)]="expression.expression" name="expressionexp" [config]="expConfig"></codemirror>
       </div>
       <div class="col-12 form-group">
-        <label class="sr-only" for="expressionrun">Zapnuto:</label>
-        <input class="form-control" type="text" [(ngModel)]="expression.running" name="expressionrun" placeholder="" />
+        <button type="button" class="btn {{btnRunningClass}}" (click)="switchOnOff()">{{isRunningText}}</button>
       </div>
       <div class="form-group col-12">
         <label class="sr-only" for="expressionerr">Chyba:</label>

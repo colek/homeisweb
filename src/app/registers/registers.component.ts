@@ -23,6 +23,7 @@ export class RegistersComponent {
     this.url = '/api';
     this._getRegister = new Register();
     this._postRegister = new Register();
+    this.addressSet();
   }
 
   onAddressSet() {
@@ -32,6 +33,10 @@ export class RegistersComponent {
       error => console.error('Error: ' + error),
       () => console.log('Completed!')
       );*/
+    this.addressSet();
+  };
+
+  addressSet(){
     this._modbusService.urlAddr = this.url;
     this._modbusService.getConnectors()
     .subscribe(
@@ -39,7 +44,7 @@ export class RegistersComponent {
       error => console.error('Error: ' + error),
       () => console.log('Completed!')
       );
-  };
+  }
     
     
     onPost(){
@@ -59,5 +64,12 @@ export class RegistersComponent {
             () => console.log('Completed!')
         );
     }
-
+    onScan(){
+        this._modbusService.scanAddress(this._getRegister)
+        .subscribe(
+            data => this.getData = JSON.stringify(data),
+            error => console.error('Error: ' + error),
+            () => console.log('Completed!')
+        );
+    }
 }

@@ -76,7 +76,7 @@ export class CommonService {
     this.getHeaders(headers);
     this.createAuthorizationHeader(headers);
     let strObj = JSON.stringify(expr);
-    return this._http.post(this.urlAddr + '/expression', strObj, {
+    return this._http.post(this.urlAddr + '/expression/', strObj, {
       headers: headers
     })
       .map((res: Response) => console.log(JSON.stringify(res)))

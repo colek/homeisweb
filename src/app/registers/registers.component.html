@@ -49,8 +49,10 @@
                     <div class="form-group row">
                         <div class="col-xs-12 col-sm-12">
                             <p>Address: {{_getRegister.connector}}:{{_getRegister.devaddress}}:{{_getRegister.base}}:{{_getRegister.value}}</p>
-                            <button (click)="onGet()" class="btn btn-primary" type="button">Read address</button><br />
+                            <button (click)="onGet()" class="btn btn-primary" type="button">Read address</button>
+                            <button (click)="onScan()" class="btn btn-primary" type="button">Scan</button><br />
                             <p>Output: {{getData}}</p>
+                            
                         </div>
                     </div>
                 </div>

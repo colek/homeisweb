@@ -55,4 +55,16 @@ export class ModbusService {
       .map((res: Response) => res.json())
       .catch(this.handleError);
   }
+
+
+  scanAddress(read: Register) {
+    let scanAddr = this.urlAddr
+      + 'api/modbus/scan/' + read.connector
+      + '/' + read.devaddress;
+
+    return this._http.get(scanAddr)
+      .map((res: Response) => res.json())
+      .catch(this.handleError);
+  }
+
 }

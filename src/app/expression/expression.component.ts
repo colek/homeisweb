@@ -3,7 +3,7 @@ import { Expression } from './../classes';
 import { CommonService } from './../common.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
-import{CodemirrorComponent} from 'ng2-codemirror';
+import { CodemirrorComponent } from 'ng2-codemirror';
 import 'codemirror/mode/lua/lua'
 
 @Component({
@@ -13,15 +13,18 @@ import 'codemirror/mode/lua/lua'
   providers: [Expression, CommonService]
 })
 export class ExpressionComponent implements OnInit {
-expression: Expression;
+  expression: Expression;
   strExpression: string;
   header: string;
   isNew: boolean;
   id: string;
   expConfig = {
-					lineNumbers: true,							
-					mode: "lua",
-					extraKeys: {"Ctrl-Space": "autocomplete"}};
+    lineNumbers: true,
+    mode: "lua",
+    extraKeys: { "Ctrl-Space": "autocomplete" }
+  };
+  isRunningText:string;
+  btnRunningClass :string;
 
   constructor(private _commonService: CommonService,
     private route: ActivatedRoute,
@@ -48,6 +51,8 @@ expression: Expression;
         () => console.log('Completed!')
         );
     }
+  this.isRunningText = (this.expression.running) ? "Zapnuto" : "Vypnuto";
+  this.btnRunningClass = (this.expression.running) ? "btn-success" : "btn-warning";
   }
 
   loadNewExpression(parentId: string) {
@@ -58,7 +63,7 @@ expression: Expression;
     this.expression.expression = "";
     this.expression.errormessage = null;
     this.expression.name = null;
-    this.expression.id = null;   
+    this.expression.id = null;
   }
 
   loadExpression(id: string) {
@@ -105,8 +110,15 @@ expression: Expression;
       );
   }
 
-  onTest(){
-    
+  onTest() {
+
+  }
+
+  switchOnOff() {
+    this.expression.running = !this.expression.running;
+
+  this.isRunningText = (this.expression.running) ? "Zapnuto" : "Vypnuto";
+  this.btnRunningClass = (this.expression.running) ? "btn-success" : "btn-warning";
   }
 
 }
