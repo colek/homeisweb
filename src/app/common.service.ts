@@ -40,27 +40,45 @@ export class CommonService {
       .catch(this.handleError);
   }
 
-  getExpression(guid: string) {
+  getExpressions(guid: string) {
     let objAddr = this.urlAddr
-      + '/expression/' + guid;
+      + '/expression/folder/' + guid;
     return this._http.get(objAddr)
       .map((res: Response) => res.json())
       .catch(this.handleError);
   }
 
-  getDevice(guid: string) {
+  getDevices() {
     let folderAddr = this.urlAddr
-      + '/onewiredevices/' + guid;
+      + '/onewiredevices';
     return this._http.get(folderAddr)
       .map((res: Response) => res.json())
       .catch(this.handleError);
   }
+
+  testExpression(guid: string) {
+    let objAddr = this.urlAddr
+      + '/expression/run/' + guid;
+    return this._http.get(objAddr)
+      .map((res: Response) => res.json())
+      .catch(this.handleError);
+  }
+
+  getTag(deviceid: string, tagid: string){
+    let addr = this.urlAddr
+      + '/onewiredevices/' + deviceid
+      + '/devvalues/' + tagid;
+    return this._http.get(addr)
+      .map((res: Response) => res.json())
+      .catch(this.handleError);
+  }
+
   // #endregion GET
 
   // #region POST
 
   addFolder(folder: Folder) {
-    let headers = this.createNewHeader(); 
+    let headers = this.createNewHeader();
     this.getHeaders(headers);
     this.createAuthorizationHeader(headers);
     let strFolder = JSON.stringify(folder);
@@ -72,11 +90,11 @@ export class CommonService {
   }
 
   addExpression(expr: Expression) {
-    let headers = this.createNewHeader(); 
+    let headers = this.createNewHeader();
     this.getHeaders(headers);
     this.createAuthorizationHeader(headers);
     let strObj = JSON.stringify(expr);
-    return this._http.post(this.urlAddr + '/expression/', strObj, {
+    return this._http.post(this.urlAddr + '/expression', strObj, {
       headers: headers
     })
       .map((res: Response) => console.log(JSON.stringify(res)))
@@ -85,9 +103,9 @@ export class CommonService {
 
 
   // addTag(folder: Tag) {    
-    // let headers = this.createNewHeader(); 
-    // this.getHeaders(headers);
-    // this.createAuthorizationHeader(headers);
+  // let headers = this.createNewHeader(); 
+  // this.getHeaders(headers);
+  // this.createAuthorizationHeader(headers);
   //   let strFolder = JSON.stringify(folder);
   //   return this._http.post(this.urlAddr + '/folder/', strFolder,{
   //     headers: headers
@@ -97,7 +115,7 @@ export class CommonService {
   // }
 
   addDevice(device: Device) {
-    let headers = this.createNewHeader(); 
+    let headers = this.createNewHeader();
     this.getHeaders(headers);
     this.createAuthorizationHeader(headers);
     let strDevice = JSON.stringify(device);
@@ -109,7 +127,7 @@ export class CommonService {
   }
 
   addDeviceValue(deviceVal: DeviceValue) {
-    let headers = this.createNewHeader(); 
+    let headers = this.createNewHeader();
     this.getHeaders(headers);
     this.createAuthorizationHeader(headers);
     let strDeviceVal = JSON.stringify(deviceVal);
@@ -132,7 +150,7 @@ export class CommonService {
       + '/' + write.base
       + '/' + write.value;
 
-    let headers = this.createNewHeader(); 
+    let headers = this.createNewHeader();
     this.getHeaders(headers);
 
     return this._http.put(writeAddr, null /*params*/, {
@@ -145,7 +163,7 @@ export class CommonService {
   editFolder(folder: Folder) {
     let folderAddr = this.urlAddr
       + '/folder/' + folder.id;
-    let headers = this.createNewHeader(); 
+    let headers = this.createNewHeader();
     this.getHeaders(headers);
     this.createAuthorizationHeader(headers);
     let strFolder = JSON.stringify(folder);
@@ -160,7 +178,7 @@ export class CommonService {
   editExpression(expr: Expression) {
     let folderAddr = this.urlAddr
       + '/expression/' + expr.id;
-    let headers = this.createNewHeader(); 
+    let headers = this.createNewHeader();
     this.getHeaders(headers);
     this.createAuthorizationHeader(headers);
     let strObj = JSON.stringify(expr);
@@ -177,7 +195,7 @@ export class CommonService {
   deleteFolder(folderId: string) {
     let folderAddr = this.urlAddr
       + '/folder/' + folderId;
-    let headers = this.createNewHeader(); 
+    let headers = this.createNewHeader();
     this.getHeaders(headers);
     this.createAuthorizationHeader(headers);
     return this._http.delete(folderAddr, {
@@ -190,7 +208,7 @@ export class CommonService {
   deleteExpression(exprId: string) {
     let objAddr = this.urlAddr
       + '/expression/' + exprId;
-    let headers = this.createNewHeader(); 
+    let headers = this.createNewHeader();
     this.getHeaders(headers);
     this.createAuthorizationHeader(headers);
     return this._http.delete(objAddr, {
@@ -212,7 +230,7 @@ export class CommonService {
     headers.append('Content-type', 'application/json');
   }
 
-  createNewHeader(){
+  createNewHeader() {
     return new Headers();
   }
 }

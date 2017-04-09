@@ -19,9 +19,12 @@ export class Folder {
 }
 
 export class Device {
-    public name: string;
-    public tags: Tag[];
-    public internal: boolean;
+    public Name: string;
+    public Id: string;
+    public Address: string;
+    public ConnectionName: string;
+    public Internal: boolean;
+    public Tags: Tag[];
     constructor() {
 
     }
@@ -72,4 +75,15 @@ export class Expression {
     public description: string;
     public name: string;
     public errormessage: string;
+    public NodeName: string;
+}
+
+export class SelectObj{
+    public name:string;
+    public value: any;
+
+    constructor(name: string, value: any) {
+        this.name = name;
+        this.value = value
+    }
 }

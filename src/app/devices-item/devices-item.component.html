@@ -1,0 +1,20 @@
+<a class="card-header list-group-item list-group-item-action" role="tab" id="heading{{device.Address}}"
+ data-toggle="collapse" data-parent="#devices" aria-expanded="true" aria-controls="collapse{device.Address}"
+    href="#collapse{{device.Address}}">
+          {{device.Name}}
+  <button type="button" class="btn-sm btn-info btn-secondary float-sm-right float-md-right float-lg-right float-xl-right" (click)="onEdit($event)">
+      Edit
+    </button>
+</a>
+<div id="collapse{{device.Address}}" class="collapse show" role="tabpanel" aria-labelledby="heading">
+  <div class="list-group">
+    <folder *ngFor="let folder of device.Tags" [folder]='folder' [deviceid]='device.id'></folder>
+  </div>
+</div>
+
+<!--<div class="list-group-item list-group-item-action" (click)="onClick($event)">
+  <img src="./icons/xxx.png" alt="xxx" /> {{device.Name}}{{strDevice}}
+  <span class="float-sm-right float-md-right float-lg-right float-xl-right">&nbsp;</span>
+  <img src="./icons/{{boolIco}}.png" alt="X" *ngIf="folder.type == 4" class=" float-sm-right float-md-right float-lg-right float-xl-right" />
+  <span *ngIf="folder.type != 4" class="tag tag-{{inError}} tag-pill float-xs-right">{{folder.value}}</span>
+</div>-->

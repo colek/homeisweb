@@ -23,8 +23,8 @@ export class ExpressionComponent implements OnInit {
     mode: "lua",
     extraKeys: { "Ctrl-Space": "autocomplete" }
   };
-  isRunningText:string;
-  btnRunningClass :string;
+  isRunningText: string;
+  btnRunningClass: string;
 
   constructor(private _commonService: CommonService,
     private route: ActivatedRoute,
@@ -35,24 +35,24 @@ export class ExpressionComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.loadNewExpression(null);
 
-    if (parentId != undefined) {
+    if (this.id == undefined) {
       this.isNew = true;
       this.header = "Nový výraz";
       this.loadNewExpression(parentId);
     }
-    else if (this.id != undefined) {
+    else {
       this.isNew = false;
       this.header = "Editace výrazu";
       this.route.params
-        .switchMap((params: Params) => this.loadExpression(params['id']))
+        .switchMap((params: Params) => this.loadExpression(parentId))
         .subscribe(
         data => this.setExpr(data),
         error => console.error('Error: ' + error),
         () => console.log('Completed!')
         );
     }
-  this.isRunningText = (this.expression.running) ? "Zapnuto" : "Vypnuto";
-  this.btnRunningClass = (this.expression.running) ? "btn-success" : "btn-warning";
+    this.isRunningText = (this.expression.running) ? "Zapnuto" : "Vypnuto";
+    this.btnRunningClass = (this.expression.running) ? "btn-success" : "btn-warning";
   }
 
   loadNewExpression(parentId: string) {
@@ -64,16 +64,22 @@ export class ExpressionComponent implements OnInit {
     this.expression.errormessage = null;
     this.expression.name = null;
     this.expression.id = null;
+    this.expression.NodeName = "expression";
   }
 
   loadExpression(id: string) {
-    return this._commonService.getExpression(id);
+    return this._commonService.getExpressions(id);
   }
 
   setExpr(expr: Expression[]) {
-    if (expr.length > 0) {
-      this.expression = expr[0];
+    for (let ex of expr) {
+      if (ex.id == this.id) {
+        this.expression = ex;
+        this.strExpression = JSON.stringify(expr);
+        return;
+      }
     }
+
   }
 
   onSave() {
@@ -111,14 +117,18 @@ export class ExpressionComponent implements OnInit {
   }
 
   onTest() {
-
+    return this._commonService.testExpression(this.id).subscribe(
+      data => this.strExpression,
+      error => console.error('Error: ' + error),
+      () => console.log('Completed!')
+    );
   }
 
   switchOnOff() {
     this.expression.running = !this.expression.running;
 
-  this.isRunningText = (this.expression.running) ? "Zapnuto" : "Vypnuto";
-  this.btnRunningClass = (this.expression.running) ? "btn-success" : "btn-warning";
+    this.isRunningText = (this.expression.running) ? "Zapnuto" : "Vypnuto";
+    this.btnRunningClass = (this.expression.running) ? "btn-success" : "btn-warning";
   }
 
 }

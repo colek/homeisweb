@@ -1,6 +1,6 @@
 {
   "name": "homeisclient",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
@@ -45,7 +45,7 @@
     "protractor": "4.0.9",
     "ts-node": "1.2.1",
     "tslint": "3.13.0",
-    "typescript": "~2.0.3",
+    "typescript": "~2.2.1",
     "webdriver-manager": "10.2.5"
   }
 }

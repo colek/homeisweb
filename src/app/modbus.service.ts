@@ -59,7 +59,7 @@ export class ModbusService {
 
   scanAddress(read: Register) {
     let scanAddr = this.urlAddr
-      + 'api/modbus/scan/' + read.connector
+      + '/modbus/scan/' + read.connector
       + '/' + read.devaddress;
 
     return this._http.get(scanAddr)

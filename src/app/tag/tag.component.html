@@ -1,0 +1,52 @@
+<form>
+  <div class="container">
+    <div class="form-group row">
+      <div class="col-12">
+        <h2>{{header}}</h2>
+      </div>
+      <div class="form-group col-12">
+        <label class="sr-only" for="tagname">Název:</label>
+        <input class="form-control" type="text" [(ngModel)]="Tag.name" name="tagname" placeholder="Název" />
+      </div>
+      <div class="form-group col-12">
+        <label class="sr-only" for="tagid">Id:</label>
+        <input class="form-control" type="text" [(ngModel)]="Tag.id" name="tagid" placeholder="Id" />
+      </div>
+      <div class="form-group col-12">
+        <label class="sr-only" for="tagnode">Typ (text):</label>
+        <input class="form-control" type="text" [(ngModel)]="Tag.NodeName" name="tagnode" placeholder="Typ (text)" />
+      </div>
+      <div class="form-group col-12">
+        <label class="sr-only" for="tagaddress">Adresa:</label>
+        <input class="form-control" type="text" [(ngModel)]="Tag.address" name="tagaddress" placeholder="Adresa" />
+      </div>
+      <div class="form-group col-12">
+        <h2>Typ</h2>
+        <select [(ngModel)]="Tag.type" class="form-control">
+           <option *ngFor="let ctype of typeSelect" [ngValue]="ctype.name">{{ctype.name}}</option>
+        </select>
+      </div>
+      <div class="form-group col-12">
+        <label class="sr-only" for="tagdirection">Direction:</label>
+        <input class="form-control" type="text" [(ngModel)]="Tag.direction" name="tagdirection" placeholder="Direction" />
+      </div>
+      <div class="form-group col-12">
+        <label class="sr-only" for="tagvalue">Hodnota:</label>
+        <input class="form-control" type="text" [(ngModel)]="Tag.value" name="tagvalue" placeholder="Hodnota" />
+      </div>
+      <div class="form-group col-12">
+        <span class="sr-only">Chyba:</span>
+        <img src="./icons/{{Tag.error}}.png" alt="X" />
+      </div>
+      <div class="col-12 form-group">
+        <button type="button" class="btn {{btnInternalClass}}" (click)="switchOnOff()">{{isInternalText}}</button>
+      </div>
+    </div>
+    <div class="col-12 btn-group" role="group">
+      <button (click)="onBack()" class="btn btn-primary" type="button">Zpět</button>
+      <button (click)="onSave()" class="btn btn-primary" type="button">Uložit</button>
+      <button (click)="onDelete()" class="btn btn-primary" type="button">Smazat</button>
+    </div>
+    <div>{{strCom}}</div>
+  </div>
+</form>

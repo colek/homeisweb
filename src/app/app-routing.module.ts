@@ -1,20 +1,22 @@
 import { RouterModule, Routes } from '@angular/router';
-import { NgModule }              from '@angular/core';
-import {FoldersComponent} from './folders/folders.component'
-import {RegistersComponent} from './registers/registers.component'
-import {PageNotFoundComponent} from './page-not-found/page-not-found.component'
-import {NewfolderComponent} from './newfolder/newfolder.component'
-import {ExpressionComponent} from './expression/expression.component'
+import { NgModule } from '@angular/core';
+import { FoldersComponent } from './folders/folders.component'
+import { RegistersComponent } from './registers/registers.component'
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
+import { NewfolderComponent } from './newfolder/newfolder.component'
+import { ExpressionComponent } from './expression/expression.component'
+import { DevicesComponent } from './devices/devices.component'
 
 const appRoutes: Routes = [
-  { path: 'folders', component:  FoldersComponent},
+  { path: 'folders', component: FoldersComponent },
   { path: 'folders/:id', component: FoldersComponent },
   { path: 'newfolder/:parentId', component: NewfolderComponent },
   { path: 'editfolder/:id', component: NewfolderComponent },
-  { path: 'editexpression/:id', component: ExpressionComponent },
+  { path: 'editexpression/:parentId/:id', component: ExpressionComponent },
   { path: 'newexpression/:parentId', component: ExpressionComponent },
-  { path: 'modbus', component:  RegistersComponent},
-  { path: '',   redirectTo: '/folders', pathMatch: 'full' },
+  { path: 'dataitems', component: DevicesComponent },
+  { path: 'modbus', component: RegistersComponent },
+  { path: '', redirectTo: '/folders', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -26,4 +28,4 @@ const appRoutes: Routes = [
     RouterModule
   ]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

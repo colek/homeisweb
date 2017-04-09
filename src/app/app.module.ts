@@ -14,6 +14,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { NewfolderComponent } from './newfolder/newfolder.component';
 import { ExpressionComponent } from './expression/expression.component';
 import { CodemirrorModule } from 'ng2-codemirror';
+import { DevicesComponent } from './devices/devices.component';
+import { DevicesItemComponent } from './devices-item/devices-item.component';
+import { TagComponent } from './tag/tag.component';
 
 
 @NgModule({
@@ -25,7 +28,10 @@ import { CodemirrorModule } from 'ng2-codemirror';
     FolderComponent,
     PageNotFoundComponent,
     NewfolderComponent,
-    ExpressionComponent
+    ExpressionComponent,
+    DevicesComponent,
+    DevicesItemComponent,
+    TagComponent
   ],
   imports: [
     BrowserModule,

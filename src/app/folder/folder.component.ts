@@ -14,6 +14,8 @@ export class FolderComponent implements OnInit {
 
   @Input() folder: Tag;
   @Input() previousfolderId: string;
+  @Input() deviceid: string;
+  
   ico: string;
   boolIco: string;
   inError: string;
@@ -55,10 +57,10 @@ export class FolderComponent implements OnInit {
         this.router.navigate(['/editfolder/', this.folder.id]);
         break;
       case "expression":
-        this.router.navigate(['/editexpression/', this.folder.id]);
+        this.router.navigate(['/editexpression/', this.previousfolderId, this.folder.id]);
         break;
     }
-    
+
   }
 
   switchBool() {

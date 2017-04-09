@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Tag } from './../classes';
-import { CommonService } from './../common.service'
+import { CommonService } from './../common.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
