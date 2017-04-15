@@ -25,7 +25,7 @@ export class FolderComponent implements OnInit {
 
   ngOnInit() {
     this.switchIco();
-    this.inError = (this.folder.error && !this.folder.internal) ? "danger" : "default";
+    this.inError = (this.folder.error && !this.folder.internal) ? "danger" : "success";
   }
 
   onClick(event) {
