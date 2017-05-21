@@ -1,0 +1,6 @@
+<div class="d-flex flex-row">
+  <span class="p-2">Složky: </span>
+  <div class="p-2 col-12 btn-group space-left2" role="group">
+  <button  class="btn btn-info btn-sm" *ngFor="let fd of Folders" routerLink="/folders/{{fd.id}}" routerLinkActive='active'>{{fd.name}} ></button>
+  </div>
+</div>

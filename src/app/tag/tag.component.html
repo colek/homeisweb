@@ -5,48 +5,61 @@
         <h2>{{header}}</h2>
       </div>
       <div class="form-group col-12">
-        <label class="sr-only" for="tagname">Název:</label>
+        <label for="tagname">Název:</label>
         <input class="form-control" type="text" [(ngModel)]="Tag.name" name="tagname" placeholder="Název" />
       </div>
       <div class="form-group col-12">
-        <label class="sr-only" for="tagid">Id:</label>
-        <input class="form-control" type="text" [(ngModel)]="Tag.id" name="tagid" placeholder="Id" />
+        <label for="tagaddress">Adresa:</label>
+        <input class="form-control" type="text" [(ngModel)]="Tag.addressname" name="tagaddress" placeholder="Adresa" />
       </div>
       <div class="form-group col-12">
-        <label class="sr-only" for="tagnode">Typ (text):</label>
-        <input class="form-control" type="text" [(ngModel)]="Tag.NodeName" name="tagnode" placeholder="Typ (text)" />
+        <label for="tagid">Id:</label>
+        <input class="form-control" type="text" [(ngModel)]="Tag.address" name="tagid" disabled="disabled" placeholder="Id" />
       </div>
       <div class="form-group col-12">
-        <label class="sr-only" for="tagaddress">Adresa:</label>
-        <input class="form-control" type="text" [(ngModel)]="Tag.address" name="tagaddress" placeholder="Adresa" />
+        <label for="tagstate">Stav:</label>
+        <button type="button" class="btn {{btnErrorClass}}" disabled="disabled" name="tagstate">{{txtIsError}}</button>
+      </div>
+      <div class="col-12 form-group">
+        <label for="taginternal">Interní:</label>
+        <button type="button" class="btn {{btnInternalClass}}" name="taginternal" disabled="disabled" (click)="switchInternal()">{{isInternalText}}</button>
       </div>
       <div class="form-group col-12">
-        <h2>Typ</h2>
-        <select [(ngModel)]="Tag.type" class="form-control">
-           <option *ngFor="let ctype of typeSelect" [ngValue]="ctype.name">{{ctype.name}}</option>
+        <label for="tagvalue">Hodnota:</label>
+        <input class="form-control" type="text" [(ngModel)]="Tag.value" *ngIf="Tag.type != 4" [disabled]="Tag.direction == 0" name="tagvalue" placeholder="Hodnota" />
+        <button type="button" class="btn {{btnBoolValueClass}}" *ngIf="Tag.type == 4" [disabled]="Tag.direction == 0" (click)="switchBoolValue()">{{boolValueText}}</button>
+      </div>
+      <div class="form-group col-12">
+        <label for="tagunit">Jednotka:</label>
+        <input class="form-control" type="text" [(ngModel)]="Tag.unit" name="tagunit" placeholder="Jednotka" />
+      </div>
+      <div class="form-group col-12">
+        <label for="tagdir">Směr komunikace:</label>
+        <input class="form-control" type="text" [(ngModel)]="tagDirectionText" name="tagdir" disabled="disabled" />
+      </div>
+      <div class="form-group col-12">
+        <label for="seltype">Typ:</label>
+        <select [(ngModel)]="Tag.type" class="form-control" name="seltype" disabled="disabled">
+           <option *ngFor="let ctype of typeSelect" [ngValue]="ctype.value">{{ctype.name}}</option>
         </select>
       </div>
-      <div class="form-group col-12">
+      <div class="col-12 form-group">
+        <button type="button" class="btn {{btnSimClass}}" (click)="switchSim()" *ngIf="!Tag.internal">{{txtIsSim}}</button>
+      </div>
+      <!--<div class="form-group col-12">
         <label class="sr-only" for="tagdirection">Direction:</label>
         <input class="form-control" type="text" [(ngModel)]="Tag.direction" name="tagdirection" placeholder="Direction" />
       </div>
       <div class="form-group col-12">
-        <label class="sr-only" for="tagvalue">Hodnota:</label>
-        <input class="form-control" type="text" [(ngModel)]="Tag.value" name="tagvalue" placeholder="Hodnota" />
-      </div>
-      <div class="form-group col-12">
         <span class="sr-only">Chyba:</span>
         <img src="./icons/{{Tag.error}}.png" alt="X" />
-      </div>
-      <div class="col-12 form-group">
-        <button type="button" class="btn {{btnInternalClass}}" (click)="switchOnOff()">{{isInternalText}}</button>
-      </div>
+      </div>-->
     </div>
     <div class="col-12 btn-group" role="group">
       <button (click)="onBack()" class="btn btn-primary" type="button">Zpět</button>
       <button (click)="onSave()" class="btn btn-primary" type="button">Uložit</button>
       <button (click)="onDelete()" class="btn btn-primary" type="button">Smazat</button>
     </div>
-    <div>{{strCom}}</div>
+    <!--<div>{{strCom}}</div>-->
   </div>
 </form>

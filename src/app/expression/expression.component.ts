@@ -41,18 +41,23 @@ export class ExpressionComponent implements OnInit {
       this.loadNewExpression(parentId);
     }
     else {
-      this.isNew = false;
+      this.readExpression(parentId);
+    }    
+  }
+
+  readExpression(parentId: string){
+    this.isNew = false;
       this.header = "Editace výrazu";
       this.route.params
         .switchMap((params: Params) => this.loadExpression(parentId))
         .subscribe(
-        data => this.setExpr(data),
+        data => {
+          this.setExpr(data);
+          this.setScriptRunning();
+        },
         error => console.error('Error: ' + error),
         () => console.log('Completed!')
         );
-    }
-    this.isRunningText = (this.expression.running) ? "Zapnuto" : "Vypnuto";
-    this.btnRunningClass = (this.expression.running) ? "btn-success" : "btn-warning";
   }
 
   loadNewExpression(parentId: string) {
@@ -118,15 +123,23 @@ export class ExpressionComponent implements OnInit {
 
   onTest() {
     return this._commonService.testExpression(this.id).subscribe(
-      data => this.strExpression,
+      data => {
+        this.strExpression = JSON.stringify(data);
+        this.readExpression(this.expression.parentId);
+      },
       error => console.error('Error: ' + error),
       () => console.log('Completed!')
     );
+
+    
   }
 
   switchOnOff() {
     this.expression.running = !this.expression.running;
+    this.setScriptRunning();
+  }
 
+  setScriptRunning() {
     this.isRunningText = (this.expression.running) ? "Zapnuto" : "Vypnuto";
     this.btnRunningClass = (this.expression.running) ? "btn-success" : "btn-warning";
   }

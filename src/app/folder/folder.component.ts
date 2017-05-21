@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Tag, Folder } from './../classes';
+import { Tag, Folder, DetailSharingService } from './../classes';
 import { CommonService } from './../common.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -8,19 +8,24 @@ import { Location } from '@angular/common';
   selector: 'folder',
   templateUrl: './folder.component.html',
   styleUrls: ['./folder.component.css'],
-  providers: [Tag]
+  providers: [Tag, Folder]
 })
 export class FolderComponent implements OnInit {
 
   @Input() folder: Tag;
   @Input() previousfolderId: string;
   @Input() deviceid: string;
-  
+
   ico: string;
   boolIco: string;
   inError: string;
+  hasBoolValue: boolean;
+  currentValue: string;
 
-  constructor(private _commonService: CommonService, private router: Router, private _location: Location) {
+  constructor(private _commonService: CommonService, 
+  private router: Router, 
+  private _location: Location, 
+  private _sharingService: DetailSharingService) {
   }
 
   ngOnInit() {
@@ -49,6 +54,23 @@ export class FolderComponent implements OnInit {
     }
   }
 
+  onBulbClick(event) {
+    switch (this.folder.NodeName) {
+      case "value":
+        // TODO set value to opposite
+        this.setBoolValueOpposite();
+        console.log('bulb clicked value');
+        event.stopPropagation();
+        break;
+      case "expression":
+        // TODO set running to opposite
+        this.setExpressionRunOpposite();
+        console.log('bulb clicked expr');
+        event.stopPropagation();
+        break;
+    }
+  }
+
   onEdit(event) {
     event.stopPropagation();
 
@@ -59,26 +81,52 @@ export class FolderComponent implements OnInit {
       case "expression":
         this.router.navigate(['/editexpression/', this.previousfolderId, this.folder.id]);
         break;
+      case "value":
+        this._sharingService.setTag(this.folder);
+        this.router.navigate(['/edittag/', this.folder.id]);
+        break;
     }
 
   }
 
   switchBool() {
-    switch (+this.folder.value) {
-      case 0: {
-        this.boolIco = "Light Bulb Off";
+
+    this.hasBoolValue = false;
+    switch (this.folder.NodeName) {
+      case "value":
+        switch (+this.folder.value) {
+          case 0: {
+            this.boolIco = "Light Bulb Off";
+            break;
+          }
+          case 1: {
+            this.boolIco = "Light Bulb On";
+            break;
+          }
+        }
+        this.hasBoolValue = true;
         break;
-      }
-      case 1: {
-        this.boolIco = "Light Bulb On";
+      case "expression":
+        switch (+this.folder.running) {
+          case 0: {
+            this.boolIco = "Light Bulb Off";
+            break;
+          }
+          case 1: {
+            this.boolIco = "Light Bulb On";
+            break;
+          }
+        }
+        this.hasBoolValue = true;
         break;
-      }
     }
   }
 
   switchIco() {
     switch (this.folder.NodeName) {
       case "value": {
+
+        this.currentValue = this.folder.value +' '+ this.folder.unit;
         switch (+this.folder.type) {
           case 0: { // int
             this.ico = "Dashboard";
@@ -127,6 +175,7 @@ export class FolderComponent implements OnInit {
       }
       case "expression": {
         this.ico = "Cog";
+        this.switchBool();
         break;
       }
       case "previous": {
@@ -138,6 +187,36 @@ export class FolderComponent implements OnInit {
         break;
       }
     }
+  }
+
+  setExpressionRunOpposite(){
+    this.folder.running = !this.folder.running;
+    this._commonService.editExpressionFolder(this.folder)
+        .subscribe(
+        // data => this.strExpression = JSON.stringify(data),
+        error => console.error('Error: ' + error),
+        () => console.log('Completed!')
+        );
+  }
+
+  setBoolValueOpposite(){
+    // zmena hodnoty pouze bool
+    if(this.folder.type == 4 && this.folder.direction > 0){
+      if(this.folder.value == "1"){
+        this.folder.value = "0";
+      }
+      else{
+        this.folder.value = "1";
+      }
+
+      this._commonService.editTag(this.folder)
+      .subscribe(
+      // data => this.strCom = JSON.stringify(data),
+      error => console.error('Error: ' + error),
+      () => console.log('Completed!')
+      );
+    }
+
   }
 
 }

@@ -17,6 +17,8 @@ import { CodemirrorModule } from 'ng2-codemirror';
 import { DevicesComponent } from './devices/devices.component';
 import { DevicesItemComponent } from './devices-item/devices-item.component';
 import { TagComponent } from './tag/tag.component';
+import { DetailSharingService } from './classes';
+import { FolderNavBarComponent } from "./folder-nav-bar/folder-nav-bar.component";
 
 
 @NgModule({
@@ -31,7 +33,8 @@ import { TagComponent } from './tag/tag.component';
     ExpressionComponent,
     DevicesComponent,
     DevicesItemComponent,
-    TagComponent
+    TagComponent,
+    FolderNavBarComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,7 @@ import { TagComponent } from './tag/tag.component';
     AppRoutingModule,
     CodemirrorModule
   ],
-  providers: [],
+  providers: [DetailSharingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

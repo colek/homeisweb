@@ -19,6 +19,7 @@ export class DevicesItemComponent implements OnInit {
   }
 
   onClick(event) {
+    
     console.log('device click');
 
   }

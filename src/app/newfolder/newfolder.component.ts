@@ -47,7 +47,7 @@ export class NewfolderComponent implements OnInit {
 
   loadNewFolder(parentId: string) {
     this.folder = new Folder();
-    this.folder.parentId = (parentId != undefined && parentId != 'undefined') ? parentId : null;
+    this.folder.ParentId = (parentId != undefined && parentId != 'undefined') ? parentId : null;
     this.folder.type = null;
   }
 

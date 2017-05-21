@@ -1,3 +1,5 @@
+import {Component, Injectable} from '@angular/core'
+
 export class Register {
     public connector: string;
     public devaddress: number;
@@ -11,7 +13,8 @@ export class Register {
 export class Folder {
     public type: string;
     public name: string;
-    public parentId: string;
+    public ParentId: string;
+    public ParentName: string;
     public id: string;
     constructor() {
 
@@ -33,16 +36,18 @@ export class Device {
 export class Tag {
     public name: string;
     public id: string;
+    public ParentId: string;
     public NodeName: string;
     public address: string;
     public type: number;
     public direction: number;
-    public value: number;
+    public value: string;
     public error: boolean;
     public force: boolean;
     public unit: string;
     public addressName: string;
     public internal: boolean;
+    public running: boolean;
     constructor() {
 
     }
@@ -86,4 +91,21 @@ export class SelectObj{
         this.name = name;
         this.value = value
     }
+}
+
+@Injectable()
+export class DetailSharingService{
+    public selectedTag: Tag;
+
+    public setTag(tag: Tag){
+        this.selectedTag = tag;
+    }
+
+
+  constructor(){
+    this.selectedTag = null;
+  }
+  getTag<Tag> () {
+    return this.selectedTag;
+  }
 }

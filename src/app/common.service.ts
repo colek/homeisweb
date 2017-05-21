@@ -11,7 +11,7 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class CommonService {
 
-  public urlAddr = 'http://192.168.2.221:82/api';
+  public urlAddr ='http://192.168.2.221:82/api'; //'/api'; //'http://192.168.2.221:82/api';
   constructor(private _http: Http) {
 
   }
@@ -64,10 +64,9 @@ export class CommonService {
       .catch(this.handleError);
   }
 
-  getTag(deviceid: string, tagid: string){
+  getTag(deviceid: string){
     let addr = this.urlAddr
-      + '/onewiredevices/' + deviceid
-      + '/devvalues/' + tagid;
+      + '/onewiredevices/' + deviceid;
     return this._http.get(addr)
       .map((res: Response) => res.json())
       .catch(this.handleError);
@@ -183,6 +182,36 @@ export class CommonService {
     this.createAuthorizationHeader(headers);
     let strObj = JSON.stringify(expr);
     return this._http.put(folderAddr, strObj, {
+      headers: headers
+    })
+      .map((res: Response) => console.log(JSON.stringify(res)))
+      .catch(this.handleError);
+  }
+
+
+  editExpressionFolder(expr: Tag) {
+    let folderAddr = this.urlAddr
+      + '/expression/' + expr.id;
+    let headers = this.createNewHeader();
+    this.getHeaders(headers);
+    this.createAuthorizationHeader(headers);
+    let strObj = JSON.stringify(expr);
+    return this._http.put(folderAddr, strObj, {
+      headers: headers
+    })
+      .map((res: Response) => console.log(JSON.stringify(res)))
+      .catch(this.handleError);
+  }
+
+
+  editTag(obj: Tag) {
+    let strAddr = this.urlAddr
+      + '/onewiredevices/devvalue/' + obj.id;
+    let headers = this.createNewHeader();
+    this.getHeaders(headers);
+    this.createAuthorizationHeader(headers);
+    let strObj = JSON.stringify(obj);
+    return this._http.put(strAddr, strObj, {
       headers: headers
     })
       .map((res: Response) => console.log(JSON.stringify(res)))

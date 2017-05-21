@@ -35,9 +35,9 @@ export class FoldersComponent implements OnInit {
     this.tick = 0;
     this.tick2 = -1;
     this.timer = Observable.timer(1000, 5000);
-    //this.sub = this.timer.subscribe(t => this.refreshFolder(t));
 
-    this.refresh = "Off";
+    this.refresh = "On";
+    this.sub = this.timer.subscribe(t => this.refreshFolder(t));
 
   }
 
@@ -52,7 +52,7 @@ export class FoldersComponent implements OnInit {
   }
 
   onNewTag() {
-
+    
   }
 
   onNewFolderSet() {
@@ -100,7 +100,8 @@ export class FoldersComponent implements OnInit {
   onSwitchRefresh() {
     if (this.refresh == "On") {
       this.refresh = "Off";
-      this.tick2 = this.tick = 0;
+      this.tick2 = -1;
+      this.tick = 0;
       this.sub.unsubscribe();
     }
     else {
