@@ -48,7 +48,7 @@ export class TagComponent implements OnInit {
     else {
       this.isNew = false;
       this.header = "Editace tagu";
-      this.Tag = this._sahringService.getTag();;
+      this.Tag = this._sahringService.getTag();
       this.strCom = JSON.stringify(this._sahringService.getTag());
       console.log(this.strCom);
       // this.route.params

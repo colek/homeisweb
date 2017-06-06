@@ -15,6 +15,7 @@ import 'rxjs/add/operator/switchMap';
 export class FoldersComponent implements OnInit {
   folders: Tag[];
   id: string;
+  rootFolderId: string;
   timer;
   tick: number;
   tick2: number;
@@ -34,7 +35,7 @@ export class FoldersComponent implements OnInit {
       )
     this.tick = 0;
     this.tick2 = -1;
-    this.timer = Observable.timer(1000, 5000);
+    this.timer = Observable.timer(1000, 500);
 
     this.refresh = "On";
     this.sub = this.timer.subscribe(t => this.refreshFolder(t));
@@ -48,7 +49,9 @@ export class FoldersComponent implements OnInit {
   }
 
   onNewExpression() {
-    this.router.navigate(['/newexpression', this.id]);
+    let cParentId = (this.id != undefined)? this.id : this.folders[0].ParentId;
+    console.log("NewExpression clicked, thisId: "+ cParentId);
+    this.router.navigate(['/newexpression', cParentId]);
   }
 
   onNewTag() {
@@ -56,7 +59,9 @@ export class FoldersComponent implements OnInit {
   }
 
   onNewFolderSet() {
-    this.router.navigate(['/newfolder', this.id]);
+    let cParentId = (this.id != undefined)? this.id : this.folders[0].ParentId;
+    console.log("NewFolder clicked, thisId: "+ cParentId);
+    this.router.navigate(['/newfolder', cParentId]);
   }
 
   sortedFolders(data: Tag[]) {

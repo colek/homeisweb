@@ -6,6 +6,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { NewfolderComponent } from './newfolder/newfolder.component'
 import { ExpressionComponent } from './expression/expression.component'
 import { DevicesComponent } from './devices/devices.component'
+import { DeviceDetailComponent } from './device-detail/device-detail.component'
 import { TagComponent } from './tag/tag.component'
 
 
@@ -16,10 +17,14 @@ const appRoutes: Routes = [
   { path: 'editfolder/:id', component: NewfolderComponent },
   { path: 'editexpression/:parentId/:id', component: ExpressionComponent },
   { path: 'edittag/:id', component: TagComponent },
+  { path: 'newtag/:parentId', component: TagComponent },
+  { path: 'device/:id', component: DeviceDetailComponent },
+  { path: 'newdevice', component: DeviceDetailComponent },
   { path: 'newexpression/:parentId', component: ExpressionComponent },
   { path: 'dataitems', component: DevicesComponent },
   { path: 'modbus', component: RegistersComponent },
   { path: '', redirectTo: '/folders', pathMatch: 'full' },
+  { path: '*.html', redirectTo: '/folders', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
 

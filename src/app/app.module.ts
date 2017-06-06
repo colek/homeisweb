@@ -19,6 +19,7 @@ import { DevicesItemComponent } from './devices-item/devices-item.component';
 import { TagComponent } from './tag/tag.component';
 import { DetailSharingService } from './classes';
 import { FolderNavBarComponent } from "./folder-nav-bar/folder-nav-bar.component";
+import { DeviceDetailComponent } from "./device-detail/device-detail.component";
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { FolderNavBarComponent } from "./folder-nav-bar/folder-nav-bar.component
     DevicesComponent,
     DevicesItemComponent,
     TagComponent,
-    FolderNavBarComponent
+    FolderNavBarComponent,
+    DeviceDetailComponent
   ],
   imports: [
     BrowserModule,

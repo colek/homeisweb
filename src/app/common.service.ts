@@ -56,6 +56,14 @@ export class CommonService {
       .catch(this.handleError);
   }
 
+  getDevice(guid: string) {
+    let folderAddr = this.urlAddr
+      + '/onewiredevices/devvalue/' + guid;
+    return this._http.get(folderAddr)
+      .map((res: Response) => res.json())
+      .catch(this.handleError);
+  }
+
   testExpression(guid: string) {
     let objAddr = this.urlAddr
       + '/expression/run/' + guid;
@@ -207,6 +215,21 @@ export class CommonService {
   editTag(obj: Tag) {
     let strAddr = this.urlAddr
       + '/onewiredevices/devvalue/' + obj.id;
+    let headers = this.createNewHeader();
+    this.getHeaders(headers);
+    this.createAuthorizationHeader(headers);
+    let strObj = JSON.stringify(obj);
+    return this._http.put(strAddr, strObj, {
+      headers: headers
+    })
+      .map((res: Response) => console.log(JSON.stringify(res)))
+      .catch(this.handleError);
+  }
+
+
+  editDevice(obj: Device) {
+    let strAddr = this.urlAddr
+      + '/onewiredevices/' + obj.Id;
     let headers = this.createNewHeader();
     this.getHeaders(headers);
     this.createAuthorizationHeader(headers);

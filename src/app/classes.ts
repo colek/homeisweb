@@ -96,16 +96,25 @@ export class SelectObj{
 @Injectable()
 export class DetailSharingService{
     public selectedTag: Tag;
+    public selectedDevice: Device;
 
     public setTag(tag: Tag){
         this.selectedTag = tag;
+    }
+    public setDevice(device: Device){
+        this.selectedDevice = device;
     }
 
 
   constructor(){
     this.selectedTag = null;
+    this.selectedDevice = null;
   }
   getTag<Tag> () {
     return this.selectedTag;
+  }
+  
+  getDevice<Device> () {
+    return this.selectedDevice;
   }
 }

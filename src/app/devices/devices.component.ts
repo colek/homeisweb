@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Device } from './../classes';
 import { CommonService } from './../common.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-devices',
@@ -13,7 +14,7 @@ export class DevicesComponent implements OnInit {
   devices: Device[];
   strDevice: string;
 
-  constructor(private _commonService: CommonService) {
+  constructor(private _commonService: CommonService, private router: Router) {
     this.loadDevices();
    }
 
@@ -31,6 +32,10 @@ export class DevicesComponent implements OnInit {
       error => console.error('Error: ' + error),
       () => console.log('Completed!')
       );
+  }
+
+  onNewDevice(){
+    this.router.navigate(['/newdevice']);
   }
 
 }

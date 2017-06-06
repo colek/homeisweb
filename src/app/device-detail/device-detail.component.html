@@ -1,0 +1,38 @@
+<form>
+  <div class="container">
+    <div class="form-group row">
+      <div class="col-12">
+        <h2>{{header}}</h2>
+      </div>
+      <div class="form-group col-12">
+        <label for="devicename">Název:</label>
+        <input class="form-control" type="text" [(ngModel)]="device.Name" name="devicename" placeholder="Název" />
+      </div>
+      <div class="form-group col-12">
+        <label for="deviceaddress">Adresa:</label>
+        <input class="form-control" type="text" [(ngModel)]="device.Address" name="deviceaddress" placeholder="Adresa" />
+      </div>
+    </div>
+
+    <a *ngIf="!isNew" class="card-header list-group-item list-group-item-action justify-content-between" role="tab" id="heading{{device.Address}}"
+      data-toggle="collapse" data-parent="#devices" aria-expanded="false" aria-controls="collapse{device.Id}C" href="#collapse{{device.Id}}C">
+      Tags
+    </a>
+
+    <div id="collapse{{device.Id}}C" class="collapse show" role="tabpanel" aria-labelledby="heading">
+      <div class="list-group">
+        <folder *ngFor="let folder of device.Tags" [folder]='folder' [deviceid]='device.id'></folder>
+      </div>
+    </div>
+
+    <div class="form-group row"></div>
+
+    <div class="col-12 btn-group" role="group">
+      <button (click)="onBack()" class="btn btn-primary" type="button">Zpět</button>
+      <button (click)="onSave()" class="btn btn-primary" type="button">Uložit</button>
+      <button (click)="onDelete()" class="btn btn-primary" type="button">Smazat</button>
+      <button (click)="onReload()" class="btn btn-primary" type="button">Reload</button>
+    </div>
+    <!--<div>{{strCom}}</div>-->
+  </div>
+</form>
