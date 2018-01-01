@@ -11,7 +11,7 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class ModbusService {
 
-  public urlAddr = 'http://192.168.2.221:82/api';
+  public urlAddr = 'https://192.168.2.221:82/api';
   constructor(private _http: Http) {
 
   }

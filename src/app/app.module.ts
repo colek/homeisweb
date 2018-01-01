@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { RegistersComponent } from './registers/registers.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MainNavBarComponent } from './main-nav-bar/main-nav-bar.component';
 import { FoldersComponent } from './folders/folders.component';
 import { FolderComponent } from './folder/folder.component';
