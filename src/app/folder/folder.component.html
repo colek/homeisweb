@@ -1,4 +1,5 @@
-<div class="list-group-item list-group-item-action justify-content-between" (click)="onClick($event)">
+<div class="list-group-item list-group-item-action  flex-column align-items-start" (click)="onClick($event)">
+	<div class="d-flex justify-content-between">
 		<div class="float-left">
 			<img src="./icons/{{ico}}.png" alt="xxx" /> {{folder.name}}
 			<!--:: {{folder.ParentId}} ::-->
@@ -14,4 +15,5 @@
 				Edit
 			</button>
 		</div>
+	</div>
 </div>

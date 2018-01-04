@@ -1,27 +1,33 @@
-<div class="row">
-    <div class="col-12">
-        <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse bg-faded">
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <!-- <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button> -->
+            <a class="navbar-brand" routerLink="/" routerLinkActive='active'>
+                HomeIS
+            </a>
+            <button class="navbar-toggler navbar" type="button" data-toggle="collapse" data-target="#navbarNav" 
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <span class="navbar-brand">HomeIS</span>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto mt-2 mt-md-0">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="supportedContentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Navigation</a>
-                        <div class="dropdown-menu" aria-labelledby="supportedContentDropdown">
-                            <button class="dropdown-item" routerLink="/dataitems" routerLinkActive='active'>Datové body</button>
-                            <button class="dropdown-item" routerLink="/folders" routerLinkActive='active'>Složky hodnot</button>
-                            <button class="dropdown-item" routerLink="/login" routerLinkActive='active'>Přihlášení</button>
-                            <button class="dropdown-item" routerLink="/modbus" routerLinkActive='active'>Nastavení Modbus</button>
-                        </div>
-                    </li>
-                </ul>
+                    <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                              <a class="nav-link"  routerLink="/dataitems" routerLinkActive='active'>Datové body</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" routerLink="/folders" routerLinkActive='active'>Složky hodnot</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" routerLink="/login" routerLinkActive='active'>Přihlášení</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" routerLink="/modbus" routerLinkActive='active'>Nastavení Modbus</a>
+                            </li>
+                    </ul>
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="text" placeholder="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>
         </nav>
-    </div>
-</div>
