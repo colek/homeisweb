@@ -8,6 +8,7 @@ import { ExpressionComponent } from './expression/expression.component'
 import { DevicesComponent } from './devices/devices.component'
 import { DeviceDetailComponent } from './device-detail/device-detail.component'
 import { TagComponent } from './tag/tag.component'
+import { LogListComponent } from './log-list/log-list.component';
 
 
 const appRoutes: Routes = [
@@ -23,6 +24,7 @@ const appRoutes: Routes = [
   { path: 'newexpression/:parentId', component: ExpressionComponent },
   { path: 'dataitems', component: DevicesComponent },
   { path: 'modbus', component: RegistersComponent },
+  { path: 'logs', component: LogListComponent },
   { path: '', redirectTo: '/folders', pathMatch: 'full' },
   { path: '*.html', redirectTo: '/folders', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }

@@ -18,6 +18,9 @@ export class DeviceDetailComponent implements OnInit {
   header: string;
   device: Device;
 
+  isRunningText: string;
+  btnRunningClass: string;
+
   constructor(
     private _commonService: CommonService,
     private route: ActivatedRoute,
@@ -52,6 +55,7 @@ export class DeviceDetailComponent implements OnInit {
         .subscribe(
         data => {
           this.device = data[0];
+          this.setScriptRunning();
         },
         error => console.error('Error: ' + error),
         () => console.log('Completed!')
@@ -89,4 +93,13 @@ export class DeviceDetailComponent implements OnInit {
 //todo
   }
 
+  switchOnOff() {
+    this.device.Enabled = !this.device.Enabled;
+    this.setScriptRunning();
+  }
+
+  setScriptRunning() {
+    this.isRunningText = (this.device.Enabled) ? "Zapnuto" : "Vypnuto";
+    this.btnRunningClass = (this.device.Enabled) ? "btn-success" : "btn-warning";
+  }
 }

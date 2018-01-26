@@ -12,6 +12,14 @@
         <label for="deviceaddress">Adresa:</label>
         <input class="form-control" type="text" [(ngModel)]="device.Address" name="deviceaddress" placeholder="Adresa" />
       </div>
+      <div class="form-group col-12">
+        <label for="devicerefresh">RefreshPeriod:</label>
+        <input class="form-control" type="text" [(ngModel)]="device.ScanPeriodMs" name="devicerefresh" placeholder="Refresh" />
+      </div>
+      <div class="form-group col-12">
+        <label for="deviceenabled">Povoleno:</label>
+        <button type="button" class="btn {{btnRunningClass}}" (click)="switchOnOff()">{{isRunningText}}</button>
+      </div>
     </div>
 
     <a *ngIf="!isNew" class="card-header list-group-item list-group-item-action justify-content-between" role="tab" id="heading{{device.Address}}"

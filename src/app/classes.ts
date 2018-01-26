@@ -27,6 +27,8 @@ export class Device {
     public Address: string;
     public ConnectionName: string;
     public Internal: boolean;
+    public ScanPeriodMs: number;
+    public Enabled: boolean;
     public Tags: Tag[];
     constructor() {
 
