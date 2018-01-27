@@ -80,6 +80,22 @@ export class CommonService {
       .catch(this.handleError);
   }
 
+  getLogs(){
+    let addr = this.urlAddr
+      + '/logs/';
+    return this._http.get(addr)
+      .map((res: Response) => res.json())
+      .catch(this.handleError);
+  }
+
+  getLog(logDate: string){
+    let addr = this.urlAddr
+      + '/logs/' + logDate;
+    return this._http.get(addr)
+      .map((res: Response) => res.json())
+      .catch(this.handleError);
+  }
+
   // #endregion GET
 
   // #region POST
