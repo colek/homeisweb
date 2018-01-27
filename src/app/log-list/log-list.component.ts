@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
-import { Logs, DetailSharingService } from './../classes';
 import { CommonService } from './../common.service';
-import { ActivatedRoute, Params } from '@angular/router';
-import { close } from 'fs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'log-list',
   templateUrl: './log-list.component.html',
   styleUrls: ['./log-list.component.css'],
-  providers: [Logs, CommonService]
+  providers: [CommonService]
 })
 export class LogListComponent implements OnInit {
   
@@ -18,17 +15,14 @@ export class LogListComponent implements OnInit {
 
   constructor(
     private _commonService: CommonService,
-    private route: ActivatedRoute,
-    private _location: Location,
-    private _sahringService: DetailSharingService) { }
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.loadLogs();
   }
   
   loadLogs(){
-    this.route.params
-      .switchMap((params: Params) => this._commonService.getLogs())
+    this._commonService.getLogs()
       .subscribe(
       data => {
         this.logs = data.reverse();
