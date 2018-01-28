@@ -5,7 +5,7 @@
         <h2>Datové body</h2>
       </div>
       <div class="col-12">
-        <button type="button" class="btn btn-primary" (click)="onNewDevice()">Nový datový bod</button>
+        <button type="button" class="btn btn-primary" (click)="onNewDevice()"  *ngIf="addMode == false">Nový datový bod</button>
       </div>
     </div>
     <div class="form-group row">
@@ -17,7 +17,7 @@
     <div class="form-group row">
       <div class="col-12">
         <div class="list-group" id="devices">
-          <devicesItem *ngFor="let device of devices" [device]='device'></devicesItem>
+          <devicesItem *ngFor="let device of devices" [device]='device' [addMode]='addMode' (addClicked)='handleAddClick($event)'></devicesItem>
         </div>
       </div>
     </div>

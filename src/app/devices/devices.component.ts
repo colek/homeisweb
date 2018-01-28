@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Device } from './../classes';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Device, Tag } from './../classes';
 import { CommonService } from './../common.service';
 import { Router } from '@angular/router';
 
@@ -13,6 +13,8 @@ export class DevicesComponent implements OnInit {
 
   devices: Device[];
   strDevice: string;
+  @Input() addMode: boolean;
+  @Output() addClicked = new EventEmitter();
 
   constructor(private _commonService: CommonService, private router: Router) {
     this.loadDevices();
@@ -36,6 +38,12 @@ export class DevicesComponent implements OnInit {
 
   onNewDevice(){
     this.router.navigate(['/newdevice']);
+  }
+
+  
+
+  handleAddClick(event){
+    this.addClicked.emit(event);
   }
 
 }

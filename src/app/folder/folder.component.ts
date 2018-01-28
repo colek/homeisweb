@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Tag, Folder, DetailSharingService } from './../classes';
 import { CommonService } from './../common.service';
 import { Router } from '@angular/router';
@@ -15,6 +15,9 @@ export class FolderComponent implements OnInit {
   @Input() folder: Tag;
   @Input() previousfolderId: string;
   @Input() deviceid: string;
+  @Input() addMode: boolean;
+
+  @Output() addClicked = new EventEmitter();
 
   ico: string;
   boolIco: string;
@@ -87,6 +90,12 @@ export class FolderComponent implements OnInit {
         break;
     }
 
+  }
+
+  onAdd(event) {
+    this.addClicked.emit(this.folder);
+    //event.stopPropagation();
+    //this._sharingService.setTag(this.folder);
   }
 
   switchBool() {
@@ -217,6 +226,15 @@ export class FolderComponent implements OnInit {
       );
     }
 
+  }
+
+  onRemoveTag(){
+    this._commonService.deleteTagFromFolder(this.folder.DirValueId)
+    .subscribe(
+    // data => this.strExpression = JSON.stringify(data),
+    error => console.error('Error: ' + error),
+    () => console.log('Completed!')
+    );
   }
 
 }

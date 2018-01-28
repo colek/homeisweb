@@ -11,8 +11,14 @@
 		<div class="float-right">
 			<span *ngIf="folder.type != 4" class="badge badge-{{inError}} badge-pill">{{currentValue}}</span>
 			<img src="./icons/{{boolIco}}.png" alt="running" title="is running" (click)="onBulbClick($event)" *ngIf="hasBoolValue == true" />
-			<button type="button" class="btn-sm btn-info btn-secondary" (click)="onEdit($event)">
+			<button type="button" class="btn-sm btn-info btn-secondary" (click)="onEdit($event)" *ngIf="addMode != true">
 				Edit
+			</button>
+			<button type="button" class="btn-sm btn-info btn-secondary" (click)="onAdd($event)" *ngIf="addMode == true">
+				Add
+			</button>
+			<button type="button" class="btn-sm btn-error btn-secondary" (click)="onRemoveTag($event)" *ngIf="folder.NodeName == 'value'">
+				X
 			</button>
 		</div>
 	</div>

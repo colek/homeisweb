@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Device } from './../classes';
 import { Location } from '@angular/common';
 import { Tag, SelectObj, DetailSharingService } from './../classes';
@@ -20,6 +20,9 @@ export class DeviceDetailComponent implements OnInit {
 
   isRunningText: string;
   btnRunningClass: string;
+
+  @Input() addMode: boolean;
+  @Output() addClicked = new EventEmitter();
 
   constructor(
     private _commonService: CommonService,
@@ -101,5 +104,9 @@ export class DeviceDetailComponent implements OnInit {
   setScriptRunning() {
     this.isRunningText = (this.device.Enabled) ? "Zapnuto" : "Vypnuto";
     this.btnRunningClass = (this.device.Enabled) ? "btn-success" : "btn-warning";
+  }
+
+  handleAddClick(event){
+    this.addClicked.emit(event);
   }
 }

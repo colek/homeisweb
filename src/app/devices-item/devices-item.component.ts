@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Device, DetailSharingService } from './../classes';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Device, DetailSharingService, Tag } from './../classes';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 })
 export class DevicesItemComponent implements OnInit {
  @Input() device: Device;
+ @Input() addMode: boolean;
+ @Output() addClicked = new EventEmitter();
  strDevice: string;
 
   constructor( 
@@ -30,6 +32,11 @@ export class DevicesItemComponent implements OnInit {
   onEdit(event){
     this._sharingService.setDevice(this.device);
     this.router.navigate(['/device/', this.device.Id]);
+  }
+
+  
+  handleAddClick(event){
+    this.addClicked.emit(event);
   }
 
 }

@@ -38,6 +38,7 @@ export class Device {
 export class Tag {
     public name: string;
     public id: string;
+    public DirValueId: string;
     public ParentId: string;
     public NodeName: string;
     public address: string;
@@ -95,16 +96,52 @@ export class SelectObj{
     }
 }
 
+export class TagToFolder{
+    public DevValueId: string;
+}
+
+// interface IChangedEvent<T> {
+//     on(handler: { (data?: T): void }) : void;
+//     //off(handler: { (data?: T): void }) : void;
+// }
+
+// class ChangedEvent<T> implements IChangedEvent<T> {
+//     private handlers: { (data?: T): void; }[] = [];
+
+//     public on(handler: { (data?: T): void }) : void {
+//         this.handlers.push(handler);
+//     }
+
+//     // public off(handler: { (data?: T): void }) : void {
+//     //     this.handlers = this.handlers.filter(h => h !== handler);
+//     // }
+
+//     public trigger(data?: T) {
+//         this.handlers.slice(0).forEach(h => h(data));
+//     }
+
+//     public expose() : IChangedEvent<T> {
+//         return this;
+//     }
+// }
+
+
 @Injectable()
 export class DetailSharingService{
+    //private readonly onChange = new ChangedEvent<object>();
+    //public get Changed() { return this.onChange.expose(); }
+
     public selectedTag: Tag;
     public selectedDevice: Device;
+    public selectedId: string;
 
     public setTag(tag: Tag){
         this.selectedTag = tag;
+       // this.onChange.trigger(tag);
     }
     public setDevice(device: Device){
         this.selectedDevice = device;
+       // this.onChange.trigger(device);
     }
 
 

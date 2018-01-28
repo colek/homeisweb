@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Http, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Register, Tag, Folder, Device, DeviceValue, Expression } from './classes';
+import { Register, Tag, Folder, Device, DeviceValue, Expression, TagToFolder } from './classes';
 import 'rxjs/add/observable/throw';
 
 import 'rxjs/add/operator/map';
@@ -179,7 +179,8 @@ export class CommonService {
     return this._http.put(writeAddr, null /*params*/, {
       headers: headers
     })
-      .map(res => res.json());
+      .map(res => res.json())
+      .catch(this.handleError);
   }
 
 
@@ -256,6 +257,18 @@ export class CommonService {
       .map((res: Response) => console.log(JSON.stringify(res)))
       .catch(this.handleError);
   }
+
+  addTagToFolder(folderId, TagToFolder){    
+    let headers = this.createNewHeader();
+    this.getHeaders(headers);
+    this.createAuthorizationHeader(headers);
+    let strVal = JSON.stringify(TagToFolder);
+    return this._http.put(this.urlAddr + '/folder/valueid/' + folderId, strVal, { //https://192.168.2.221:82/api/folder/valueid/cec19e4e-bb1e-4efa-9311-f9f6a4ae9e18/
+      headers: headers
+    })
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
   // #endregion PUT
 
   // #region DELETE
@@ -276,6 +289,20 @@ export class CommonService {
   deleteExpression(exprId: string) {
     let objAddr = this.urlAddr
       + '/expression/' + exprId;
+    let headers = this.createNewHeader();
+    this.getHeaders(headers);
+    this.createAuthorizationHeader(headers);
+    return this._http.delete(objAddr, {
+      headers: headers
+    })
+      .map((res: Response) => console.log(JSON.stringify(res)))
+      .catch(this.handleError);
+  }
+
+  /// api/onewiredevices/folder/e23ee00f-348b-4542-9ce0-690d7229d27b/
+  deleteTagFromFolder(tagId: string){
+    let objAddr = this.urlAddr
+      + '/onewiredevices/folder/' + tagId;
     let headers = this.createNewHeader();
     this.getHeaders(headers);
     this.createAuthorizationHeader(headers);

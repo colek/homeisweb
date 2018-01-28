@@ -1,16 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
-import { Tag } from './../classes';
+import { Tag, DetailSharingService, TagToFolder } from './../classes';
 import { CommonService } from './../common.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
+import { SimpleChange } from '@angular/core/src/change_detection/change_detection_util';
 
 
 @Component({
   selector: 'folders',
   templateUrl: './folders.component.html',
   styleUrls: ['./folders.component.css'],
-  providers: [CommonService]
+  providers: [CommonService, DetailSharingService]
 })
 export class FoldersComponent implements OnInit {
   folders: Tag[];
@@ -21,11 +22,14 @@ export class FoldersComponent implements OnInit {
   tick2: number;
   private sub: Subscription;
   refresh: string;
-  constructor(private _commonService: CommonService, private route: ActivatedRoute, private router: Router) {
+  @ViewChild('closeModal') closeModal:ElementRef;
 
+  constructor(private _commonService: CommonService, private route: ActivatedRoute, private router: Router, private _sharingService: DetailSharingService) {
+    
   }
 
   ngOnInit() {
+
     this.route.params
       .switchMap((params: Params) => this.manageId(params['id']))
       .subscribe(
@@ -58,6 +62,7 @@ export class FoldersComponent implements OnInit {
     
   }
 
+  // TODO spatne se vklada nadrazena slozka!!! 
   onNewFolderSet() {
     let cParentId = (this.id != undefined)? this.id : this.folders[0].ParentId;
     console.log("NewFolder clicked, thisId: "+ cParentId);
@@ -114,5 +119,37 @@ export class FoldersComponent implements OnInit {
       this.sub = this.timer.subscribe(t => this.refreshFolder(t));
     }
   }
+
+  setTagToFolder(ttf: TagToFolder){
+    this._commonService.addTagToFolder(this.id, ttf).subscribe(
+      // data => this.strCom = JSON.stringify(data),
+      error => console.error('Error: ' + error),
+      () => {
+        console.log('Completed!');
+        this.closeModalClick();
+      }
+      ); 
+  }
+
+  addNewTagToFolder(event){
+    let tag: Tag;
+
+    tag = event;
+
+    let ttf: TagToFolder;
+    ttf = new TagToFolder();
+
+    if (tag == null || tag.id == '') return;
+
+    ttf.DevValueId = tag.id;
+
+    this.setTagToFolder(ttf);
+  }
+
+  closeModalClick(){
+    this.closeModal.nativeElement.click();
+  }
+  
+  
 
 }
