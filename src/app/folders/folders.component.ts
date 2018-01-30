@@ -22,6 +22,7 @@ export class FoldersComponent implements OnInit {
   tick2: number;
   private sub: Subscription;
   refresh: string;
+  refreshButtonType: string;
   @ViewChild('closeModal') closeModal:ElementRef;
 
   constructor(private _commonService: CommonService, private route: ActivatedRoute, private router: Router, private _sharingService: DetailSharingService) {
@@ -42,6 +43,7 @@ export class FoldersComponent implements OnInit {
     this.timer = Observable.timer(1000, 500);
 
     this.refresh = "On";
+    this.refreshButtonType = "light";
     this.sub = this.timer.subscribe(t => this.refreshFolder(t));
 
   }
@@ -93,13 +95,22 @@ export class FoldersComponent implements OnInit {
     this._commonService.getFolders(this.id)
       .subscribe(
       data => this.folders = this.sortedFolders(data),
-      error => console.error('Error: ' + error),
+      error => {
+        console.error('Error: ' + error);
+        this.refreshButtonType = 'danger';
+      },
       () => {
         console.log('Completed!');
-        this.tick2 = this.tick2 + 1;
+        //this.tick2 = this.tick2 + 1;
+        if(this.refresh == 'On') {
+          this.refreshButtonType = 'success';
+        }
+        else {
+          this.refreshButtonType = 'danger';
+        }
       }
       );
-    this.tick = t;
+    //this.tick = t;
   }
 
   manageId(id: string) {
@@ -110,9 +121,10 @@ export class FoldersComponent implements OnInit {
   onSwitchRefresh() {
     if (this.refresh == "On") {
       this.refresh = "Off";
-      this.tick2 = -1;
-      this.tick = 0;
+      //this.tick2 = -1;
+      //this.tick = 0;
       this.sub.unsubscribe();
+      this.refreshButtonType = 'danger';
     }
     else {
       this.refresh = "On";
