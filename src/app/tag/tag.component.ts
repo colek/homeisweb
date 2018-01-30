@@ -8,7 +8,7 @@ import { Location } from '@angular/common';
   selector: 'tag-item',
   templateUrl: './tag.component.html',
   styleUrls: ['./tag.component.css'],
-  providers: [Tag, CommonService]
+  providers: [CommonService]
 })
 export class TagComponent implements OnInit {
   Tag: Tag;
