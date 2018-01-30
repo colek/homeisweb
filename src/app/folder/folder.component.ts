@@ -8,7 +8,7 @@ import { Location } from '@angular/common';
   selector: 'folder',
   templateUrl: './folder.component.html',
   styleUrls: ['./folder.component.css'],
-  providers: [Tag, Folder]
+  providers: []
 })
 export class FolderComponent implements OnInit {
 

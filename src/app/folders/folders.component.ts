@@ -11,7 +11,7 @@ import { SimpleChange } from '@angular/core/src/change_detection/change_detectio
   selector: 'folders',
   templateUrl: './folders.component.html',
   styleUrls: ['./folders.component.css'],
-  providers: [CommonService, DetailSharingService]
+  providers: [CommonService]
 })
 export class FoldersComponent implements OnInit {
   folders: Tag[];
