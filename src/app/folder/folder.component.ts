@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Tag, Folder, DetailSharingService } from './../classes';
-import { CommonService } from './../common.service';
+import { Tag, Folder } from 'app/classes';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { SharingService } from 'app/services/sharing-service.service';
+import { DevicesService } from 'app/services/devices.service';
+import { ExpressionService } from 'app/services/expression.service';
 
 @Component({
   selector: 'folder',
@@ -25,10 +27,11 @@ export class FolderComponent implements OnInit {
   hasBoolValue: boolean;
   currentValue: string;
 
-  constructor(private _commonService: CommonService, 
+  constructor(private _deviceService: DevicesService,
+  private _expressionService: ExpressionService, 
   private router: Router, 
   private _location: Location, 
-  private _sharingService: DetailSharingService) {
+  private _sharingService: SharingService) {
   }
 
   ngOnInit() {
@@ -200,7 +203,7 @@ export class FolderComponent implements OnInit {
 
   setExpressionRunOpposite(){
     this.folder.running = !this.folder.running;
-    this._commonService.editExpressionFolder(this.folder)
+    this._expressionService.editExpressionFolder(this.folder)
         .subscribe(
         // data => this.strExpression = JSON.stringify(data),
         error => console.error('Error: ' + error),
@@ -218,7 +221,7 @@ export class FolderComponent implements OnInit {
         this.folder.value = "1";
       }
 
-      this._commonService.editTag(this.folder)
+      this._deviceService.editTag(this.folder)
       .subscribe(
       // data => this.strCom = JSON.stringify(data),
       error => console.error('Error: ' + error),
@@ -229,7 +232,7 @@ export class FolderComponent implements OnInit {
   }
 
   onRemoveTag(){
-    this._commonService.deleteTagFromFolder(this.folder.DirValueId)
+    this._deviceService.deleteTagFromFolder(this.folder.DirValueId)
     .subscribe(
     // data => this.strExpression = JSON.stringify(data),
     error => console.error('Error: ' + error),

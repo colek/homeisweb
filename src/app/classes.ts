@@ -100,6 +100,10 @@ export class TagToFolder{
     public DevValueId: string;
 }
 
+export interface IService{
+    servicePrefix: string;
+}
+
 // interface IChangedEvent<T> {
 //     on(handler: { (data?: T): void }) : void;
 //     //off(handler: { (data?: T): void }) : void;
@@ -126,34 +130,34 @@ export class TagToFolder{
 // }
 
 
-@Injectable()
-export class DetailSharingService{
-    //private readonly onChange = new ChangedEvent<object>();
-    //public get Changed() { return this.onChange.expose(); }
+// @Injectable()
+// export class DetailSharingService{
+//     //private readonly onChange = new ChangedEvent<object>();
+//     //public get Changed() { return this.onChange.expose(); }
 
-    public selectedTag: Tag;
-    public selectedDevice: Device;
-    public selectedId: string;
+//     public selectedTag: Tag;
+//     public selectedDevice: Device;
+//     public selectedId: string;
 
-    public setTag(tag: Tag){
-        this.selectedTag = tag;
-       // this.onChange.trigger(tag);
-    }
-    public setDevice(device: Device){
-        this.selectedDevice = device;
-       // this.onChange.trigger(device);
-    }
+//     public setTag(tag: Tag){
+//         this.selectedTag = tag;
+//        // this.onChange.trigger(tag);
+//     }
+//     public setDevice(device: Device){
+//         this.selectedDevice = device;
+//        // this.onChange.trigger(device);
+//     }
 
 
-  constructor(){
-    this.selectedTag = null;
-    this.selectedDevice = null;
-  }
-  getTag<Tag> () {
-    return this.selectedTag;
-  }
+//   constructor(){
+//     this.selectedTag = null;
+//     this.selectedDevice = null;
+//   }
+//   getTag<Tag> () {
+//     return this.selectedTag;
+//   }
   
-  getDevice<Device> () {
-    return this.selectedDevice;
-  }
-}
+//   getDevice<Device> () {
+//     return this.selectedDevice;
+//   }
+// }

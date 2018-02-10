@@ -1,17 +1,18 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
-import { Tag, DetailSharingService, TagToFolder } from './../classes';
-import { CommonService } from './../common.service';
+import { Tag, TagToFolder } from 'app/classes';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import { SimpleChange } from '@angular/core/src/change_detection/change_detection_util';
+import { FolderService } from 'app/services/folder.service';
+import { SharingService } from 'app/services/sharing-service.service';
 
 
 @Component({
   selector: 'folders',
   templateUrl: './folders.component.html',
   styleUrls: ['./folders.component.css'],
-  providers: [CommonService]
+  providers: []
 })
 export class FoldersComponent implements OnInit {
   folders: Tag[];
@@ -25,7 +26,7 @@ export class FoldersComponent implements OnInit {
   refreshButtonType: string;
   @ViewChild('closeModal') closeModal:ElementRef;
 
-  constructor(private _commonService: CommonService, private route: ActivatedRoute, private router: Router, private _sharingService: DetailSharingService) {
+  constructor(private _folderService: FolderService, private route: ActivatedRoute, private router: Router, private _sharingService: SharingService) {
     
   }
 
@@ -92,7 +93,7 @@ export class FoldersComponent implements OnInit {
   }
 
   refreshFolder(t) {
-    this._commonService.getFolders(this.id)
+    this._folderService.getFolders(this.id)
       .subscribe(
       data => this.folders = this.sortedFolders(data),
       error => {
@@ -115,7 +116,7 @@ export class FoldersComponent implements OnInit {
 
   manageId(id: string) {
     this.id = id;
-    return this._commonService.getFolders(id);
+    return this._folderService.getFolders(id);
   }
 
   onSwitchRefresh() {
@@ -133,7 +134,7 @@ export class FoldersComponent implements OnInit {
   }
 
   setTagToFolder(ttf: TagToFolder){
-    this._commonService.addTagToFolder(this.id, ttf).subscribe(
+    this._folderService.addTagToFolder(this.id, ttf).subscribe(
       // data => this.strCom = JSON.stringify(data),
       error => console.error('Error: ' + error),
       () => {

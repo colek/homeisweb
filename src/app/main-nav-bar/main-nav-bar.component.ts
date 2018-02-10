@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SharingService } from 'app/services/sharing-service.service';
 
 @Component({
   selector: 'main-nav-bar',
@@ -11,9 +12,11 @@ export class MainNavBarComponent implements OnInit {
   public showLogin: boolean;
   public showFolders: boolean;
   public showDataTags: boolean;
+  public logged: string;
 
 
-  constructor() { 
+  constructor(private _sharingService: SharingService) { 
+    this.logged= this._sharingService.Login;
   }
 
   ngOnInit() {

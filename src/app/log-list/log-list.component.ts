@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonService } from './../common.service';
 import { ActivatedRoute } from '@angular/router';
+import { LogService } from 'app/services/log.service';
 
 @Component({
   selector: 'log-list',
   templateUrl: './log-list.component.html',
   styleUrls: ['./log-list.component.css'],
-  providers: [CommonService]
+  providers: []
 })
 export class LogListComponent implements OnInit {
   
@@ -14,7 +14,7 @@ export class LogListComponent implements OnInit {
   currentLog: string;
 
   constructor(
-    private _commonService: CommonService,
+    private _logService: LogService,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -22,7 +22,7 @@ export class LogListComponent implements OnInit {
   }
   
   loadLogs(){
-    this._commonService.getLogs()
+    this._logService.getLogs()
       .subscribe(
       data => {
         this.logs = data.reverse();

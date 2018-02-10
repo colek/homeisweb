@@ -17,11 +17,17 @@ import { CodemirrorModule } from 'ng2-codemirror';
 import { DevicesComponent } from './devices/devices.component';
 import { DevicesItemComponent } from './devices-item/devices-item.component';
 import { TagComponent } from './tag/tag.component';
-import { DetailSharingService } from './classes';
 import { FolderNavBarComponent } from "./folder-nav-bar/folder-nav-bar.component";
 import { DeviceDetailComponent } from "./device-detail/device-detail.component";
 import { LogListComponent } from './log-list/log-list.component';
 import { LogDayComponent } from './log-day/log-day.component';
+import { SharingService } from './services/sharing-service.service';
+import { AuthComponent } from './auth/auth/auth.component';
+import { ModbusService } from './services/modbus.service';
+import { DevicesService } from './services/devices.service';
+import { FolderService } from './services/folder.service';
+import { LogService } from './services/log.service';
+import { ExpressionService } from './services/expression.service';
 
 
 @NgModule({
@@ -40,7 +46,8 @@ import { LogDayComponent } from './log-day/log-day.component';
     FolderNavBarComponent,
     DeviceDetailComponent,
     LogListComponent,
-    LogDayComponent
+    LogDayComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +57,7 @@ import { LogDayComponent } from './log-day/log-day.component';
     AppRoutingModule,
     CodemirrorModule
   ],
-  providers: [DetailSharingService],
+  providers: [SharingService, ModbusService, DevicesService, FolderService, LogService, ExpressionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

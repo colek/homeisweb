@@ -1,13 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Device, Tag } from './../classes';
-import { CommonService } from './../common.service';
+import { Device, Tag } from 'app/classes';
 import { Router } from '@angular/router';
+import { DevicesService } from 'app/services/devices.service';
 
 @Component({
   selector: 'app-devices',
   templateUrl: './devices.component.html',
   styleUrls: ['./devices.component.css'],
-  providers: [Device, CommonService]
+  providers: [Device]
 })
 export class DevicesComponent implements OnInit {
 
@@ -16,7 +16,7 @@ export class DevicesComponent implements OnInit {
   @Input() addMode: boolean;
   @Output() addClicked = new EventEmitter();
 
-  constructor(private _commonService: CommonService, private router: Router) {
+  constructor(private _deviceService: DevicesService, private router: Router) {
     this.loadDevices();
    }
 
@@ -25,7 +25,7 @@ export class DevicesComponent implements OnInit {
   }
 
   loadDevices() {
-    this._commonService.getDevices()
+    this._deviceService.getDevices()
       .subscribe(
       data => {
         this.devices = data,

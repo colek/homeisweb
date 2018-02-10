@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Pipe } from '@angular/core';
-import { Folder } from './../classes';
-import { CommonService } from './../common.service';
+import { Folder } from 'app/classes';
+import { FolderService } from 'app/services/folder.service';
 
 @Component({
   selector: 'folder-nav',
@@ -14,7 +14,7 @@ export class FolderNavBarComponent implements OnInit {
   Folders: Array<Folder>;
   strFolders: string;
 
-  constructor(private _commonService: CommonService) { }
+  constructor(private _folderService: FolderService) { }
 
   ngOnInit() {
     this.Folders = new Array();
@@ -23,7 +23,7 @@ export class FolderNavBarComponent implements OnInit {
   }
 
   GetParentFolder(folderid: string){
-    this._commonService.getFolder(folderid).subscribe(
+    this._folderService.getFolder(folderid).subscribe(
         data => this.addFolder(data),
         error => console.error('Error: ' + error),
         () => console.log('Completed!')

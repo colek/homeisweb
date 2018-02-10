@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SimpleChange } from '@angular/core/src/change_detection/change_detection_util';
-import { CommonService } from './../common.service';
+import { LogService } from 'app/services/log.service';
 
 @Component({
   selector: 'log-day',
@@ -13,7 +13,7 @@ export class LogDayComponent implements OnInit {
   logText: string;
 
   constructor(
-    private _commonService: CommonService) { }
+    private _logService: LogService) { }
 
   ngOnInit() {
   }
@@ -21,7 +21,7 @@ export class LogDayComponent implements OnInit {
   ngOnChanges(chage: SimpleChange){
     if(this.currentLog == undefined) return;
 
-    this._commonService.getLog(this.currentLog)
+    this._logService.getLog(this.currentLog)
         .subscribe(
         data => {
           this.logText = data[this.currentLog];

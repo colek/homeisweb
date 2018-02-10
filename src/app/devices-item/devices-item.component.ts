@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Device, DetailSharingService, Tag } from './../classes';
+import { Device, Tag } from 'app/classes';
 import { Router } from '@angular/router';
+import { SharingService } from 'app/services/sharing-service.service';
 
 @Component({
   selector: 'devicesItem',
@@ -16,17 +17,15 @@ export class DevicesItemComponent implements OnInit {
 
   constructor( 
   private router: Router, 
-  private _sharingService: DetailSharingService) {
+  private _sharingService: SharingService) {
     
   }
 
   ngOnInit() {
   }
 
-  onClick(event) {
-    
+  onClick(event) {    
     console.log('device click');
-
   }
 
   onEdit(event){

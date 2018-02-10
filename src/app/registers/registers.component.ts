@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { ModbusService } from './../modbus.service'
-import {Register} from './../classes';
+import { ModbusService } from 'app/modbus.service'
+import {Register} from 'app/classes';
+import { SharingService } from 'app/services/sharing-service.service';
 
 @Component({
   selector: 'registers',
   templateUrl: './registers.component.html',
   styleUrls: ['./registers.component.css'],
-  providers: [ModbusService, Register]
+  providers: [ModbusService]
 })
 
 export class RegistersComponent {
@@ -18,9 +19,10 @@ export class RegistersComponent {
   private _postRegister: Register
 
   constructor(
-      private _modbusService: ModbusService) {
+      private _modbusService: ModbusService,
+    private _sharingSrvice: SharingService) {
     //this.onTestGet();
-    this.url = '/api';
+    this.url = this._sharingSrvice.urlAddr;
     this._getRegister = new Register();
     this._postRegister = new Register();
     this.addressSet();
@@ -37,7 +39,7 @@ export class RegistersComponent {
   };
 
   addressSet(){
-    this._modbusService.urlAddr = this.url;
+    this._sharingSrvice.urlAddr = this.url;
     this._modbusService.getConnectors()
     .subscribe(
       data => this.connectors = data,

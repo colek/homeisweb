@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Tag, SelectObj, DetailSharingService } from './../classes';
-import { CommonService } from './../common.service';
+import { Tag, SelectObj } from 'app/classes';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
+import { SharingService } from 'app/services/sharing-service.service';
+import { DevicesService } from 'app/services/devices.service';
 
 @Component({
   selector: 'tag-item',
   templateUrl: './tag.component.html',
   styleUrls: ['./tag.component.css'],
-  providers: [CommonService]
+  providers: []
 })
 export class TagComponent implements OnInit {
   Tag: Tag;
@@ -31,10 +32,10 @@ export class TagComponent implements OnInit {
 
   strCom: string;
 
-  constructor(private _commonService: CommonService,
+  constructor(private _deviceService: DevicesService,
     private route: ActivatedRoute,
     private _location: Location,
-    private _sahringService: DetailSharingService) { }
+    private _sahringService: SharingService) { }
 
   ngOnInit() {
     this.loadTypes();
@@ -65,7 +66,7 @@ export class TagComponent implements OnInit {
   }
 
   loadTag(parentId: string) {
-    return this._commonService.getTag(parentId);
+    return this._deviceService.getTag(parentId);
   }
 
   refreshButtons(){
@@ -111,7 +112,7 @@ export class TagComponent implements OnInit {
   onSave() {
 
     this.strCom = JSON.stringify(this.Tag);
-    this._commonService.editTag(this.Tag)
+    this._deviceService.editTag(this.Tag)
       .subscribe(
       // data => this.strCom = JSON.stringify(data),
       error => console.error('Error: ' + error),

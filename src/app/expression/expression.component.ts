@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Expression } from './../classes';
-import { CommonService } from './../common.service';
+import { Expression } from 'app/classes';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import { CodemirrorComponent } from 'ng2-codemirror';
 import 'codemirror/mode/lua/lua'
+import { ExpressionService } from 'app/services/expression.service';
 
 @Component({
   selector: 'expression',
   templateUrl: './expression.component.html',
   styleUrls: ['./expression.component.css'],
-  providers: [Expression, CommonService]
+  providers: [Expression]
 })
 export class ExpressionComponent implements OnInit {
   expression: Expression;
@@ -26,7 +26,7 @@ export class ExpressionComponent implements OnInit {
   isRunningText: string;
   btnRunningClass: string;
 
-  constructor(private _commonService: CommonService,
+  constructor(private _expressionService: ExpressionService,
     private route: ActivatedRoute,
     private _location: Location) { }
 
@@ -73,7 +73,7 @@ export class ExpressionComponent implements OnInit {
   }
 
   loadExpression(id: string) {
-    return this._commonService.getExpressions(id);
+    return this._expressionService.getExpressions(id);
   }
 
   setExpr(expr: Expression[]) {
@@ -89,7 +89,7 @@ export class ExpressionComponent implements OnInit {
 
   onSave() {
     if (this.isNew) {
-      this._commonService.addExpression(this.expression)
+      this._expressionService.addExpression(this.expression)
         .subscribe(
         data => this.strExpression = JSON.stringify(data),
         error => console.error('Error: ' + error),
@@ -97,7 +97,7 @@ export class ExpressionComponent implements OnInit {
         );
     }
     else {
-      this._commonService.editExpression(this.expression)
+      this._expressionService.editExpression(this.expression)
         .subscribe(
         data => this.strExpression = JSON.stringify(data),
         error => console.error('Error: ' + error),
@@ -113,7 +113,7 @@ export class ExpressionComponent implements OnInit {
   }
 
   onDelete() {
-    this._commonService.deleteExpression(this.id)
+    this._expressionService.deleteExpression(this.id)
       .subscribe(
       data => this.strExpression = JSON.stringify(data),
       error => console.error('Error: ' + error),
@@ -122,7 +122,7 @@ export class ExpressionComponent implements OnInit {
   }
 
   onTest() {
-    return this._commonService.testExpression(this.id).subscribe(
+    return this._expressionService.testExpression(this.id).subscribe(
       data => {
         this.strExpression = JSON.stringify(data);
         this.readExpression(this.expression.parentId);

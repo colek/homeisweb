@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Folder } from './../classes';
-import { CommonService } from './../common.service';
+import { Folder } from 'app/classes';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
+import { FolderService } from 'app/services/folder.service';
 
 @Component({
   selector: 'newfolder',
   templateUrl: './newfolder.component.html',
   styleUrls: ['./newfolder.component.css'],
-  providers: [Folder, CommonService]
+  providers: [Folder]
 })
 export class NewfolderComponent implements OnInit {
   folder: Folder;
@@ -17,7 +17,7 @@ export class NewfolderComponent implements OnInit {
   isNew: boolean;
   id: string;
 
-  constructor(private _commonService: CommonService,
+  constructor(private _folderService: FolderService,
     private route: ActivatedRoute,
     private _location: Location) {
   }
@@ -52,7 +52,7 @@ export class NewfolderComponent implements OnInit {
   }
 
   loadFolder(id: string) {
-    return this._commonService.getFolder(id);
+    return this._folderService.getFolder(id);
   }
 
   setFolder(folder: Folder[]) {
@@ -63,7 +63,7 @@ export class NewfolderComponent implements OnInit {
 
   onSave() {
     if (this.isNew) {
-      this._commonService.addFolder(this.folder)
+      this._folderService.addFolder(this.folder)
         .subscribe(
         data => this.strFolder = JSON.stringify(data),
         error => console.error('Error: ' + error),
@@ -71,7 +71,7 @@ export class NewfolderComponent implements OnInit {
         );
     }
     else {
-      this._commonService.editFolder(this.folder)
+      this._folderService.editFolder(this.folder)
         .subscribe(
         data => this.strFolder = JSON.stringify(data),
         error => console.error('Error: ' + error),
@@ -87,7 +87,7 @@ export class NewfolderComponent implements OnInit {
   }
 
   onDelete() {
-    this._commonService.deleteFolder(this.id)
+    this._folderService.deleteFolder(this.id)
       .subscribe(
       data => this.strFolder = JSON.stringify(data),
       error => console.error('Error: ' + error),

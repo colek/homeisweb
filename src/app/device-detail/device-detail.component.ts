@@ -1,15 +1,15 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Device } from './../classes';
 import { Location } from '@angular/common';
-import { Tag, SelectObj, DetailSharingService } from './../classes';
-import { CommonService } from './../common.service';
+import { Tag, SelectObj, Device } from 'app/classes';
 import { ActivatedRoute, Params } from '@angular/router';
+import { DevicesService } from 'app/services/devices.service';
+import { SharingService } from 'app/services/sharing-service.service';
 
 @Component({
   selector: 'device-detail',
   templateUrl: './device-detail.component.html',
   styleUrls: ['./device-detail.component.css'],
-  providers: [Device, Tag, CommonService]
+  providers: [Device, Tag]
 })
 export class DeviceDetailComponent implements OnInit {
 
@@ -25,13 +25,14 @@ export class DeviceDetailComponent implements OnInit {
   @Output() addClicked = new EventEmitter();
 
   constructor(
-    private _commonService: CommonService,
+    private _deviceService: DevicesService,
     private route: ActivatedRoute,
     private _location: Location,
-    private _sahringService: DetailSharingService) { }
+    private _sahringService: SharingService) {       
+    }
 
   ngOnInit() {
-    this.id = this.route.snapshot.params['id'];
+    this.id = this.route.snapshot.params['id'];    
 
     if (this.id == undefined) {
       this.isNew = true;
@@ -46,6 +47,7 @@ export class DeviceDetailComponent implements OnInit {
         this.loadDevice();
       }
     }
+    this.setScriptRunning();
   }
 
   onBack(){
@@ -54,7 +56,7 @@ export class DeviceDetailComponent implements OnInit {
 
   loadDevice(){
       this.route.params
-        .switchMap((params: Params) => this._commonService.getDevice(params["id"]))
+        .switchMap((params: Params) => this._deviceService.getDevice(params["id"]))
         .subscribe(
         data => {
           this.device = data[0];
@@ -67,7 +69,7 @@ export class DeviceDetailComponent implements OnInit {
 
   onSave(){
     if(this.isNew){
-    this._commonService.addDevice(this.device)
+    this._deviceService.addDevice(this.device)
       .subscribe(
       // data => this.strCom = JSON.stringify(data),
       error => console.error('Error: ' + error),
@@ -77,7 +79,7 @@ export class DeviceDetailComponent implements OnInit {
       );
     }
     else{
-      this._commonService.editDevice(this.device)
+      this._deviceService.editDevice(this.device)
       .subscribe(
       // data => this.strCom = JSON.stringify(data),
       error => console.error('Error: ' + error),
@@ -96,14 +98,18 @@ export class DeviceDetailComponent implements OnInit {
 //todo
   }
 
+  onNewTag(){
+    
+  }
+
   switchOnOff() {
     this.device.Enabled = !this.device.Enabled;
     this.setScriptRunning();
   }
 
   setScriptRunning() {
-    this.isRunningText = (this.device.Enabled) ? "Zapnuto" : "Vypnuto";
-    this.btnRunningClass = (this.device.Enabled) ? "btn-success" : "btn-warning";
+    this.isRunningText = (this.device!=null && this.device.Enabled) ? "Zapnuto" : "Vypnuto";
+    this.btnRunningClass = (this.device!=null && this.device.Enabled) ? "btn-success" : "btn-warning";
   }
 
   handleAddClick(event){

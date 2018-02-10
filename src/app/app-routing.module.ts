@@ -10,6 +10,7 @@ import { DeviceDetailComponent } from './device-detail/device-detail.component'
 import { TagComponent } from './tag/tag.component'
 import { LogListComponent } from './log-list/log-list.component';
 import { LogDayComponent } from 'app/log-day/log-day.component';
+import { AuthComponent } from 'app/auth/auth/auth.component';
 
 
 const appRoutes: Routes = [
@@ -25,6 +26,7 @@ const appRoutes: Routes = [
   { path: 'newexpression/:parentId', component: ExpressionComponent },
   { path: 'dataitems', component: DevicesComponent },
   { path: 'modbus', component: RegistersComponent },
+  { path: 'login', component: AuthComponent },
   { path: 'logs', component: LogListComponent },
   { path: 'log/:id', component: LogDayComponent },
   { path: '', redirectTo: '/folders', pathMatch: 'full' },
