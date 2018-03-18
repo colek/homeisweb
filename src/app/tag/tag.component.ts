@@ -42,9 +42,14 @@ export class TagComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.strCom = "xxx";
 
-    if (this.id == undefined) {
+    if (this.id == undefined || this.id == "new") {
       this.isNew = true;
       this.header = "Nový tag";
+      this.Tag = new Tag();
+      this.Tag.internal = true;
+      this.Tag.type = 0;
+      this.Tag.direction = 2;
+      this.Tag.ParentId = this._sahringService.getDevice().Id;
     }
     else {
       this.isNew = false;
@@ -61,8 +66,9 @@ export class TagComponent implements OnInit {
       //   () => console.log('Completed!')
       //   );
 
-      this.refreshButtons();
     }
+
+    this.refreshButtons();
   }
 
   loadTag(parentId: string) {
@@ -112,6 +118,16 @@ export class TagComponent implements OnInit {
   onSave() {
 
     this.strCom = JSON.stringify(this.Tag);
+    if(this.isNew){
+      this._deviceService.addDeviceValue(this.Tag).subscribe(
+        error => console.error('Error: ' + error),
+        () => {
+          console.log('Completed!');
+  
+          this.strCom = JSON.stringify(this.Tag);
+        }
+        );
+    }
     this._deviceService.editTag(this.Tag)
       .subscribe(
       // data => this.strCom = JSON.stringify(data),

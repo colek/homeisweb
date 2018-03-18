@@ -39,7 +39,7 @@
       </div>
       <div class="form-group col-12">
         <label for="seltype">Typ:</label>
-        <select [(ngModel)]="Tag.type" class="form-control" name="seltype" disabled="disabled">
+        <select [(ngModel)]="Tag.type" class="form-control" name="seltype" ng-disabled="isNew != true">
            <option *ngFor="let ctype of typeSelect" [ngValue]="ctype.value">{{ctype.name}}</option>
         </select>
       </div>

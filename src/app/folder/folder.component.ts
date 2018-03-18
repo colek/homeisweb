@@ -26,6 +26,7 @@ export class FolderComponent implements OnInit {
   inError: string;
   hasBoolValue: boolean;
   currentValue: string;
+  onlineState: string = 'action';
 
   constructor(private _deviceService: DevicesService,
   private _expressionService: ExpressionService, 
@@ -37,6 +38,7 @@ export class FolderComponent implements OnInit {
   ngOnInit() {
     this.switchIco();
     this.inError = (this.folder.error && !this.folder.internal) ? "danger" : "success";
+    this.onlineState = (this.folder.error && !this.folder.internal) ? "danger" : "action";
   }
 
   onClick(event) {

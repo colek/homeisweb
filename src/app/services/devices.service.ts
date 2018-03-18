@@ -48,7 +48,7 @@ export class DevicesService implements IService{
       .catch(this._sharingService.handleError);
   }
 
-  addDeviceValue(deviceVal: DeviceValue) {
+  addDeviceValue(deviceVal: Tag) {
     let headers = this._sharingService.createHeaders();
     let strDeviceVal = JSON.stringify(deviceVal);
     return this._http.post(this._sharingService.getAddress(this.servicePrefix + 'devvalue/'), strDeviceVal, {

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Location } from '@angular/common';
 import { Tag, SelectObj, Device } from 'app/classes';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DevicesService } from 'app/services/devices.service';
 import { SharingService } from 'app/services/sharing-service.service';
 
@@ -28,7 +28,8 @@ export class DeviceDetailComponent implements OnInit {
     private _deviceService: DevicesService,
     private route: ActivatedRoute,
     private _location: Location,
-    private _sahringService: SharingService) {       
+    private _sahringService: SharingService,
+    private router: Router) {       
     }
 
   ngOnInit() {
@@ -99,7 +100,8 @@ export class DeviceDetailComponent implements OnInit {
   }
 
   onNewTag(){
-    
+    this._sahringService.setDevice(this.device);
+    this.router.navigate(['/edittag/new']);
   }
 
   switchOnOff() {

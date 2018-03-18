@@ -8,7 +8,7 @@ export class SharingService {
 
   Login: string;
   Pwd: string;
-  public urlAddr ='https://192.168.2.221:82/api'; //'/api'; //'https://192.168.2.221:82/api';
+  public urlAddr ='/api'; //'/api'; //'https://192.168.2.221:82/api';
 
  
   public selectedTag: Tag;
