@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SharingService } from 'app/services/sharing-service.service';
+import { ModbusService } from 'app/modbus.service';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs';
+import { LogService } from '../services/log.service';
 
 @Component({
   selector: 'main-nav-bar',
@@ -13,10 +17,28 @@ export class MainNavBarComponent implements OnInit {
   public showFolders: boolean;
   public showDataTags: boolean;
   public logged: string;
+  
+  timer;
+  private sub: Subscription;  
+  public boolIco: string;
 
 
-  constructor(private _sharingService: SharingService) { 
+  constructor(private _sharingService: SharingService, private _logService: LogService) { 
     this.logged= this._sharingService.Login;
+  }
+
+  
+
+  checkOnline(t) {
+    this._logService.getLogs()
+      .subscribe(
+      data => { },
+      error => {
+        console.error('Error: ' + error);
+        this.boolIco = "Light Bulb Off";
+      },
+      () => { this.boolIco = "Light Bulb On"; }
+      );
   }
 
   ngOnInit() {
@@ -24,6 +46,11 @@ export class MainNavBarComponent implements OnInit {
     this.showLogin = false;
     this.showFolders = false;
     this.showDataTags = false;
+
+    this.timer = Observable.timer(1000, 500);
+
+    this.boolIco = "Light Bulb Off";
+    this.sub = this.timer.subscribe(t => this.checkOnline(t));
   }
 
   onShowRegisters(){    
