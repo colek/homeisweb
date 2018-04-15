@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Tag, Folder } from 'app/classes';
+import { Tag, Folder, TagType } from 'app/classes';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { SharingService } from 'app/services/sharing-service.service';
 import { DevicesService } from 'app/services/devices.service';
 import { ExpressionService } from 'app/services/expression.service';
+import { TagService } from 'app/services/tag.service';
 
 @Component({
   selector: 'folder',
@@ -14,13 +15,14 @@ import { ExpressionService } from 'app/services/expression.service';
 })
 export class FolderComponent implements OnInit {
 
-  @Input() folder: Tag;
+  @Input() folderitem: Tag;
   @Input() previousfolderId: string;
   @Input() deviceid: string;
   @Input() addMode: boolean;
 
   @Output() addClicked = new EventEmitter();
 
+  boolType: TagType = TagType.Bool;
   ico: string;
   boolIco: string;
   inError: string;
@@ -29,6 +31,7 @@ export class FolderComponent implements OnInit {
   onlineState: string = 'action';
 
   constructor(private _deviceService: DevicesService,
+    private _tagService: TagService,
   private _expressionService: ExpressionService, 
   private router: Router, 
   private _location: Location, 
@@ -37,15 +40,15 @@ export class FolderComponent implements OnInit {
 
   ngOnInit() {
     this.switchIco();
-    this.inError = (this.folder.error && !this.folder.internal) ? "danger" : "success";
-    this.onlineState = (this.folder.error && !this.folder.internal) ? "danger" : "action";
+    this.inError = (this.folderitem.error && !this.folderitem.internal) ? "danger" : "success";
+    this.onlineState = (this.folderitem.error && !this.folderitem.internal) ? "danger" : "action";
   }
 
   onClick(event) {
     console.log('folder click');
-    switch (this.folder.NodeName) {
+    switch (this.folderitem.NodeName) {
       case "folder":
-        this.router.navigate(['/folders/', this.folder.id]);
+        this.router.navigate(['/folders/', this.folderitem.id]);
         break;
       case "previous":
         this._location.back();
@@ -63,7 +66,7 @@ export class FolderComponent implements OnInit {
   }
 
   onBulbClick(event) {
-    switch (this.folder.NodeName) {
+    switch (this.folderitem.NodeName) {
       case "value":
         // TODO set value to opposite
         this.setBoolValueOpposite();
@@ -82,23 +85,25 @@ export class FolderComponent implements OnInit {
   onEdit(event) {
     event.stopPropagation();
 
-    switch (this.folder.NodeName) {
+    switch (this.folderitem.NodeName) {
       case "folder":
-        this.router.navigate(['/editfolder/', this.folder.id]);
+        this.router.navigate(['/editfolder/', this.folderitem.id]);
         break;
       case "expression":
-        this.router.navigate(['/editexpression/', this.previousfolderId, this.folder.id]);
+        this.router.navigate(['/editexpression/', this.previousfolderId, this.folderitem.id]);
         break;
       case "value":
-        this._sharingService.setTag(this.folder);
-        this.router.navigate(['/edittag/', this.folder.id]);
+        if (this.deviceid==undefined)
+          this.router.navigate(['/edittagfromfolder/',this.previousfolderId, this.folderitem.id]);
+        else
+          this.router.navigate(['/edittagfromdevice/',this.deviceid, this.folderitem.id]);
         break;
     }
 
   }
 
   onAdd(event) {
-    this.addClicked.emit(this.folder);
+    this.addClicked.emit(this.folderitem);
     //event.stopPropagation();
     //this._sharingService.setTag(this.folder);
   }
@@ -106,9 +111,9 @@ export class FolderComponent implements OnInit {
   switchBool() {
 
     this.hasBoolValue = false;
-    switch (this.folder.NodeName) {
+    switch (this.folderitem.NodeName) {
       case "value":
-        switch (+this.folder.value) {
+        switch (+this.folderitem.value) {
           case 0: {
             this.boolIco = "Light Bulb Off";
             break;
@@ -121,7 +126,7 @@ export class FolderComponent implements OnInit {
         this.hasBoolValue = true;
         break;
       case "expression":
-        switch (+this.folder.running) {
+        switch (+this.folderitem.running) {
           case 0: {
             this.boolIco = "Light Bulb Off";
             break;
@@ -137,37 +142,37 @@ export class FolderComponent implements OnInit {
   }
 
   switchIco() {
-    switch (this.folder.NodeName) {
+    switch (this.folderitem.NodeName) {
       case "value": {
 
-        this.currentValue = this.folder.value +' '+ this.folder.unit;
-        switch (+this.folder.type) {
-          case 0: { // int
+        this.currentValue = this.folderitem.value +' '+ this.folderitem.unit;
+        switch (this.folderitem.type) {
+          case TagType.Int: { // int
             this.ico = "Dashboard";
             break;
           }
-          case 1: {
+          case TagType.Uint: {
             this.ico = "Dashboard";
             break;
           }
-          case 2: { // double
+          case TagType.Double: { // double
             this.ico = "Dashboard";
             break;
           }
-          case 3: { // string
+          case TagType.String: { // string
             this.ico = "Dashboard";
             break;
           }
-          case 4: { // bool
+          case TagType.Bool: { // bool
             this.ico = "System Preferences";
             this.switchBool();
             break;
           }
-          case 5: { // ??
+          case TagType.Enum: { // ??
             this.ico = "Dashboard";
             break;
           }
-          case 6: { // ??
+          case TagType.Email: { // ??
             this.ico = "Dashboard";
             break;
           }
@@ -204,8 +209,8 @@ export class FolderComponent implements OnInit {
   }
 
   setExpressionRunOpposite(){
-    this.folder.running = !this.folder.running;
-    this._expressionService.editExpressionFolder(this.folder)
+    this.folderitem.running = !this.folderitem.running;
+    this._expressionService.editExpressionFolder(this.folderitem)
         .subscribe(
         // data => this.strExpression = JSON.stringify(data),
         error => console.error('Error: ' + error),
@@ -215,15 +220,15 @@ export class FolderComponent implements OnInit {
 
   setBoolValueOpposite(){
     // zmena hodnoty pouze bool
-    if(this.folder.type == 4 && this.folder.direction > 0){
-      if(this.folder.value == "1"){
-        this.folder.value = "0";
+    if(this.folderitem.type == TagType.Bool && this.folderitem.direction > 0){
+      if(this.folderitem.value == "1"){
+        this.folderitem.value = "0";
       }
       else{
-        this.folder.value = "1";
+        this.folderitem.value = "1";
       }
 
-      this._deviceService.editTag(this.folder)
+      this._tagService.saveTag(this.folderitem)
       .subscribe(
       // data => this.strCom = JSON.stringify(data),
       error => console.error('Error: ' + error),
@@ -234,7 +239,7 @@ export class FolderComponent implements OnInit {
   }
 
   onRemoveTag(){
-    this._deviceService.deleteTagFromFolder(this.folder.DirValueId)
+    this._deviceService.deleteTagFromFolder(this.folderitem.DirValueId)
     .subscribe(
     // data => this.strExpression = JSON.stringify(data),
     error => console.error('Error: ' + error),

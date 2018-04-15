@@ -43,24 +43,19 @@ export class DeviceDetailComponent implements OnInit {
     else{
       this.isNew = false;
       this.header = "Datový bod";
-      this.device = this._sahringService.getDevice();
-      if(this.device == undefined){
-        this.loadDevice();
-      }
-    }
-    this.setScriptRunning();
-  }
+      this.loadDevice();    
+    }    
+  } 
 
   onBack(){
     this._location.back();
   }
 
-  loadDevice(){
-      this.route.params
-        .switchMap((params: Params) => this._deviceService.getDevice(params["id"]))
+  loadDevice(){      
+        this._deviceService.getDevice(this.id)
         .subscribe(
         data => {
-          this.device = data[0];
+          this.device = data;
           this.setScriptRunning();
         },
         error => console.error('Error: ' + error),
@@ -69,7 +64,7 @@ export class DeviceDetailComponent implements OnInit {
   }
 
   onSave(){
-    if(this.isNew){
+    if(this.isNew){ 
     this._deviceService.addDevice(this.device)
       .subscribe(
       // data => this.strCom = JSON.stringify(data),
@@ -101,7 +96,7 @@ export class DeviceDetailComponent implements OnInit {
 
   onNewTag(){
     this._sahringService.setDevice(this.device);
-    this.router.navigate(['/edittag/new']);
+    this.router.navigate(['/newtag/' + this.id]);
   }
 
   switchOnOff() {

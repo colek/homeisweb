@@ -26,8 +26,10 @@ export class FoldersComponent implements OnInit {
   refreshButtonType: string;
   @ViewChild('closeModal') closeModal:ElementRef;
 
-  constructor(private _folderService: FolderService, private route: ActivatedRoute, private router: Router, private _sharingService: SharingService) {
-    
+  constructor(private _folderService: FolderService, 
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private _sharingService: SharingService) {    
   }
 
   ngOnInit() {
@@ -56,7 +58,7 @@ export class FoldersComponent implements OnInit {
   }
 
   onNewExpression() {
-    let cParentId = (this.id != undefined)? this.id : this.folders[0].ParentId;
+    let cParentId = (this.id != undefined)? this.id : this.folders[0].parentId;
     console.log("NewExpression clicked, thisId: "+ cParentId);
     this.router.navigate(['/newexpression', cParentId]);
   }
@@ -67,7 +69,7 @@ export class FoldersComponent implements OnInit {
 
   // TODO spatne se vklada nadrazena slozka!!! 
   onNewFolderSet() {
-    let cParentId = (this.id != undefined)? this.id : this.folders[0].ParentId;
+    let cParentId = (this.id != undefined)? this.id : this.folders[0].parentId;
     console.log("NewFolder clicked, thisId: "+ cParentId);
     this.router.navigate(['/newfolder', cParentId]);
   }

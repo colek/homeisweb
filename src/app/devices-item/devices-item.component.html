@@ -12,7 +12,7 @@
 </a>
 <div id="collapse{{device.Id}}C" class="collapse" role="tabpanel" aria-labelledby="heading">
   <div class="list-group">
-    <folder *ngFor="let folder of device.Tags" [folder]='folder' [deviceid]='device.id' [addMode]='addMode' (addClicked)='handleAddClick($event)'></folder>
+    <folder *ngFor="let folder of device.Tags" [folderitem]='folder' [deviceid]='device.Id' [addMode]='addMode' (addClicked)='handleAddClick($event)'></folder>
   </div>
 </div>
 

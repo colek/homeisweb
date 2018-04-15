@@ -35,14 +35,25 @@ export class Device {
     }
 }
 
+export enum TagType {
+    Unknown = -1,
+	Int = 0,
+	Uint = 1,
+	Double = 2,
+	String = 3,
+	Bool = 4,
+	Enum = 5,
+	Email = 6
+}
+
 export class Tag {
     public name: string;
     public id: string;
     public DirValueId: string;
-    public ParentId: string;
+    public parentId: string;
     public NodeName: string;
     public address: string;
-    public type: number;
+    public type: TagType;
     public direction: number;
     public value: string;
     public error: boolean;
@@ -103,61 +114,3 @@ export class TagToFolder{
 export interface IService{
     servicePrefix: string;
 }
-
-// interface IChangedEvent<T> {
-//     on(handler: { (data?: T): void }) : void;
-//     //off(handler: { (data?: T): void }) : void;
-// }
-
-// class ChangedEvent<T> implements IChangedEvent<T> {
-//     private handlers: { (data?: T): void; }[] = [];
-
-//     public on(handler: { (data?: T): void }) : void {
-//         this.handlers.push(handler);
-//     }
-
-//     // public off(handler: { (data?: T): void }) : void {
-//     //     this.handlers = this.handlers.filter(h => h !== handler);
-//     // }
-
-//     public trigger(data?: T) {
-//         this.handlers.slice(0).forEach(h => h(data));
-//     }
-
-//     public expose() : IChangedEvent<T> {
-//         return this;
-//     }
-// }
-
-
-// @Injectable()
-// export class DetailSharingService{
-//     //private readonly onChange = new ChangedEvent<object>();
-//     //public get Changed() { return this.onChange.expose(); }
-
-//     public selectedTag: Tag;
-//     public selectedDevice: Device;
-//     public selectedId: string;
-
-//     public setTag(tag: Tag){
-//         this.selectedTag = tag;
-//        // this.onChange.trigger(tag);
-//     }
-//     public setDevice(device: Device){
-//         this.selectedDevice = device;
-//        // this.onChange.trigger(device);
-//     }
-
-
-//   constructor(){
-//     this.selectedTag = null;
-//     this.selectedDevice = null;
-//   }
-//   getTag<Tag> () {
-//     return this.selectedTag;
-//   }
-  
-//   getDevice<Device> () {
-//     return this.selectedDevice;
-//   }
-// }

@@ -43,7 +43,10 @@ export class RegistersComponent {
     this._modbusService.getConnectors()
     .subscribe(
       data => this.connectors = data,
-      error => console.error('Error: ' + error),
+      error => {
+        console.error('Error: ' + error);
+        this.getData = error;
+    },
       () => console.log('Completed!')
       );
   }
@@ -52,8 +55,11 @@ export class RegistersComponent {
     onPost(){
         this._modbusService.putRegister(this._postRegister)
         .subscribe(
-            data => this.postData = JSON.stringify(data),
-            error => console.error('Error: ' + error),
+            data => this.postData = JSON.stringify(data),            
+            error => {
+                console.error('Error: ' + error);
+                this.getData = error;
+            },
             () => console.log('Completed!')
         );
     }
@@ -62,7 +68,10 @@ export class RegistersComponent {
         this._modbusService.readRegister(this._getRegister)
         .subscribe(
             data => this.getData = JSON.stringify(data),
-            error => console.error('Error: ' + error),
+            error => {
+                console.error('Error: ' + error);
+                this.getData = error;
+        },
             () => console.log('Completed!')
         );
     }
@@ -70,7 +79,10 @@ export class RegistersComponent {
         this._modbusService.scanAddress(this._getRegister)
         .subscribe(
             data => this.getData = JSON.stringify(data),
-            error => console.error('Error: ' + error),
+            error => {
+                console.error('Error: ' + error);
+                this.getData = error;
+            },
             () => console.log('Completed!')
         );
     }

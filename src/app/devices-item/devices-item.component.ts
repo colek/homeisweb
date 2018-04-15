@@ -13,7 +13,7 @@ export class DevicesItemComponent implements OnInit {
  @Input() device: Device;
  @Input() addMode: boolean;
  @Output() addClicked = new EventEmitter();
- strDevice: string;
+ strDevice: string; 
 
   constructor( 
   private router: Router, 

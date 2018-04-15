@@ -28,6 +28,7 @@ import { DevicesService } from './services/devices.service';
 import { FolderService } from './services/folder.service';
 import { LogService } from './services/log.service';
 import { ExpressionService } from './services/expression.service';
+import { TagService } from './services/tag.service';
 
 
 @NgModule({
@@ -57,7 +58,7 @@ import { ExpressionService } from './services/expression.service';
     AppRoutingModule,
     CodemirrorModule
   ],
-  providers: [SharingService, ModbusService, DevicesService, FolderService, LogService, ExpressionService],
+  providers: [TagService, SharingService, ModbusService, DevicesService, FolderService, LogService, ExpressionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

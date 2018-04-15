@@ -6,61 +6,43 @@ import { Tag, Device, DeviceValue, IService } from 'app/classes';
 import { SharingService } from './sharing-service.service';
 
 @Injectable()
-export class DevicesService implements IService{
-  servicePrefix: string = 'onewiredevices/';
+export class TagService implements IService{
+  servicePrefix: string = 'devices/devvalue';
 
   constructor(private _http: Http, private _sharingService: SharingService) {
 
   }
 
-  getDevices() {
-    let folderAddr = this._sharingService.getAddress(this.servicePrefix);
-    return this._http.get(folderAddr)
-      .map((res: Response) => res.json())
-      .catch(this._sharingService.handleError);
-  }
-
-  getDevice(deviceid: string) {
-    let folderAddr = this._sharingService.getAddress(this.servicePrefix +deviceid);
-    return this._http.get(folderAddr)
-      .map((res: Response) => res.json())
-      .catch(this._sharingService.handleError);
-  }
-
-  getTag(deviceid: string){
-    let addr = this._sharingService.getAddress(this.servicePrefix + deviceid);
-    return this._http.get(addr)
-      .map((res: Response) => res.json())
-      .catch(this._sharingService.handleError);
-  }
-
-  //-----------------
-  
-
-  addDevice(device: Device) {
-    let headers = this._sharingService.createHeaders();
-    let strDevice = JSON.stringify(device);
-    return this._http.post(this._sharingService.getAddress(this.servicePrefix), strDevice, {
+  createTag(deviceVal: Tag) {
+    let url = this._sharingService.getAddress(this.servicePrefix);
+    let headers = this._sharingService.createHeaders();    
+    let strDeviceVal = JSON.stringify(deviceVal);
+    return this._http.post(url, strDeviceVal, {
       headers: headers
     })
       .map((res: Response) => res.json())
-      .catch(this._sharingService.handleError);
+      //.catch(this._sharingService.handleError);
   }
 
-  
-  //--------------------
-  editDevice(obj: Device) {
-    let strAddr = this._sharingService.getAddress(this.servicePrefix + obj.Id);
+  getTag(tagid: string) {
+    let tagAddr = this._sharingService.getAddress(this.servicePrefix) + "/" + tagid;
+    return this._http.get(tagAddr)
+      .map((res: Response) => res.json())
+      .catch(this._sharingService.handleError);
+  }
+  //-----------------
+
+  saveTag(obj: Tag) {
+    let tagAddr = this._sharingService.getAddress(this.servicePrefix + "/" + obj.id);
     let headers = this._sharingService.createHeaders();
     let strObj = JSON.stringify(obj);
-    return this._http.put(strAddr, strObj, {
+    return this._http.put(tagAddr, strObj, {
       headers: headers
     })
       .map((res: Response) => console.log(JSON.stringify(res)))
       .catch(this._sharingService.handleError);
   }
 
-  
   //---------------------DELETE 
 
   /// api/onewiredevices/folder/e23ee00f-348b-4542-9ce0-690d7229d27b/

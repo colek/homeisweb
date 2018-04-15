@@ -4,6 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import { SharingService } from 'app/services/sharing-service.service';
 import { DevicesService } from 'app/services/devices.service';
+import { TagService } from 'app/services/tag.service';
 
 @Component({
   selector: 'tag-item',
@@ -33,46 +34,43 @@ export class TagComponent implements OnInit {
   strCom: string;
 
   constructor(private _deviceService: DevicesService,
+    private _tagService: TagService,
     private route: ActivatedRoute,
     private _location: Location,
     private _sahringService: SharingService) { }
 
   ngOnInit() {
     this.loadTypes();
-    this.id = this.route.snapshot.params['id'];
-    this.strCom = "xxx";
+    this.id = this.route.snapshot.params['id'];    
+    let parentFolderId = this.route.snapshot.params['parentFolderId'];
+    let parentDeviceId = this.route.snapshot.params['parentDeviceId'];
+    
+    this.Tag = new Tag();
+    if (parentDeviceId==undefined)
+      this.Tag.parentId = parentFolderId;
+    else
+      this.Tag.parentId = parentDeviceId;
 
-    if (this.id == undefined || this.id == "new") {
+    if (this.id == undefined) {
       this.isNew = true;
-      this.header = "Nový tag";
-      this.Tag = new Tag();
-      this.Tag.internal = true;
-      this.Tag.type = 0;
-      this.Tag.direction = 2;
-      this.Tag.ParentId = this._sahringService.getDevice().Id;
+      this.header = "Nový tag";      
     }
     else {
-      this.isNew = false;
-      this.header = "Editace tagu";
-      this.Tag = this._sahringService.getTag();
-      this.strCom = JSON.stringify(this._sahringService.getTag());
-      console.log(this.strCom);
-      // this.route.params
-      //   .switchMap((params: Params) => this.loadTag(this.parentId))
-      //   .subscribe(
-      //   // data => this.setTag(<Tag>data),
-      //   data => this.setTag(<Device>data),
-      //   error => console.error('Error: ' + error),
-      //   () => console.log('Completed!')
-      //   );
-
-    }
-
-    this.refreshButtons();
+      this.loadTag(this.id).subscribe(
+        data => {
+          this.Tag = data;          
+        },
+        error => console.error('Load tag error: ' + error),
+        () => {
+          console.log('Load tag completed!');
+          this.refreshButtons();
+        }
+      );
+    }            
   }
 
-  loadTag(parentId: string) {
-    return this._deviceService.getTag(parentId);
+  loadTag(tagid: string) {
+    return this._tagService.getTag(tagid);
   }
 
   refreshButtons(){
@@ -119,25 +117,31 @@ export class TagComponent implements OnInit {
 
     this.strCom = JSON.stringify(this.Tag);
     if(this.isNew){
-      this._deviceService.addDeviceValue(this.Tag).subscribe(
-        error => console.error('Error: ' + error),
+      this._tagService.createTag(this.Tag).subscribe(
+        error => console.error('Tag add error: ' + error),
         () => {
-          console.log('Completed!');
+          console.log('Tag added!');
   
           this.strCom = JSON.stringify(this.Tag);
         }
         );
     }
-    this._deviceService.editTag(this.Tag)
-      .subscribe(
-      // data => this.strCom = JSON.stringify(data),
-      error => console.error('Error: ' + error),
-      () => {
-        console.log('Completed!');
+    else
+    {
+      this._tagService.saveTag(this.Tag)
+        .subscribe((value:any) => {
 
-        this.strCom = JSON.stringify(this.Tag);
-      }
-      );
+        },
+        // data => this.strCom = JSON.stringify(data),
+        (error:any) => {
+          console.error('Tag save error: ' + error.statusText)
+        },
+        () => {
+          console.log('Tag saved!');
+          this.strCom = JSON.stringify(this.Tag);
+        }
+        );
+    }
   }
 
 
@@ -154,14 +158,6 @@ export class TagComponent implements OnInit {
     //   () => console.log('Delete clicked!')
     //   );
   }
-
-
-  // switchOnOff() {
-  //   this.expression.running = !this.expression.running;
-
-  //   this.isRunningText = (this.expression.running) ? "Zapnuto" : "Vypnuto";
-  //   this.btnRunningClass = (this.expression.running) ? "btn-success" : "btn-warning";
-  // }
 
   switchSim(){
     this.Tag.force = !this.Tag.force;

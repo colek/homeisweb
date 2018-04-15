@@ -16,18 +16,20 @@ export class MainNavBarComponent implements OnInit {
   public showLogin: boolean;
   public showFolders: boolean;
   public showDataTags: boolean;
-  public logged: string;
-  
+    
   timer;
   private sub: Subscription;  
   public boolIco: string;
 
 
-  constructor(private _sharingService: SharingService, private _logService: LogService) { 
-    this.logged= this._sharingService.Login;
+  constructor(private _sharingService: SharingService, 
+    private _logService: LogService) {     
   }
 
-  
+  public Login()
+  {
+      return this._sharingService.Login;
+  }
 
   checkOnline(t) {
     this._logService.getLogs()
@@ -47,7 +49,7 @@ export class MainNavBarComponent implements OnInit {
     this.showFolders = false;
     this.showDataTags = false;
 
-    this.timer = Observable.timer(1000, 500);
+    this.timer = Observable.timer(1000, 10000);
 
     this.boolIco = "Light Bulb Off";
     this.sub = this.timer.subscribe(t => this.checkOnline(t));
