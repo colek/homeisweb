@@ -41,8 +41,8 @@ export class FolderNavBarComponent implements OnInit {
       cFolder.id = "";
     }
     this.Folders.push(cFolder);
-    if(cFolder.ParentName != "root" && cFolder.ParentId != undefined && cFolder.name != "root"){
-       this.GetParentFolder(cFolder.ParentId);
+    if(cFolder.ParentName != "root" && cFolder.parentId != undefined && cFolder.name != "root"){
+       this.GetParentFolder(cFolder.parentId);
        console.log(cFolder.ParentName);
     }
     

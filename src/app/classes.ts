@@ -13,7 +13,7 @@ export class Register {
 export class Folder {
     public type: string;
     public name: string;
-    public ParentId: string;
+    public parentId: string;
     public ParentName: string;
     public id: string;
     constructor() {

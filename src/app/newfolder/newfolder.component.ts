@@ -27,12 +27,12 @@ export class NewfolderComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.loadNewFolder(null);
 
-    if (parentId != undefined) {
+    if (this.id == undefined) {
       this.isNew = true;
       this.header = "Nový adresář";
       this.loadNewFolder(parentId);
     }
-    else if (this.id != undefined) {
+    else {
       this.isNew = false;
       this.header = "Editace adresáře";
       this.route.params
@@ -47,7 +47,7 @@ export class NewfolderComponent implements OnInit {
 
   loadNewFolder(parentId: string) {
     this.folder = new Folder();
-    this.folder.ParentId = (parentId != undefined && parentId != 'undefined') ? parentId : null;
+    this.folder.parentId = (parentId != undefined && parentId != 'undefined') ? parentId : null;
     this.folder.type = null;
   }
 

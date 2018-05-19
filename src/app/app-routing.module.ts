@@ -17,6 +17,7 @@ const appRoutes: Routes = [
   { path: 'folders', component: FoldersComponent },
   { path: 'folders/:id', component: FoldersComponent },
   { path: 'newfolder/:parentId', component: NewfolderComponent },
+  { path: 'newfolder', component: NewfolderComponent },
   { path: 'editfolder/:id', component: NewfolderComponent },
   { path: 'editexpression/:parentId/:id', component: ExpressionComponent },
   { path: 'edittagfromfolder/:parentFolderId/:id', component: TagComponent },

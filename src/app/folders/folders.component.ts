@@ -69,9 +69,12 @@ export class FoldersComponent implements OnInit {
 
   // TODO spatne se vklada nadrazena slozka!!! 
   onNewFolderSet() {
-    let cParentId = (this.id != undefined)? this.id : this.folders[0].parentId;
+    let cParentId = (this.id != undefined) ? this.id : this.folders[0].parentId;
     console.log("NewFolder clicked, thisId: "+ cParentId);
-    this.router.navigate(['/newfolder', cParentId]);
+    if (cParentId==undefined)
+      this.router.navigate(['/newfolder']);
+    else
+      this.router.navigate(['/newfolder', cParentId]);
   }
 
   sortedFolders(data: Tag[]) {
