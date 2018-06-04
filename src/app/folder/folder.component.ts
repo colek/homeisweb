@@ -46,7 +46,7 @@ export class FolderComponent implements OnInit {
 
   onClick(event) {
     console.log('folder click');
-    switch (this.folderitem.NodeName) {
+    switch (this.folderitem.nodeName) {
       case "folder":
         this.router.navigate(['/folders/', this.folderitem.id]);
         break;
@@ -66,7 +66,7 @@ export class FolderComponent implements OnInit {
   }
 
   onBulbClick(event) {
-    switch (this.folderitem.NodeName) {
+    switch (this.folderitem.nodeName) {
       case "value":
         // TODO set value to opposite
         this.setBoolValueOpposite();
@@ -85,7 +85,7 @@ export class FolderComponent implements OnInit {
   onEdit(event) {
     event.stopPropagation();
 
-    switch (this.folderitem.NodeName) {
+    switch (this.folderitem.nodeName) {
       case "folder":
         this.router.navigate(['/editfolder/', this.folderitem.id]);
         break;
@@ -111,7 +111,7 @@ export class FolderComponent implements OnInit {
   switchBool() {
 
     this.hasBoolValue = false;
-    switch (this.folderitem.NodeName) {
+    switch (this.folderitem.nodeName) {
       case "value":
         switch (+this.folderitem.value) {
           case 0: {
@@ -142,7 +142,7 @@ export class FolderComponent implements OnInit {
   }
 
   switchIco() {
-    switch (this.folderitem.NodeName) {
+    switch (this.folderitem.nodeName) {
       case "value": {
 
         this.currentValue = this.folderitem.value +' '+ this.folderitem.unit;
@@ -212,9 +212,9 @@ export class FolderComponent implements OnInit {
     this.folderitem.running = !this.folderitem.running;
     this._expressionService.editExpressionFolder(this.folderitem)
         .subscribe(
-        // data => this.strExpression = JSON.stringify(data),
+        data => console.log(JSON.stringify(data)),
         error => console.error('Error: ' + error),
-        () => console.log('Completed!')
+        () => console.log('Expression run!')
         );
   }
 
@@ -230,20 +230,20 @@ export class FolderComponent implements OnInit {
 
       this._tagService.saveTag(this.folderitem)
       .subscribe(
-      // data => this.strCom = JSON.stringify(data),
+      data => console.log(JSON.stringify(data)),
       error => console.error('Error: ' + error),
-      () => console.log('Completed!')
+      () => console.log('Tag saved!')
       );
     }
 
   }
 
   onRemoveTag(){
-    this._deviceService.deleteTagFromFolder(this.folderitem.DirValueId)
+    this._deviceService.deleteTagFromFolder(this.folderitem.dirValueId)
     .subscribe(
-    // data => this.strExpression = JSON.stringify(data),
+    data => console.log(JSON.stringify(data)),
     error => console.error('Error: ' + error),
-    () => console.log('Completed!')
+    () => console.log('Tag removed!')
     );
   }
 

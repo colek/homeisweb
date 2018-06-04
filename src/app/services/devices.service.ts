@@ -50,7 +50,7 @@ export class DevicesService implements IService{
   
   //--------------------
   editDevice(obj: Device) {
-    let strAddr = this._sharingService.getAddress(this.servicePrefix + obj.Id);
+    let strAddr = this._sharingService.getAddress(this.servicePrefix + obj.id);
     let headers = this._sharingService.createHeaders();
     let strObj = JSON.stringify(obj);
     return this._http.put(strAddr, strObj, {

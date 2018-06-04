@@ -100,13 +100,13 @@ export class DeviceDetailComponent implements OnInit {
   }
 
   switchOnOff() {
-    this.device.Enabled = !this.device.Enabled;
+    this.device.enabled = !this.device.enabled;
     this.setScriptRunning();
   }
 
   setScriptRunning() {
-    this.isRunningText = (this.device!=null && this.device.Enabled) ? "Zapnuto" : "Vypnuto";
-    this.btnRunningClass = (this.device!=null && this.device.Enabled) ? "btn-success" : "btn-warning";
+    this.isRunningText = (this.device!=null && this.device.enabled) ? "Zapnuto" : "Vypnuto";
+    this.btnRunningClass = (this.device!=null && this.device.enabled) ? "btn-success" : "btn-warning";
   }
 
   handleAddClick(event){

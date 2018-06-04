@@ -6,15 +6,15 @@
       </div>
       <div class="form-group col-12">
         <label for="devicename">Název:</label>
-        <input class="form-control" type="text" [(ngModel)]="device.Name" name="devicename" placeholder="Název" />
+        <input class="form-control" type="text" [(ngModel)]="device.name" name="devicename" placeholder="Název" />
       </div>
       <div class="form-group col-12">
         <label for="deviceaddress">Adresa:</label>
-        <input class="form-control" type="text" [(ngModel)]="device.Address" name="deviceaddress" placeholder="Adresa" />
+        <input class="form-control" type="text" [(ngModel)]="device.address" name="deviceaddress" placeholder="Adresa" />
       </div>
       <div class="form-group col-12">
         <label for="devicerefresh">RefreshPeriod:</label>
-        <input class="form-control" type="number" [(ngModel)]="device.ScanPeriodMs" name="devicerefresh" placeholder="Refresh" />
+        <input class="form-control" type="number" [(ngModel)]="device.scanPeriodMs" name="devicerefresh" placeholder="Refresh" />
       </div>
       <div class="form-group col-12">
         <label for="deviceenabled">Povoleno:</label>
@@ -27,7 +27,7 @@
       Tags
     </a>
 
-    <div id="collapse{{device.Id}}C" class="collapse show" role="tabpanel" aria-labelledby="heading">
+    <div id="collapse{{device.id}}C" class="collapse show" role="tabpanel" aria-labelledby="heading">
       <div class="list-group">
         <folder *ngFor="let folder of device.Tags" [folderitem]='folder' [deviceid]='device.id' [addMode]='addMode' (addClicked)='handleAddClick'></folder>
       </div>

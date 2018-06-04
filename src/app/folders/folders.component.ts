@@ -80,8 +80,8 @@ export class FoldersComponent implements OnInit {
   sortedFolders(data: Tag[]) {
     let folds = data;
     folds = folds.sort((t1, t2) => {
-      return (t1.NodeName < t2.NodeName ? -2 :
-        (t1.NodeName > t2.NodeName ? 2 :
+      return (t1.nodeName < t2.nodeName ? -2 :
+        (t1.nodeName > t2.nodeName ? 2 :
           (t1.name < t2.name ? -1 :
             (t1.name > t2.name ? 1 : 0))));
     });
@@ -90,7 +90,7 @@ export class FoldersComponent implements OnInit {
       let tag: Tag;
       tag = new Tag();
       tag.name = "..";
-      tag.NodeName = "previous";
+      tag.nodeName = "previous";
       tag.id = this.id;
       folds.unshift(tag);
     }
@@ -159,7 +159,7 @@ export class FoldersComponent implements OnInit {
 
     if (tag == null || tag.id == '') return;
 
-    ttf.DevValueId = tag.id;
+    ttf.devValueId = tag.id;
 
     this.setTagToFolder(ttf);
   }

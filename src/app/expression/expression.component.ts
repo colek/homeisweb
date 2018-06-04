@@ -66,10 +66,10 @@ export class ExpressionComponent implements OnInit {
     this.expression.running = false;
     this.expression.description = null;
     this.expression.expression = "";
-    this.expression.errormessage = null;
+    this.expression.errorMessage = null;
     this.expression.name = null;
     this.expression.id = null;
-    this.expression.NodeName = "expression";
+    this.expression.nodeName = "expression";
   }
 
   loadExpression(id: string) {

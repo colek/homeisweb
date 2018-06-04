@@ -1,8 +1,8 @@
 <a class="card-header list-group-item list-group-item-action justify-content-between" role="tab" id="heading{{device.Address}}"
- data-toggle="collapse" data-parent="#devices" aria-expanded="false" aria-controls="collapse{device.Id}C"
-    href="#collapse{{device.Id}}C">
+ data-toggle="collapse" data-parent="#devices" aria-expanded="false" aria-controls="collapse{device.id}C"
+    href="#collapse{{device.id}}C">
     <div class="d-flex justify-content-between">
-          {{device.Name}}
+          {{device.name}}
           <div class="float-right">
             <button type="button" class="btn-sm btn-info btn-secondary" (click)="onEdit($event)" *ngIf="addMode != true">
             Edit
@@ -10,9 +10,9 @@
           </div>
     </div>
 </a>
-<div id="collapse{{device.Id}}C" class="collapse" role="tabpanel" aria-labelledby="heading">
+<div id="collapse{{device.id}}C" class="collapse" role="tabpanel" aria-labelledby="heading">
   <div class="list-group">
-    <folder *ngFor="let folder of device.Tags" [folderitem]='folder' [deviceid]='device.Id' [addMode]='addMode' (addClicked)='handleAddClick($event)'></folder>
+    <folder *ngFor="let folder of device.tags" [folderitem]='folder' [deviceid]='device.id' [addMode]='addMode' (addClicked)='handleAddClick($event)'></folder>
   </div>
 </div>
 

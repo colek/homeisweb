@@ -41,15 +41,15 @@ export class FolderNavBarComponent implements OnInit {
       cFolder.id = "";
     }
     this.Folders.push(cFolder);
-    if(cFolder.ParentName != "root" && cFolder.parentId != undefined && cFolder.name != "root"){
+    if(cFolder.parentName != "root" && cFolder.parentId != undefined && cFolder.name != "root"){
        this.GetParentFolder(cFolder.parentId);
-       console.log(cFolder.ParentName);
+       console.log(cFolder.parentName);
     }
     
-    if(cFolder.ParentName == "root"){
+    if(cFolder.parentName == "root"){
       let xs = new Folder();
       xs.id = "";
-      xs.name = cFolder.ParentName;
+      xs.name = cFolder.parentName;
       this.Folders.push(xs);
       this.Folders.reverse();
     }

@@ -14,7 +14,7 @@ export class Folder {
     public type: string;
     public name: string;
     public parentId: string;
-    public ParentName: string;
+    public parentName: string;
     public id: string;
     constructor() {
 
@@ -22,14 +22,14 @@ export class Folder {
 }
 
 export class Device {
-    public Name: string;
-    public Id: string;
-    public Address: string;
-    public ConnectionName: string;
-    public Internal: boolean;
-    public ScanPeriodMs: number;
-    public Enabled: boolean;
-    public Tags: Tag[];
+    public name: string;
+    public id: string;
+    public address: string;
+    public connectionName: string;
+    public internal: boolean;
+    public scanPeriodMs: number;
+    public enabled: boolean;
+    public tags: Tag[];
     constructor() {
 
     }
@@ -49,9 +49,9 @@ export enum TagType {
 export class Tag {
     public name: string;
     public id: string;
-    public DirValueId: string;
+    public dirValueId: string;
     public parentId: string;
-    public NodeName: string;
+    public nodeName: string;
     public address: string;
     public type: TagType;
     public direction: number;
@@ -93,8 +93,8 @@ export class Expression {
     public running: boolean;
     public description: string;
     public name: string;
-    public errormessage: string;
-    public NodeName: string;
+    public errorMessage: string;
+    public nodeName: string;
 }
 
 export class SelectObj{
@@ -108,7 +108,7 @@ export class SelectObj{
 }
 
 export class TagToFolder{
-    public DevValueId: string;
+    public devValueId: string;
 }
 
 export interface IService{

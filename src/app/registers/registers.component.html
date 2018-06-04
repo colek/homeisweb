@@ -23,7 +23,7 @@
                         <div class="col-xs-12 col-sm-12">
                             <h2>Set address to read</h2>
                             <select [(ngModel)]="_getRegister.connector" class="form-control">
-                                <option *ngFor="let connector of connectors" [ngValue]="connector.Name">{{connector.Name}}</option>
+                                <option *ngFor="let connector of connectors" [ngValue]="connector.name">{{connector.name}}</option>
                             </select>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         <div class="col-xs-12 col-sm-12">
                             <h2>Set address to write</h2>
                             <select class="form-control" [(ngModel)]="_postRegister.connector" >
-                                <option *ngFor="let connector of connectors" [ngValue]="connector.Name">{{connector.Name}}</option>
+                                <option *ngFor="let connector of connectors" [ngValue]="connector.name">{{connector.name}}</option>
                             </select>
                         </div>
                     </div>

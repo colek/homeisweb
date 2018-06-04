@@ -30,7 +30,7 @@ export class DevicesItemComponent implements OnInit {
 
   onEdit(event){
     this._sharingService.setDevice(this.device);
-    this.router.navigate(['/device/', this.device.Id]);
+    this.router.navigate(['/device/', this.device.id]);
   }
 
   
