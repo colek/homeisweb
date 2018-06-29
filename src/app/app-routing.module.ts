@@ -22,7 +22,7 @@ const appRoutes: Routes = [
   { path: 'editexpression/:parentId/:id', component: ExpressionComponent },
   { path: 'edittagfromfolder/:parentFolderId/:id', component: TagComponent },
   { path: 'edittagfromdevice/:parentDeviceId/:id', component: TagComponent },
-  { path: 'newtag/:parentId', component: TagComponent },
+  { path: 'newtag/:parentDeviceId', component: TagComponent },
   { path: 'device/:id', component: DeviceDetailComponent },
   { path: 'newdevice', component: DeviceDetailComponent },
   { path: 'newexpression/:parentId', component: ExpressionComponent },
