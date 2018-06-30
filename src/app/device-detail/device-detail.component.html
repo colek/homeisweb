@@ -22,14 +22,14 @@
       </div>
     </div>
 
-    <a *ngIf="!isNew" class="card-header list-group-item list-group-item-action justify-content-between" role="tab" id="heading{{device.Address}}"
-      data-toggle="collapse" data-parent="#devices" aria-expanded="false" aria-controls="collapse{device.Id}C" href="#collapse{{device.Id}}C">
+    <a *ngIf="!isNew" class="card-header list-group-item list-group-item-action justify-content-between" role="tab" id="heading{{device.address}}"
+      data-toggle="collapse" data-parent="#devices" aria-expanded="false" aria-controls="collapse{device.Id}C" href="#collapse{{device.id}}C">
       Tags
     </a>
 
     <div id="collapse{{device.id}}C" class="collapse show" role="tabpanel" aria-labelledby="heading">
       <div class="list-group">
-        <folder *ngFor="let folder of device.Tags" [folderitem]='folder' [deviceid]='device.id' [addMode]='addMode' (addClicked)='handleAddClick'></folder>
+        <folder *ngFor="let folder of device.tags" [folderitem]='folder' [deviceid]='device.id' [addMode]='addMode' (addClicked)='handleAddClick'></folder>
       </div>
     </div>
 

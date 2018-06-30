@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Tag, SelectObj } from 'app/classes';
+import { Tag, SelectObj, TagType } from 'app/classes';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import { SharingService } from 'app/services/sharing-service.service';
@@ -176,12 +176,25 @@ export class TagComponent implements OnInit {
   loadTypes() {
     this.typeSelect = new Array();
 
-    this.typeSelect.push(new SelectObj("Unknown", -1));
-    this.typeSelect.push(new SelectObj("Int", 0));
-    this.typeSelect.push(new SelectObj("UInt", 1));
-    this.typeSelect.push(new SelectObj("Double", 2));
-    this.typeSelect.push(new SelectObj("String", 3));
-    this.typeSelect.push(new SelectObj("Bool", 4));
+    // this.typeSelect.push(new SelectObj("Unknown", -1));
+    // this.typeSelect.push(new SelectObj("Int", 0));
+    // this.typeSelect.push(new SelectObj("UInt", 1));
+    // this.typeSelect.push(new SelectObj("Double", 2));
+    // this.typeSelect.push(new SelectObj("String", 3));
+    // this.typeSelect.push(new SelectObj("Bool", 4));
+    // this.typeSelect.push(new SelectObj("Enum", 5));
+    // this.typeSelect.push(new SelectObj("Email", 6));
+
+    
+
+    this.keys().forEach(element => {
+      this.typeSelect.push(new SelectObj(element, TagType[element]));
+    });
   }
+
+  keys() : Array<string> {
+    var keys = Object.keys(TagType);
+    return keys.slice(keys.length / 2);
+}
 
 }
