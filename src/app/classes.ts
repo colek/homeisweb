@@ -41,9 +41,9 @@ export enum TagType {
 	Uint = 1,
 	Double = 2,
 	String = 3,
-	Bool = 4,
-	Enum = 5,
-	Email = 6
+    Bool = 4,
+    Email = 5,
+	Enum = 6
 }
 
 export class Tag {
