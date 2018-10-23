@@ -29,72 +29,72 @@ export class DeviceDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private _location: Location,
     private _sahringService: SharingService,
-    private router: Router) {       
-    }
+    private router: Router) {
+  }
 
   ngOnInit() {
-    this.id = this.route.snapshot.params['id'];    
+    this.id = this.route.snapshot.params['id'];
 
     if (this.id == undefined) {
       this.isNew = true;
       this.header = "Nový datový bod";
       this.device = new Device();
     }
-    else{
+    else {
       this.isNew = false;
       this.header = "Datový bod";
-      this.loadDevice();    
-    }    
-  } 
+      this.loadDevice();
+    }
+  }
 
-  onBack(){
+  onBack() {
     this._location.back();
   }
 
-  loadDevice(){      
-        this._deviceService.getDevice(this.id)
-        .subscribe(
+  loadDevice() {
+    this._deviceService.getDevice(this.id)
+      .subscribe(
         data => {
           this.device = data;
           this.setScriptRunning();
         },
-        error => console.error('Error: ' + error),
+        error => { },
         () => console.log('Completed!')
+      );
+  }
+
+  onSave() {
+    if (this.isNew) {
+      this._deviceService.addDevice(this.device)
+        .subscribe(
+          // data => this.strCom = JSON.stringify(data),
+          error => { },
+          () => {
+            console.log('Completed!');
+          }
         );
-  }
-
-  onSave(){
-    if(this.isNew){ 
-    this._deviceService.addDevice(this.device)
-      .subscribe(
-      // data => this.strCom = JSON.stringify(data),
-      error => console.error('Error: ' + error),
-      () => {
-        console.log('Completed!');
-      }
-      );
     }
-    else{
+    else {
       this._deviceService.editDevice(this.device)
-      .subscribe(
-      // data => this.strCom = JSON.stringify(data),
-      error => console.error('Error: ' + error),
-      () => {
-        console.log('Completed!');
-      }
-      );
+        .subscribe(
+          // data => this.strCom = JSON.stringify(data),
+          error => { },
+          () => {
+            console.log('Completed!');
+          }
+        );
     }
   }
 
-  onDelete(){
-//todo
+  onDelete() {
+    //todo
   }
 
-  onReload(){
-//todo
+  onReload() {
+    //todo
   }
 
-  onNewTag(){
+  onNewTag() {
     this._sahringService.setDevice(this.device);
     this.router.navigate(['/newtag/' + this.id]);
   }
@@ -105,11 +105,11 @@ export class DeviceDetailComponent implements OnInit {
   }
 
   setScriptRunning() {
-    this.isRunningText = (this.device!=null && this.device.enabled) ? "Zapnuto" : "Vypnuto";
-    this.btnRunningClass = (this.device!=null && this.device.enabled) ? "btn-success" : "btn-warning";
+    this.isRunningText = (this.device != null && this.device.enabled) ? "Zapnuto" : "Vypnuto";
+    this.btnRunningClass = (this.device != null && this.device.enabled) ? "btn-success" : "btn-warning";
   }
 
-  handleAddClick(event){
+  handleAddClick(event) {
     this.addClicked.emit(event);
   }
 }

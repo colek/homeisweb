@@ -3,6 +3,7 @@ import { Folder } from 'app/classes';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import { FolderService } from 'app/services/folder.service';
+import { SharingService } from 'app/services/sharing-service.service';
 
 @Component({
   selector: 'newfolder',
@@ -19,6 +20,7 @@ export class NewfolderComponent implements OnInit {
 
   constructor(private _folderService: FolderService,
     private route: ActivatedRoute,
+    private _sharingService: SharingService,
     private _location: Location) {
   }
 
@@ -38,9 +40,9 @@ export class NewfolderComponent implements OnInit {
       this.route.params
         .switchMap((params: Params) => this.loadFolder(params['id']))
         .subscribe(
-        data => this.setFolder(data),
-        error => console.error('Error: ' + error),
-        () => console.log('Completed!')
+          data => this.setFolder(data),
+          error => { },
+          () => console.log('Completed!')
         );
     }
   }
@@ -65,17 +67,17 @@ export class NewfolderComponent implements OnInit {
     if (this.isNew) {
       this._folderService.addFolder(this.folder)
         .subscribe(
-        data => this.strFolder = JSON.stringify(data),
-        error => console.error('Error: ' + error),
-        () => console.log('Completed!')
+          data => this.strFolder = JSON.stringify(data),
+          error => { },
+          () => console.log('Completed!')
         );
     }
     else {
       this._folderService.editFolder(this.folder)
         .subscribe(
-        data => this.strFolder = JSON.stringify(data),
-        error => console.error('Error: ' + error),
-        () => console.log('Completed!')
+          data => this.strFolder = JSON.stringify(data),
+          error => { },
+          () => console.log('Completed!')
         );
     }
   }
@@ -89,9 +91,9 @@ export class NewfolderComponent implements OnInit {
   onDelete() {
     this._folderService.deleteFolder(this.id)
       .subscribe(
-      data => this.strFolder = JSON.stringify(data),
-      error => console.error('Error: ' + error),
-      () => console.log('Delete clicked!')
+        data => this.strFolder = JSON.stringify(data),
+        error => { },
+        () => console.log('Delete clicked!')
       );
   }
 

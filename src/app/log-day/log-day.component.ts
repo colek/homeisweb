@@ -18,17 +18,17 @@ export class LogDayComponent implements OnInit {
   ngOnInit() {
   }
 
-  ngOnChanges(chage: SimpleChange){
-    if(this.currentLog == undefined) return;
+  ngOnChanges(chage: SimpleChange) {
+    if (this.currentLog == undefined) return;
 
     this._logService.getLog(this.currentLog)
-        .subscribe(
+      .subscribe(
         data => {
           this.logText = data[this.currentLog];
         },
-        error => console.error('Error: ' + error),
+        error => { },
         () => console.log('Completed!')
-        );
+      );
   }
 
 }

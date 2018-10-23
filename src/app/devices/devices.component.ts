@@ -13,12 +13,12 @@ export class DevicesComponent implements OnInit {
 
   devices: Device[];
   strDevice: string;
-  @Input() addMode: boolean;
+  @Input() addMode: boolean = false;
   @Output() addClicked = new EventEmitter();
 
   constructor(private _deviceService: DevicesService, private router: Router) {
     this.loadDevices();
-   }
+  }
 
   ngOnInit() {
     // this.loadDevices();
@@ -27,22 +27,22 @@ export class DevicesComponent implements OnInit {
   loadDevices() {
     this._deviceService.getDevices()
       .subscribe(
-      data => {
-        this.devices = data,
-        this.strDevice = JSON.stringify(data)
-      },
-      error => console.error('Error: ' + error),
-      () => console.log('Completed!')
+        data => {
+          this.devices = data,
+            this.strDevice = JSON.stringify(data)
+        },
+        error => { },
+        () => console.log('Completed!')
       );
   }
 
-  onNewDevice(){
+  onNewDevice() {
     this.router.navigate(['/newdevice']);
   }
 
-  
 
-  handleAddClick(event){
+
+  handleAddClick(event) {
     this.addClicked.emit(event);
   }
 

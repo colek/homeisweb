@@ -1,4 +1,4 @@
-import {Component, Injectable} from '@angular/core'
+import { Component, Injectable } from '@angular/core'
 
 export class Register {
     public connector: string;
@@ -37,13 +37,13 @@ export class Device {
 
 export enum TagType {
     Unknown = -1,
-	Int = 0,
-	Uint = 1,
-	Double = 2,
-	String = 3,
-	Bool = 4,
-	Enum = 5,
-	Email = 6
+    Int = 0,
+    Uint = 1,
+    Double = 2,
+    String = 3,
+    Bool = 4,
+    Enum = 5,
+    Email = 6
 }
 
 export class Tag {
@@ -97,8 +97,8 @@ export class Expression {
     public nodeName: string;
 }
 
-export class SelectObj{
-    public name:string;
+export class SelectObj {
+    public name: string;
     public value: any;
 
     constructor(name: string, value: any) {
@@ -107,10 +107,19 @@ export class SelectObj{
     }
 }
 
-export class TagToFolder{
+export class TagToFolder {
     public devValueId: string;
 }
 
-export interface IService{
+export interface IService {
     servicePrefix: string;
+}
+
+export class Guid {
+    static newGuid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
 }

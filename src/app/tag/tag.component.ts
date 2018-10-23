@@ -41,24 +41,24 @@ export class TagComponent implements OnInit {
 
   ngOnInit() {
     this.loadTypes();
-    this.id = this.route.snapshot.params['id'];    
+    this.id = this.route.snapshot.params['id'];
     let parentFolderId = this.route.snapshot.params['parentFolderId'];
     let parentDeviceId = this.route.snapshot.params['parentDeviceId'];
-    
+
     this.Tag = new Tag();
-    if (parentDeviceId==undefined)
+    if (parentDeviceId == undefined)
       this.Tag.parentId = parentFolderId;
     else
       this.Tag.parentId = parentDeviceId;
 
     if (this.id == undefined) {
       this.isNew = true;
-      this.header = "Nový tag";      
+      this.header = "Nový tag";
     }
     else {
       this.loadTag(this.id).subscribe(
         data => {
-          this.Tag = data;          
+          this.Tag = data;
         },
         error => console.error('Load tag error: ' + error),
         () => {
@@ -66,40 +66,40 @@ export class TagComponent implements OnInit {
           this.refreshButtons();
         }
       );
-    }            
+    }
   }
 
   loadTag(tagid: string) {
     return this._tagService.getTag(tagid);
   }
 
-  refreshButtons(){
+  refreshButtons() {
     if (this.Tag != undefined) {
       this.isInternalText = (this.Tag.internal) ? "Internal" : "Internal off";
       this.btnInternalClass = (this.Tag.internal) ? "btn-success" : "btn-warning";
-      
+
       this.txtIsError = (this.Tag.error) ? "Odpojeno" : "Připojeno";
       this.btnErrorClass = (this.Tag.error) ? "btn-warning" : "btn-success";
-      
+
       this.txtIsSim = (this.Tag.force) ? "Simulační režim: ANO" : "Simulační režim: NE";
       this.btnSimClass = (this.Tag.force) ? "btn-warning" : "btn-success";
 
       this.boolValueText = (this.Tag.value == "0") ? "Vypnuto" : "Zapnuto";
       this.btnBoolValueClass = (this.Tag.value == "0") ? "btn-warning" : "btn-success";
-      
+
       switch (this.Tag.direction) {
-        case 0: 
+        case 0:
           this.tagDirectionText = "čtení";
           break;
-        case 1: 
+        case 1:
           this.tagDirectionText = "zápis";
           break;
-        case 2: 
+        case 2:
           this.tagDirectionText = "čtení / zápis";
           break;
-      
+
         default:
-        this.tagDirectionText = "nedefinováno";
+          this.tagDirectionText = "nedefinováno";
           break;
       }
     }
@@ -116,30 +116,31 @@ export class TagComponent implements OnInit {
   onSave() {
 
     this.strCom = JSON.stringify(this.Tag);
-    if(this.isNew){
+    if (this.isNew) {
       this._tagService.createTag(this.Tag).subscribe(
-        error => console.error('Tag add error: ' + error),
+        error => {
+          console.error('Tag add error: ' + error)
+        },
         () => {
           console.log('Tag added!');
-  
+
           this.strCom = JSON.stringify(this.Tag);
         }
-        );
+      );
     }
-    else
-    {
+    else {
       this._tagService.saveTag(this.Tag)
-        .subscribe((value:any) => {
+        .subscribe((value: any) => {
 
         },
-        // data => this.strCom = JSON.stringify(data),
-        (error:any) => {
-          console.error('Tag save error: ' + error.statusText)
-        },
-        () => {
-          console.log('Tag saved!');
-          this.strCom = JSON.stringify(this.Tag);
-        }
+          // data => this.strCom = JSON.stringify(data),
+          (error: any) => {
+            console.error('Tag save error: ' + error.statusText)
+          },
+          () => {
+            console.log('Tag saved!');
+            this.strCom = JSON.stringify(this.Tag);
+          }
         );
     }
   }
@@ -154,23 +155,23 @@ export class TagComponent implements OnInit {
     // this._commonService.deleteTag(this.id)
     //   .subscribe(
     //   data => this.strCom = JSON.stringify(data),
-    //   error => console.error('Error: ' + error),
+    //   error => {},
     //   () => console.log('Delete clicked!')
     //   );
   }
 
-  switchSim(){
+  switchSim() {
     this.Tag.force = !this.Tag.force;
-      this.refreshButtons();
+    this.refreshButtons();
   }
-  switchInternal(){
+  switchInternal() {
     this.Tag.internal = !this.Tag.internal;
-      this.refreshButtons();
+    this.refreshButtons();
   }
-  switchBoolValue(){
-    if(this.Tag.value == "0") this.Tag.value = "1";
+  switchBoolValue() {
+    if (this.Tag.value == "0") this.Tag.value = "1";
     else this.Tag.value = "0";
-      this.refreshButtons();
+    this.refreshButtons();
   }
 
   loadTypes() {
@@ -185,16 +186,16 @@ export class TagComponent implements OnInit {
     // this.typeSelect.push(new SelectObj("Enum", 5));
     // this.typeSelect.push(new SelectObj("Email", 6));
 
-    
+
 
     this.keys().forEach(element => {
       this.typeSelect.push(new SelectObj(element, TagType[element]));
     });
   }
 
-  keys() : Array<string> {
+  keys(): Array<string> {
     var keys = Object.keys(TagType);
     return keys.slice(keys.length / 2);
-}
+  }
 
 }

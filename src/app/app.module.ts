@@ -29,6 +29,7 @@ import { FolderService } from './services/folder.service';
 import { LogService } from './services/log.service';
 import { ExpressionService } from './services/expression.service';
 import { TagService } from './services/tag.service';
+import { MainComponent } from './components/main/main.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { TagService } from './services/tag.service';
     DeviceDetailComponent,
     LogListComponent,
     LogDayComponent,
-    AuthComponent
+    AuthComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,

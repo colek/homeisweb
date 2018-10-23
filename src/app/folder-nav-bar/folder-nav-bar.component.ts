@@ -22,31 +22,31 @@ export class FolderNavBarComponent implements OnInit {
     this.GetParentFolder(this.CurrentFolderId);
   }
 
-  GetParentFolder(folderid: string){
+  GetParentFolder(folderid: string) {
     this._folderService.getFolder(folderid).subscribe(
-        data => this.addFolder(data),
-        error => console.error('Error: ' + error),
-        () => console.log('Completed!')
-        );
+      data => this.addFolder(data),
+      error => { },
+      () => console.log('Completed!')
+    );
   }
 
-  addFolder(folder: Folder[]){
-    if(folder.length <= 0) {
+  addFolder(folder: Folder[]) {
+    if (folder.length <= 0) {
       return;
     }
-    let cFolder:Folder = folder[0];
-// this.strFolders = JSON.stringify(cFolder);
+    let cFolder: Folder = folder[0];
+    // this.strFolders = JSON.stringify(cFolder);
 
-    if(cFolder.name == "root"){
+    if (cFolder.name == "root") {
       cFolder.id = "";
     }
     this.Folders.push(cFolder);
-    if(cFolder.parentName != "root" && cFolder.parentId != undefined && cFolder.name != "root"){
-       this.GetParentFolder(cFolder.parentId);
-       console.log(cFolder.parentName);
+    if (cFolder.parentName != "root" && cFolder.parentId != undefined && cFolder.name != "root") {
+      this.GetParentFolder(cFolder.parentId);
+      console.log(cFolder.parentName);
     }
-    
-    if(cFolder.parentName == "root"){
+
+    if (cFolder.parentName == "root") {
       let xs = new Folder();
       xs.id = "";
       xs.name = cFolder.parentName;

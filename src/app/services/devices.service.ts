@@ -6,7 +6,7 @@ import { Tag, Device, DeviceValue, IService } from 'app/classes';
 import { SharingService } from './sharing-service.service';
 
 @Injectable()
-export class DevicesService implements IService{
+export class DevicesService implements IService {
   servicePrefix: string = 'onewiredevices/';
 
   constructor(private _http: Http, private _sharingService: SharingService) {
@@ -17,25 +17,25 @@ export class DevicesService implements IService{
     let folderAddr = this._sharingService.getAddress(this.servicePrefix);
     return this._http.get(folderAddr)
       .map((res: Response) => res.json())
-      .catch(this._sharingService.handleError);
+      .catch((err: Response) => { return this._sharingService.handleError(err); });
   }
 
   getDevice(deviceid: string) {
-    let folderAddr = this._sharingService.getAddress(this.servicePrefix +deviceid);
+    let folderAddr = this._sharingService.getAddress(this.servicePrefix + deviceid);
     return this._http.get(folderAddr)
       .map((res: Response) => res.json())
-      .catch(this._sharingService.handleError);
+      .catch((err: Response) => { return this._sharingService.handleError(err); });
   }
 
-  getTag(deviceid: string){
+  getTag(deviceid: string) {
     let addr = this._sharingService.getAddress(this.servicePrefix + deviceid);
     return this._http.get(addr)
       .map((res: Response) => res.json())
-      .catch(this._sharingService.handleError);
+      .catch((err: Response) => { return this._sharingService.handleError(err); });
   }
 
   //-----------------
-  
+
 
   addDevice(device: Device) {
     let headers = this._sharingService.createHeaders();
@@ -44,10 +44,10 @@ export class DevicesService implements IService{
       headers: headers
     })
       .map((res: Response) => res.json())
-      .catch(this._sharingService.handleError);
+      .catch((err: Response) => { return this._sharingService.handleError(err); });
   }
 
-  
+
   //--------------------
   editDevice(obj: Device) {
     let strAddr = this._sharingService.getAddress(this.servicePrefix + obj.id);
@@ -57,21 +57,21 @@ export class DevicesService implements IService{
       headers: headers
     })
       .map((res: Response) => console.log(JSON.stringify(res)))
-      .catch(this._sharingService.handleError);
+      .catch((err: Response) => { return this._sharingService.handleError(err); });
   }
 
-  
+
   //---------------------DELETE 
 
   /// api/onewiredevices/folder/e23ee00f-348b-4542-9ce0-690d7229d27b/
-  deleteTagFromFolder(tagId: string){
+  deleteTagFromFolder(tagId: string) {
     let objAddr = this._sharingService.getAddress(this.servicePrefix + 'folder/' + tagId);
     let headers = this._sharingService.createHeaders();
     return this._http.delete(objAddr, {
       headers: headers
     })
       .map((res: Response) => console.log(JSON.stringify(res)))
-      .catch(this._sharingService.handleError);
+      .catch((err: Response) => { return this._sharingService.handleError(err); });
   }
 
 }

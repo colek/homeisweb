@@ -1,0 +1,27 @@
+<div class="container-fluid">
+  <main-nav-bar></main-nav-bar>
+  <div>
+    <div class="row">
+      <div class="col-11">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <ng-template #login>
+    <div class="modal-header">
+      <h4 class="modal-title">Nejste přihlášeni</h4>
+      <button type="button" class="close" (click)="closeModalClick()">
+        <span>&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-auth></app-auth>
+    </div>
+    <div class="modal-footer">
+      <button type="button" (click)="closeModalClick()" class="btn btn-secondary">Close</button>
+    </div>
+  </ng-template>
+
+</div>

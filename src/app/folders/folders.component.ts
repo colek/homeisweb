@@ -24,12 +24,12 @@ export class FoldersComponent implements OnInit {
   private sub: Subscription;
   refresh: string;
   refreshButtonType: string;
-  @ViewChild('closeModal') closeModal:ElementRef;
+  @ViewChild('closeModal') closeModal: ElementRef;
 
-  constructor(private _folderService: FolderService, 
-    private route: ActivatedRoute, 
-    private router: Router, 
-    private _sharingService: SharingService) {    
+  constructor(private _folderService: FolderService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private _sharingService: SharingService) {
   }
 
   ngOnInit() {
@@ -37,9 +37,9 @@ export class FoldersComponent implements OnInit {
     this.route.params
       .switchMap((params: Params) => this.manageId(params['id']))
       .subscribe(
-      data => this.folders = this.sortedFolders(data),
-      error => console.error('Error: ' + error),
-      () => console.log('Completed!')
+        data => this.folders = this.sortedFolders(data),
+        error => { },
+        () => console.log('Completed!')
       )
     this.tick = 0;
     this.tick2 = -1;
@@ -58,20 +58,20 @@ export class FoldersComponent implements OnInit {
   }
 
   onNewExpression() {
-    let cParentId = (this.id != undefined)? this.id : this.folders[0].parentId;
-    console.log("NewExpression clicked, thisId: "+ cParentId);
+    let cParentId = (this.id != undefined) ? this.id : this.folders[0].parentId;
+    console.log("NewExpression clicked, thisId: " + cParentId);
     this.router.navigate(['/newexpression', cParentId]);
   }
 
   onNewTag() {
-    
+
   }
 
   // TODO spatne se vklada nadrazena slozka!!! 
   onNewFolderSet() {
     let cParentId = (this.id != undefined) ? this.id : this.folders[0].parentId;
-    console.log("NewFolder clicked, thisId: "+ cParentId);
-    if (cParentId==undefined)
+    console.log("NewFolder clicked, thisId: " + cParentId);
+    if (cParentId == undefined)
       this.router.navigate(['/newfolder']);
     else
       this.router.navigate(['/newfolder', cParentId]);
@@ -100,21 +100,21 @@ export class FoldersComponent implements OnInit {
   refreshFolder(t) {
     this._folderService.getFolders(this.id)
       .subscribe(
-      data => this.folders = this.sortedFolders(data),
-      error => {
-        console.error('Error: ' + error);
-        this.refreshButtonType = 'danger';
-      },
-      () => {
-        console.log('Completed!');
-        //this.tick2 = this.tick2 + 1;
-        if(this.refresh == 'On') {
-          this.refreshButtonType = 'success';
-        }
-        else {
+        data => this.folders = this.sortedFolders(data),
+        error => {
+          { };
           this.refreshButtonType = 'danger';
+        },
+        () => {
+          console.log('Completed!');
+          //this.tick2 = this.tick2 + 1;
+          if (this.refresh == 'On') {
+            this.refreshButtonType = 'success';
+          }
+          else {
+            this.refreshButtonType = 'danger';
+          }
         }
-      }
       );
     //this.tick = t;
   }
@@ -138,18 +138,18 @@ export class FoldersComponent implements OnInit {
     }
   }
 
-  setTagToFolder(ttf: TagToFolder){
+  setTagToFolder(ttf: TagToFolder) {
     this._folderService.addTagToFolder(this.id, ttf).subscribe(
       // data => this.strCom = JSON.stringify(data),
-      error => console.error('Error: ' + error),
+      error => { },
       () => {
         console.log('Completed!');
         this.closeModalClick();
       }
-      ); 
+    );
   }
 
-  addNewTagToFolder(event){
+  addNewTagToFolder(event) {
     let tag: Tag;
 
     tag = event;
@@ -164,10 +164,10 @@ export class FoldersComponent implements OnInit {
     this.setTagToFolder(ttf);
   }
 
-  closeModalClick(){
+  closeModalClick() {
     this.closeModal.nativeElement.click();
   }
-  
-  
+
+
 
 }

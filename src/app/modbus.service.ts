@@ -10,14 +10,14 @@ export class ModbusService implements IService {
   servicePrefix: string = 'modbus/';
 
   //public urlAddr = 'https://192.168.2.221:82/api';
-  constructor(private _http: Http,private _sharingService: SharingService) {
+  constructor(private _http: Http, private _sharingService: SharingService) {
 
   }
 
   getConnectors() {
     return this._http.get(this._sharingService.getAddress('connectors/'))
       .map((res: Response) => res.json())
-      .catch(this._sharingService.handleError);
+      .catch((err: Response) => { return this._sharingService.handleError(err); });
   }
 
   putRegister(write: Register) {
@@ -46,7 +46,7 @@ export class ModbusService implements IService {
 
     return this._http.get(readAddr)
       .map((res: Response) => res.json())
-      .catch(this._sharingService.handleError);
+      .catch((err: Response) => { return this._sharingService.handleError(err); });
   }
 
 
@@ -57,7 +57,7 @@ export class ModbusService implements IService {
 
     return this._http.get(scanAddr)
       .map((res: Response) => res.json())
-      .catch(this._sharingService.handleError);
+      .catch((err: Response) => { return this._sharingService.handleError(err); });
   }
 
 }

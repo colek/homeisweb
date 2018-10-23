@@ -1,46 +1,56 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers } from '@angular/http';
-import { Tag, Device } from 'app/classes';
+import { Tag, Device, Guid } from 'app/classes';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class SharingService {
 
   Login: string;
   Pwd: string;
-  public urlAddr ='/api'; //'/api'; //'https://192.168.2.221:82/api';
+  public urlAddr = 'https://192.168.2.221:82/api'; //'/api'; //'https://192.168.2.221:82/api';
 
- 
+
   public selectedTag: Tag;
   public selectedDevice: Device;
   public selectedId: string;
 
-  constructor( ) { 
+  public loginAlert = new Subject();
+  public loginObservable = this.loginAlert.asObservable();
+  public sessionId: Guid;
 
+  public logged: Boolean;
+  public startCallLogin: boolean = false;
+
+  constructor() {
+    if (this.sessionId == null || this.sessionId == undefined) {
+      this.sessionId = Guid.newGuid();
+    }
   }
 
-  public setTag(tag: Tag){
-      this.selectedTag = tag;
-     // this.onChange.trigger(tag);
+  public setTag(tag: Tag) {
+    this.selectedTag = tag;
+    // this.onChange.trigger(tag);
   }
-  public setDevice(device: Device){
-      this.selectedDevice = device;
-     // this.onChange.trigger(device);
+  public setDevice(device: Device) {
+    this.selectedDevice = device;
+    // this.onChange.trigger(device);
   }
-    getTag<Tag> () {
-      return this.selectedTag;
-    }
-    
-    getDevice<Device> () {
-      return this.selectedDevice;
-    }
+  getTag<Tag>() {
+    return this.selectedTag;
+  }
+
+  getDevice<Device>() {
+    return this.selectedDevice;
+  }
 
   handleError(error: Response) {
-    console.error(error);
+    if (!error.ok && error.status == 401) {
+      this.callLogin();
+    }
     return Observable.throw(error.json().error || 'chyba');
   }
-
-
 
   createAuthorizationHeader(headers: Headers) {
     headers.append('Authorization', 'Basic ' +
@@ -54,16 +64,23 @@ export class SharingService {
     return new Headers();
   }
 
-  getAddress(adr: string){
+  getAddress(adr: string) {
     return this.urlAddr + '/' + adr;
   }
 
-  createHeaders(){
+  createHeaders() {
     let headers = this.createNewHeader();
     this.getHeaders(headers);
     this.createAuthorizationHeader(headers);
 
     return headers;
+  }
+
+
+  callLogin() {
+    // if (this.Login == undefined || this.Pwd == undefined) {
+    this.loginAlert.next();
+    // }
   }
 
 }

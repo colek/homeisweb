@@ -9,7 +9,7 @@ import { LogService } from 'app/services/log.service';
   providers: []
 })
 export class LogListComponent implements OnInit {
-  
+  id: any;
   logs: string[];
   currentLog: string;
 
@@ -20,19 +20,19 @@ export class LogListComponent implements OnInit {
   ngOnInit() {
     this.loadLogs();
   }
-  
-  loadLogs(){
+
+  loadLogs() {
     this._logService.getLogs()
       .subscribe(
-      data => {
-        this.logs = data.reverse();
-      },
-      error => console.error('Error: ' + error),
-      () => console.log('Completed!')
+        data => {
+          this.logs = data.reverse();
+        },
+        error => { },
+        () => console.log('Completed!')
       );
   }
 
-  onLogClick(cLog){
+  onLogClick(cLog) {
     this.currentLog = cLog;
   }
 

@@ -7,19 +7,19 @@ import { IService } from 'app/classes';
 export class LogService implements IService {
   servicePrefix: string = 'logs/';
 
-  constructor(private _http: Http,private _sharingService: SharingService) { }
+  constructor(private _http: Http, private _sharingService: SharingService) { }
 
-  getLogs(){
+  getLogs() {
     let addr = this._sharingService.getAddress(this.servicePrefix);
     return this._http.get(addr)
       .map((res: Response) => res.json())
-      .catch(this._sharingService.handleError);
+      .catch((err: Response) => { return this._sharingService.handleError(err); });
   }
 
-  getLog(logDate: string){
+  getLog(logDate: string) {
     let addr = this._sharingService.getAddress(this.servicePrefix + logDate);
     return this._http.get(addr)
       .map((res: Response) => res.json())
-      .catch(this._sharingService.handleError);
+      .catch((err: Response) => { return this._sharingService.handleError(err); });
   }
 }

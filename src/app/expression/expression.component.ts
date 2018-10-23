@@ -42,22 +42,22 @@ export class ExpressionComponent implements OnInit {
     }
     else {
       this.readExpression(parentId);
-    }    
+    }
   }
 
-  readExpression(parentId: string){
+  readExpression(parentId: string) {
     this.isNew = false;
-      this.header = "Editace výrazu";
-      this.route.params
-        .switchMap((params: Params) => this.loadExpression(parentId))
-        .subscribe(
+    this.header = "Editace výrazu";
+    this.route.params
+      .switchMap((params: Params) => this.loadExpression(parentId))
+      .subscribe(
         data => {
           this.setExpr(data);
           this.setScriptRunning();
         },
-        error => console.error('Error: ' + error),
+        error => { },
         () => console.log('Completed!')
-        );
+      );
   }
 
   loadNewExpression(parentId: string) {
@@ -91,17 +91,17 @@ export class ExpressionComponent implements OnInit {
     if (this.isNew) {
       this._expressionService.addExpression(this.expression)
         .subscribe(
-        data => this.strExpression = JSON.stringify(data),
-        error => console.error('Error: ' + error),
-        () => console.log('Completed!')
+          data => this.strExpression = JSON.stringify(data),
+          error => { },
+          () => console.log('Completed!')
         );
     }
     else {
       this._expressionService.editExpression(this.expression)
         .subscribe(
-        data => this.strExpression = JSON.stringify(data),
-        error => console.error('Error: ' + error),
-        () => console.log('Completed!')
+          data => this.strExpression = JSON.stringify(data),
+          error => { },
+          () => console.log('Completed!')
         );
     }
   }
@@ -115,9 +115,9 @@ export class ExpressionComponent implements OnInit {
   onDelete() {
     this._expressionService.deleteExpression(this.id)
       .subscribe(
-      data => this.strExpression = JSON.stringify(data),
-      error => console.error('Error: ' + error),
-      () => console.log('Delete clicked!')
+        data => this.strExpression = JSON.stringify(data),
+        error => { },
+        () => console.log('Delete clicked!')
       );
   }
 
@@ -127,11 +127,11 @@ export class ExpressionComponent implements OnInit {
         this.strExpression = JSON.stringify(data);
         this.readExpression(this.expression.parentId);
       },
-      error => console.error('Error: ' + error),
+      error => { },
       () => console.log('Completed!')
     );
 
-    
+
   }
 
   switchOnOff() {

@@ -16,30 +16,29 @@ export class MainNavBarComponent implements OnInit {
   public showLogin: boolean;
   public showFolders: boolean;
   public showDataTags: boolean;
-    
+
   timer;
-  private sub: Subscription;  
+  private sub: Subscription;
   public boolIco: string;
 
 
-  constructor(private _sharingService: SharingService, 
-    private _logService: LogService) {     
+  constructor(private _sharingService: SharingService,
+    private _logService: LogService) {
   }
 
-  public Login()
-  {
-      return this._sharingService.Login;
+  public Login() {
+    return this._sharingService.Login;
   }
 
   checkOnline(t) {
     this._logService.getLogs()
       .subscribe(
-      data => { },
-      error => {
-        console.error('Error: ' + error);
-        this.boolIco = "Light Bulb Off";
-      },
-      () => { this.boolIco = "Light Bulb On"; }
+        data => { },
+        error => {
+          { };
+          this.boolIco = "Light Bulb Off";
+        },
+        () => { this.boolIco = "Light Bulb On"; }
       );
   }
 
@@ -55,28 +54,28 @@ export class MainNavBarComponent implements OnInit {
     this.sub = this.timer.subscribe(t => this.checkOnline(t));
   }
 
-  onShowRegisters(){    
+  onShowRegisters() {
     this.showRegisters = true;
     this.showLogin = false;
     this.showFolders = false;
     this.showDataTags = false;
   }
 
-  onShowLogin(){
+  onShowLogin() {
     this.showRegisters = false;
     this.showLogin = true;
     this.showFolders = false;
     this.showDataTags = false;
   }
 
-  onShowFolders(){  
+  onShowFolders() {
     this.showRegisters = false;
     this.showLogin = false;
     this.showFolders = true;
     this.showDataTags = false;
   }
 
-  onShowDataTags(){
+  onShowDataTags() {
     this.showRegisters = false;
     this.showLogin = false;
     this.showFolders = false;

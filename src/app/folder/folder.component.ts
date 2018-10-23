@@ -32,10 +32,10 @@ export class FolderComponent implements OnInit {
 
   constructor(private _deviceService: DevicesService,
     private _tagService: TagService,
-  private _expressionService: ExpressionService, 
-  private router: Router, 
-  private _location: Location, 
-  private _sharingService: SharingService) {
+    private _expressionService: ExpressionService,
+    private router: Router,
+    private _location: Location,
+    private _sharingService: SharingService) {
   }
 
   ngOnInit() {
@@ -57,7 +57,7 @@ export class FolderComponent implements OnInit {
         // this._commonService.getFolder(this.previousfolderId)
         //   .subscribe(
         //   data => preFolder = data,
-        //   error => console.error('Error: ' + error),
+        //   error => {},
         //   () => this.router.navigate(['/folders/', preFolder.parentId])
         //   );
         // console.log('previous clicked');
@@ -93,10 +93,10 @@ export class FolderComponent implements OnInit {
         this.router.navigate(['/editexpression/', this.previousfolderId, this.folderitem.id]);
         break;
       case "value":
-        if (this.deviceid==undefined)
-          this.router.navigate(['/edittagfromfolder/',this.previousfolderId, this.folderitem.id]);
+        if (this.deviceid == undefined)
+          this.router.navigate(['/edittagfromfolder/', this.previousfolderId, this.folderitem.id]);
         else
-          this.router.navigate(['/edittagfromdevice/',this.deviceid, this.folderitem.id]);
+          this.router.navigate(['/edittagfromdevice/', this.deviceid, this.folderitem.id]);
         break;
     }
 
@@ -145,7 +145,7 @@ export class FolderComponent implements OnInit {
     switch (this.folderitem.nodeName) {
       case "value": {
 
-        this.currentValue = this.folderitem.value +' '+ this.folderitem.unit;
+        this.currentValue = this.folderitem.value + ' ' + this.folderitem.unit;
         switch (this.folderitem.type) {
           case TagType.Int: { // int
             this.ico = "Dashboard";
@@ -208,43 +208,43 @@ export class FolderComponent implements OnInit {
     }
   }
 
-  setExpressionRunOpposite(){
+  setExpressionRunOpposite() {
     this.folderitem.running = !this.folderitem.running;
     this._expressionService.editExpressionFolder(this.folderitem)
-        .subscribe(
+      .subscribe(
         data => console.log(JSON.stringify(data)),
-        error => console.error('Error: ' + error),
+        error => { },
         () => console.log('Expression run!')
-        );
+      );
   }
 
-  setBoolValueOpposite(){
+  setBoolValueOpposite() {
     // zmena hodnoty pouze bool
-    if(this.folderitem.type == TagType.Bool && this.folderitem.direction > 0){
-      if(this.folderitem.value == "1"){
+    if (this.folderitem.type == TagType.Bool && this.folderitem.direction > 0) {
+      if (this.folderitem.value == "1") {
         this.folderitem.value = "0";
       }
-      else{
+      else {
         this.folderitem.value = "1";
       }
 
       this._tagService.saveTag(this.folderitem)
-      .subscribe(
-      data => console.log(JSON.stringify(data)),
-      error => console.error('Error: ' + error),
-      () => console.log('Tag saved!')
-      );
+        .subscribe(
+          data => console.log(JSON.stringify(data)),
+          error => { },
+          () => console.log('Tag saved!')
+        );
     }
 
   }
 
-  onRemoveTag(){
+  onRemoveTag() {
     this._deviceService.deleteTagFromFolder(this.folderitem.dirValueId)
-    .subscribe(
-    data => console.log(JSON.stringify(data)),
-    error => console.error('Error: ' + error),
-    () => console.log('Tag removed!')
-    );
+      .subscribe(
+        data => console.log(JSON.stringify(data)),
+        error => { },
+        () => console.log('Tag removed!')
+      );
   }
 
 }
