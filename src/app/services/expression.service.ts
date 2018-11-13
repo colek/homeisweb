@@ -17,11 +17,25 @@ export class ExpressionService implements IService {
       .catch((err: Response) => { return this._sharingService.handleError(err); });
   }
 
-  testExpression(guid: string) {
-    let objAddr = this._sharingService.getAddress(this.servicePrefix + 'run/' + guid);
+  getExpression(expressionId: string) {
+    let objAddr = this._sharingService.getAddress(this.servicePrefix + expressionId);
     return this._http.get(objAddr)
       .map((res: Response) => res.json())
       .catch((err: Response) => { return this._sharingService.handleError(err); });
+  }
+
+  getExpressionLog(expressionId: string) {
+    let objAddr = this._sharingService.getAddress(this.servicePrefix + "debuglog/" + expressionId);
+    return this._http.get(objAddr)
+      .map((res: Response) => res.json())
+      .catch(this._sharingService.handleError);
+  }
+
+  testExpression(expressionId: string) {
+    let objAddr = this._sharingService.getAddress(this.servicePrefix + 'run/' + expressionId);
+    return this._http.get(objAddr)
+      .map((res:any) => res.json())
+      .catch(this._sharingService.handleError);
   }
 
   addExpression(expr: Expression) {

@@ -5,6 +5,8 @@ import { Location } from '@angular/common';
 import { CodemirrorComponent } from 'ng2-codemirror';
 import 'codemirror/mode/lua/lua'
 import { ExpressionService } from 'app/services/expression.service';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'expression',
@@ -14,6 +16,9 @@ import { ExpressionService } from 'app/services/expression.service';
 })
 export class ExpressionComponent implements OnInit {
   expression: Expression;
+  expressionLog: string;
+  timer:any;
+  timerSubscription:Subscription;
   strExpression: string;
   header: string;
   isNew: boolean;
@@ -31,6 +36,9 @@ export class ExpressionComponent implements OnInit {
     private _location: Location) { }
 
   ngOnInit() {
+    this.timer = Observable.timer(1000,1000);    
+    this.timerSubscription = this.timer.subscribe(t => this.loadDebugLog(this.id));
+    
     let parentId = this.route.snapshot.params['parentId'];
     this.id = this.route.snapshot.params['id'];
     this.loadNewExpression(null);
@@ -41,16 +49,28 @@ export class ExpressionComponent implements OnInit {
       this.loadNewExpression(parentId);
     }
     else {
-      this.readExpression(parentId);
-    }
+      this.readExpression(this.id);
+    }    
   }
 
-  readExpression(parentId: string) {
+  loadDebugLog(expressionId: string) {
+    this._expressionService.getExpressionLog(expressionId)
+    .subscribe(
+    data => {
+      this.expressionLog = "";
+      data.forEach(element => {
+        this.expressionLog += element + "\n";
+      });             
+    });
+  }
+
+
+  readExpression(expressionId: string){
     this.isNew = false;
-    this.header = "Editace výrazu";
-    this.route.params
-      .switchMap((params: Params) => this.loadExpression(parentId))
-      .subscribe(
+      this.header = "Editace výrazu";
+      this.route.params
+        .switchMap((params: Params) => this.loadExpression(expressionId))
+        .subscribe(
         data => {
           this.setExpr(data);
           this.setScriptRunning();
@@ -72,8 +92,8 @@ export class ExpressionComponent implements OnInit {
     this.expression.nodeName = "expression";
   }
 
-  loadExpression(id: string) {
-    return this._expressionService.getExpressions(id);
+  loadExpression(expressionId: string) {
+    return this._expressionService.getExpression(expressionId);
   }
 
   setExpr(expr: Expression[]) {
@@ -124,14 +144,14 @@ export class ExpressionComponent implements OnInit {
   onTest() {
     return this._expressionService.testExpression(this.id).subscribe(
       data => {
-        this.strExpression = JSON.stringify(data);
-        this.readExpression(this.expression.parentId);
+        this.strExpression = JSON.stringify(data);        
+        this.readExpression(this.expression.id);
       },
-      error => { },
+      error => console.error('Error: ' + error),
       () => console.log('Completed!')
     );
 
-
+    
   }
 
   switchOnOff() {
