@@ -24,7 +24,7 @@ export class Folder {
 export class Device {
     public name: string;
     public id: string;
-    public address: string;
+    public addressName: string;
     public connectionName: string;
     public internal: boolean;
     public scanPeriodMs: number;
