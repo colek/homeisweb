@@ -67,7 +67,10 @@ export class NewfolderComponent implements OnInit {
     if (this.isNew) {
       this._folderService.addFolder(this.folder)
         .subscribe(
-          data => this.strFolder = JSON.stringify(data),
+          data => {
+            this.strFolder = JSON.stringify(data);          
+            this._location.back();
+          },
           error => { },
           () => console.log('Completed!')
         );
@@ -75,7 +78,10 @@ export class NewfolderComponent implements OnInit {
     else {
       this._folderService.editFolder(this.folder)
         .subscribe(
-          data => this.strFolder = JSON.stringify(data),
+          data => {
+            this.strFolder = JSON.stringify(data);          
+            this._location.back();
+          },
           error => { },
           () => console.log('Completed!')
         );
@@ -91,7 +97,10 @@ export class NewfolderComponent implements OnInit {
   onDelete() {
     this._folderService.deleteFolder(this.id)
       .subscribe(
-        data => this.strFolder = JSON.stringify(data),
+        data => {
+          this.strFolder = JSON.stringify(data);
+          this._location.back();
+        },
         error => { },
         () => console.log('Delete clicked!')
       );
