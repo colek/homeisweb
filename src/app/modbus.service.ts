@@ -39,7 +39,7 @@ export class ModbusService implements IService {
 
   readRegister(read: Register) {
     let readAddr = this._sharingService.getAddress(this.servicePrefix
-      + '/registers/' + read.connector
+      + 'registers/' + read.connector
       + '/' + read.devaddress
       + '/' + read.base
       + '/' + read.value);
@@ -52,7 +52,7 @@ export class ModbusService implements IService {
 
   scanAddress(read: Register) {
     let scanAddr = this._sharingService.getAddress(this.servicePrefix
-      + '/scan/' + read.connector
+      + 'scan/' + read.connector
       + '/' + read.devaddress);
 
     return this._http.get(scanAddr)

@@ -71,8 +71,8 @@ export class ExpressionComponent implements OnInit {
       this.route.params
         .switchMap((params: Params) => this.loadExpression(expressionId))
         .subscribe(
-        data => {
-          this.setExpr(data);
+        data => {          
+          this.expression = data;
           this.setScriptRunning();
         },
         error => { },
