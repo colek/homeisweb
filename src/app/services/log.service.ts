@@ -16,8 +16,13 @@ export class LogService implements IService {
       .catch((err: Response) => { return this._sharingService.handleError(err); });
   }
 
-  getLog(logDate: string) {
+  getFileUrl(logDate:string): string {
     let addr = this._sharingService.getAddress(this.servicePrefix + logDate);
+    return addr;
+  }
+
+  getLog(logDate: string) {
+    let addr = this.getFileUrl(logDate);
     return this._http.get(addr)
       .map((res: Response) => res.json())
       .catch((err: Response) => { return this._sharingService.handleError(err); });

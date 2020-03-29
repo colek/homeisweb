@@ -39,6 +39,7 @@ export class RegistersComponent {
     };
 
     addressSet() {
+        this.getData = "Waiting...";
         this._sharingSrvice.urlAddr = this.url;
         this._modbusService.getConnectors()
             .subscribe(
@@ -53,6 +54,7 @@ export class RegistersComponent {
 
 
     onPost() {
+        this.getData = "Waiting...";
         this._modbusService.putRegister(this._postRegister)
             .subscribe(
                 data => this.postData = JSON.stringify(data),
@@ -65,6 +67,7 @@ export class RegistersComponent {
     }
 
     onGet() {
+        this.getData = "Waiting...";
         this._modbusService.readRegister(this._getRegister)
             .subscribe(
                 data => this.getData = JSON.stringify(data),
@@ -76,6 +79,7 @@ export class RegistersComponent {
             );
     }
     onScan() {
+        this.getData = "Waiting...";
         this._modbusService.scanAddress(this._getRegister)
             .subscribe(
                 data => this.getData = JSON.stringify(data),

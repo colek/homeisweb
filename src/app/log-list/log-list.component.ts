@@ -33,7 +33,12 @@ export class LogListComponent implements OnInit {
   }
 
   onLogClick(cLog) {
-    this.currentLog = cLog;
+    //this.currentLog = cLog;
+    this.goToLink(this._logService.getFileUrl(cLog));   
   }
+
+  goToLink(url: string){
+    window.open(url, "_blank");
+}
 
 }
